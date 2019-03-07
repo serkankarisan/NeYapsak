@@ -1,0 +1,267 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NeYapsak</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Open Sans -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='/text/css'>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
+
+    <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="~/css/baba-style.css" rel="stylesheet" />
+
+</head>
+
+<body data-spy="scroll" data-target="#scroll-spy">
+    <button onclick="topFunction()" id="myBtn" title="Başa Dön"><i class="fa fa-chevron-circle-up fa-3x"></i></button>
+    <!-- Navigation - Fixed Top -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-home" href="#home" role="button">
+                    <svg class="lnr lnr-home"><use xlink:href="#lnr-home"></use></svg>
+                </a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#scroll-spy" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="material-icons">&#xE5D2;</i>
+                </button>
+                <!-- 				<a class="navbar-brand" href="#home">Boom Scroll
+                                    <i class="material-icons">mouse</i>
+                                </a> -->
+            </div>
+
+            <!-- Collect the nav links, forms for toggling -->
+            <div class="collapse navbar-collapse" id="scroll-spy">
+
+                <!-- navbar-nav -->
+                <ul class="nav navbar-nav ">
+                    <li><a href="#about">Hakkımızda</a></li>
+                    <li><a href="#demo">Nasıl Çalışır</a></li>
+                    <li><a href="#features">Kayıt Ol</a></li>
+                    <li><a href="#howto">Giriş Yap</a></li>
+                </ul><!-- /.navbar-nav -->
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav><!-- /.fixed navigation -->
+
+    <section id="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <a href="/index.cshtml" style="text-decoration:none"><h1>neyapsak.com</h1></a>
+                    <h4>etkinlik partneri bulmanın kolay yolu</h4>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+                    <p class="typewrite" data-period="2000" data-type='[ "neyapsak.com", "burada yapacak çok şey  var", "sen de bir şeyler yapmak istiyorsan", "doğru yerdesin:)" ]'></p>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-xs-12 col-md-3 col-md-push-3">
+                    <a class="tutorials-link" href="#howto" role="button">Giriş Yap</a>
+                </div>
+                <div class="col-xs-12 col-md-3 col-md-push-3">
+                    <a class="tutorials-link" href="#features" role="button">Kayıt Ol</a>
+                </div>
+            </div>
+        </div><!-- /.container -->
+    </section><!-- /#home -->
+
+    <section id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="section-header">
+                        Hakkımızda
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+                    <p>Biliyoruz, artık dışarda bir şey yapmak isteyince birini bulabilmek zor. Malum Netflix, oyunlar, akıllı telefonlar vb. Oturduk, ne yapsak diye düşündük ve bu siteyi ortaya çıkardık. Sen <highlight>sosyalleş</highlight> istedik<i class="fa fa-linux" aria-hidden="true"></i></p>
+
+                    <p><highlight>This example</highlight> demonstrates some rich, additional features including <strong>animated scrolling</strong>, <strong>focus events</strong> as well as how to offset with a fixed navigation bar.</p>
+
+                    <p>It also shows how to ensure that the 'last' #target element is able to scroll to the top for a better user experience (UX)</p>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /#about -->
+
+    <section id="demo">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="section-header">
+                        Nasıl Çalışır
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <div class="row text-center">
+                        <span class="fa-stack fa-4x">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h3>KAYIT OL</h3>
+                    </div>
+                    <p>Senden temel bazı bilgiler isteyeceğiz. İstersen sosyal medya hesaplarınla da kayıt olabilirsin. Sonrasında profil bilgilerini tamamlayarak etkinlik oluşturmaya, var olan etkinliklere katılım talebi göndermeye başlayabilirsin.</p>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="row text-center">
+                        <span class="fa-stack fa-4x">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h3>ETKİNLİK OLUŞTUR</h3>
+                    </div>
+                    <p>Biz de seni bekliyorduk. Bir şey yapmak istiyor ama kendine bunu yapacak partner/ler bulamıyorsan en doğru yerdesin. Basit bilgiler girerek etkinliğini oluştur ve katılımcılardan talep beklemeye başla.</p>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="row text-center">
+                        <span class="fa-stack fa-4x">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-hand-o-down fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h3>KEŞFET</h3>
+                    </div>
+                    <p>Veya var olan etkinliklere katılmak için talep yolla, istersen etkinlikle alakalı olarak etkinlik sahibine sorular sor. Hayat sokakta <i class="fa fa-smile-o" aria-hidden="true"></i> </p>
+                </div>
+            </div>
+        </div><!-- /.container -->
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="section-header">
+                        Kayıt Ol
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+
+            <div class="row">
+                <div class="feature-container col-xs-12">
+                    <div class="row">
+                        <div class="card">
+                            <article class="card-body">
+                                <p class="card-title mb-4 mt-1 text-center font-weight-normal">Başlangıçta senden temel bilgiler isteyeceğiz. Sonrasında profiline girerek geri kalan bilgileri tamamlayıp çeteye katılabilirsin. Eğer Twitter veya Facebook hesabını kullanarak kaydolacaksan seni <strong><a href="#howto" style="text-decoration:none;color:#f74c3c">Giriş Yap</a></strong> bölümüne alalım.</p>
+
+                                <form>
+                                    <div class="form-group col-xs-12 col-md-6 text-center">
+                                        <label>Adın</label><input name="" class="form-control" placeholder="Adın" type="text">
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-6 text-center">
+                                        <label>Soyadın</label><input name="" class="form-control" placeholder="Soyadın" type="text">
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-4 text-center">
+                                        <label>E-Posta Adresin</label>
+                                        <input name="" class="form-control" placeholder="E-posta adresin" type="email">
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-4 text-center">
+                                        <label>Şifren</label><input class="form-control" placeholder="******" type="password">
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-4 text-center">
+                                        <label>Şifren(Tekrar)</label><input class="form-control" placeholder="******" type="password">
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-offset-3 col-md-6 text-center">
+                                        <a class="tutorials-link" href="#features" role="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Kayıt Ol</a>
+                                    </div> <!-- form-group// -->
+                                </form>
+                            </article>
+                        </div> <!-- card.// -->
+                    </div><!-- /.row -->
+                </div><!-- /.feature-container -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /#features -->
+
+    <section id="howto">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="section-header">
+                        Giriş Yap
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="card">
+                    <article class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 text-center"><span class="btn btn-dark sc-login-tw"><a href="#" class="btn"> <i class="fa fa-twitter"></i> Twitter ile giriş yap</a></span></div>
+                            <div class="col-md-6 text-center"><span class="btn btn-dark sc-login-fb"><a href="#" class="btn btn-block btn-outline-primary"> <i class="fa fa-facebook"></i>&nbsp;Facebook ile giriş yap</a></span></div>
+                        </div>
+                        <form>
+                            <div class="form-group col-xs-12 col-md-6 text-center">
+                                <input name="" class="form-control" placeholder="E-Mail adresin" type="email">
+                            </div> <!-- form-group// -->
+                            <div class="form-group col-xs-12 col-md-6 text-center">
+                                <input class="form-control" placeholder="******" type="password">
+                            </div> <!-- form-group// -->
+                            <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center">
+                                <a class="tutorials-link" href="#howto" role="button"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;Giriş Yap</a>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center"><a class="large" href="#" style="color:#f74c3c">Şifreni mi unuttun ?</a></div>
+                            </div>
+                        </form>
+                    </article>
+                </div> <!-- card.// -->
+            </div>
+        </div><!-- /.container -->
+    </section>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>
+                        This is a footer
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <a href="#home" role="button" class="scrollTop">
+        <svg class="lnr lnr-chevron-up"><use xlink:href="#lnr-chevron-up"></use></svg>
+    </a>
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+    <script>
+		window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("myBtn").style.display = "block";
+  } else {
+    document.getElementById("myBtn").style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+    </script>
+    <script src="/js/index.js"></script>
+</body>
+</html>
