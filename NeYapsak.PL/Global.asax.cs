@@ -15,7 +15,7 @@ namespace NeYapsak.PL
         {
             using (NeYapsakContext ent = new NeYapsakContext())
             {
-                //ent.Database.CreateIfNotExists();
+                ent.Database.CreateIfNotExists();
             }
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
