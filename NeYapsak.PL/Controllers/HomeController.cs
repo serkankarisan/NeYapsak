@@ -17,18 +17,19 @@ namespace NeYapsak.PL.Controllers
             return View();
         }
 
-        //public ActionResult About()
-        //{
-        //    ViewBag.Message = "Your application description page.";
+        public ActionResult Main()
+        {
+            return View();
+        }
 
-        //    return View();
-        //}
+        public ActionResult EventDetail()
+        {
+            return View();
+        }
 
-        //public ActionResult Contact()
-        //{
-        //    ViewBag.Message = "Your contact page.";
-
-        //    return View();
-        //}
+        public ActionResult User()
+        {
+            return View();
+        }
     }
 }
