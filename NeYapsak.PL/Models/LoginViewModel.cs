@@ -9,8 +9,8 @@ namespace NeYapsak.PL.Models
     public class LoginViewModel
     {
             [Required]
-            [Display(Name = "Kullanıcı Adı")]
-            public string Username { get; set; }
+            [Display(Name = "Email")]
+            public string Email { get; set; }
 
             [Required]
             [Display(Name = "Şifre")]
