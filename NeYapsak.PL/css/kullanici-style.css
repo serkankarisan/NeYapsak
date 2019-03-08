@@ -32,6 +32,32 @@ input.form-control:focus{
 box-shadow: 0 6px 12px -4px rgba(0, 0, 0, 0.3);
 border: 2px solid #f74c3c;
 }
+
+#etkinlik-olustur {
+    display: block;
+    border-radius:20px;
+    background-color: transparent;
+    position: relative;
+    width: 180px;
+    margin: 0 auto 25px;
+    padding: 15px 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 2px;
+    color: #f74c3c;
+    border: 2px solid #f74c3c;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+    #etkinlik-olustur:hover {
+        color: #e7e6f1;
+        background: #f74c3c;
+        box-shadow: 0 6px 12px -4px rgba(0, 0, 0, 0.3);
+    }
+
 .emp-profile{
     padding: 3%;
     margin-top: 3%;

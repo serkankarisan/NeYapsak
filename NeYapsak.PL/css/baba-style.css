@@ -337,10 +337,9 @@ footer {
   color: #e7e6f1;
   background: #2F3032;
 }
-
 #KayitOl {
     display: block;
-    background-color:transparent;
+    background-color: transparent;
     position: relative;
     width: 180px;
     margin: 0 auto 25px;

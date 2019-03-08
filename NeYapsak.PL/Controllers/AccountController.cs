@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace NeYapsak.PL.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         NeYapsakContext ent = new NeYapsakContext();
         

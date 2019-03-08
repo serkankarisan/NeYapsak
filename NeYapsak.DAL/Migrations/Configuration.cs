@@ -63,7 +63,7 @@ namespace NeYapsak.DAL.Migrations
             //);
 
             //context.Ilanlar.AddOrUpdate(
-            //new Ilan { Id = 1, Baslik = "Halýsaha Maçý mý yapsak.", BaslangicTarihi = DateTime.Now, GoruntulenmeSayaci = 1, Il = "istanbul", Ilce = "beþiktaþ", Kontenjan = 2, KullaniciId = "90fd7acd-9a43-488b-80bb-d6084507c441", OlusturmaTarihi = DateTime.Now, Ozet = "Hele  gelde maç yapak.kaleye adam lazým :).loyloy.", Silindi = false, Yayindami = true }
+            //new Ilan { Id = 1, Baslik = "Halýsaha Maçý mý yapsak.", BaslangicTarihi = DateTime.Now, GoruntulenmeSayaci = 1, Il = "Ýstanbul", Ilce = "Beþiktaþ", Kontenjan = 2, KullaniciId = "90fd7acd-9a43-488b-80bb-d6084507c441", OlusturmaTarihi = DateTime.Now, Ozet = "Hele  gelde maç yapak.kaleye adam lazým :).loyloy.", Silindi = false, Yayindami = true }
             //);
 
             //context.IlanHareketler.AddOrUpdate(
