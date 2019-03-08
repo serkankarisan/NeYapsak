@@ -24,6 +24,7 @@ namespace NeYapsak.PL.Controllers
             ViewBag.ilanlar = repoI.GetAll().Where(i => i.Silindi == false && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize]
@@ -38,7 +39,7 @@ namespace NeYapsak.PL.Controllers
             yeni.Kontenjan = model.Kontenjan;
             yeni.OlusturmaTarihi = DateTime.Now;
             yeni.Silindi = false;
-            yeni.Yayindami = true;
+            yeni.Yayindami = true;//Değişecek.
             yeni.Ozet = model.Ozet;
             yeni.KullaniciId = "6e8edacb-d8f9-47b3-91f1-028643139e1d";
             yeni.GoruntulenmeSayaci = 1;
@@ -46,7 +47,6 @@ namespace NeYapsak.PL.Controllers
             {
                 return RedirectToAction("Main","Home");
             }
-            
             return View(model);
         }
 

@@ -13,9 +13,6 @@ namespace NeYapsak.PL.Controllers
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
-            //ViewBag.ilanlar = repoI.GetAll().Where(i => i.Silindi == false && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
-
             base.OnActionExecuting(filterContext);
         }
     }
