@@ -22,9 +22,9 @@ namespace NeYapsak.PL.Controllers
 
         public ActionResult Main()
         {
-            ViewBag.Sehirler = new List<Sehirler>() {
-                new Sehirler{ Plaka=1,SehirAdi="Adana"},new Sehirler{ Plaka=34,SehirAdi="İstanbul"},new Sehirler{ Plaka=6,SehirAdi="Ankara"},new Sehirler{ Plaka=35,SehirAdi="İzmir"},new Sehirler{ Plaka=61,SehirAdi="Trabzon"}
-            };
+            //ViewBag.Sehirler = new List<Sehirler>() {
+            //    new Sehirler{ Plaka=1,SehirAdi="Adana"},new Sehirler{ Plaka=34,SehirAdi="İstanbul"},new Sehirler{ Plaka=6,SehirAdi="Ankara"},new Sehirler{ Plaka=35,SehirAdi="İzmir"},new Sehirler{ Plaka=61,SehirAdi="Trabzon"}
+            //};
 
             ViewBag.ilanlar = repoI.GetAll().Where(i => i.Silindi == false && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
             return View();
