@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using NeYapsak.BLL.Identity;
 using NeYapsak.DAL.Context;
 using NeYapsak.Entity.Identity;
 using NeYapsak.PL.Models;
@@ -12,22 +13,13 @@ using System.Web.Mvc;
 
 namespace NeYapsak.PL.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        NeYapsakContext ent = new NeYapsakContext();
-        
-        IdentityUserRole userrole;
-        private UserManager<ApplicationUser> usermanager;
-
-        public AccountController()
-        {
-            var userStore = new UserStore<ApplicationUser>(new NeYapsakContext());
-            usermanager = new UserManager<ApplicationUser>(userStore);
-        }
         public ActionResult Index()
         {
             return View();
         }
+
         public ActionResult Register()
         {
             return View();
@@ -40,6 +32,7 @@ namespace NeYapsak.PL.Controllers
         {
             if (!ModelState.IsValid)
                 return RedirectToAction("Index", "Home", model);
+            var usermanager = IdentityTools.NewUserManager();
             var kullanici = usermanager.FindByEmail(model.RegisterView.Email);
             if (kullanici != null)
             {
@@ -53,22 +46,9 @@ namespace NeYapsak.PL.Controllers
             user.UserName = model.RegisterView.Email;
             user.DogumTarihi =model.RegisterView.DogumTarihi;
             var result = usermanager.Create(user, model.RegisterView.Password);
-
             if (result.Succeeded)
             {
-                ApplicationRole ApRole = (ApplicationRole)ent.Roles.Where(r => r.Name == "User").FirstOrDefault();
-
-                userrole = new IdentityUserRole() { UserId = user.Id, RoleId = ApRole.Id };
-                user.Roles.Add(userrole);
-                ApRole.Users.Add(userrole);
-                try
-                {
-                    ent.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    string hata = ex.Message;
-                }
+                usermanager.AddToRole(user.Id, "User");
                 return RedirectToAction("Index", "Home");//sayfa hazırlanıyor.
             }
             else
@@ -80,12 +60,13 @@ namespace NeYapsak.PL.Controllers
             }
             return RedirectToAction("Index", "Home", model);
         }
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             //ViewBag.returnUrl = returnUrl;
             LoginViewModel model = new LoginViewModel() { returnUrl = returnUrl };
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -94,8 +75,7 @@ namespace NeYapsak.PL.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            var userStore = new UserStore<ApplicationUser>(new NeYapsakContext());
-            var usermanager = new UserManager<ApplicationUser>(userStore);
+            var usermanager = IdentityTools.NewUserManager();
             var kullanici = usermanager.FindByEmail(model.Email);
             if (kullanici == null)
             {

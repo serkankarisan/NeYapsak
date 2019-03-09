@@ -36,6 +36,9 @@ namespace NeYapsak.Entity.Entity
 
         [ForeignKey("KullaniciId")]
         public virtual ApplicationUser User { get; set; }
-
+        public Katilan()
+        {
+            Silindi = false;
+        }
     }
 }
