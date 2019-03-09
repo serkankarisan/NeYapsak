@@ -1,0 +1,17 @@
+﻿using NeYapsak.Entity.Entity;
+using NeYapsak.Entity.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace NeYapsak.PL.Models
+{
+    public class UserViewModel
+    {
+        public ApplicationUser Kullanici { get; set; }
+        public List<Ilan> KullaniciIlanlari { get; set; }
+        public List<Ilgilenen> IlgilendigiIlanlar { get; set; }
+        public List<Katilan> KatildigiIlanlar { get; set; }
+    }
+}
