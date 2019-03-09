@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     Layout = "~/Views/Shared/_Layout-0-Header-Footer.cshtml";
 }
 <nav class="navbar bg-white">
@@ -21,24 +21,27 @@
     <div class="row">
         <!--sol, profil ve dışlink tarafı-->
         <div class="col-md-3">
-            <div class="card">
-                <div class="card-body p-10">
-                    <div class="row">
-                        <div class="col-2 col-md-3">
-                            <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                        </div>
-                        <div class="col-10 col-md-9">
-                            <div class="h5 m-0"><a href="#" class="cs-renk">Merih</a></div>
-                            <div class="h7 text-muted">Merih Uzun,23</div>
-                        </div>
-                    </div><br>
-                    <p class="text-normal">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam et nobis iure omnis voluptates doloribus temporibus dignissimos eum, natus tempora in itaque expedita debitis dicta deserunt ipsa possimus officia quaerat!</p>
+            @{NeYapsak.PL.Models.UserViewModel item = new NeYapsak.PL.Models.UserViewModel();
+                item = ViewBag.user;
+                }
+                <div class="card">
+                    <div class="card-body p-10">
+                        <div class="row">
+                            <div class="col-2 col-md-3">
+                                <img class="rounded-circle" width="45" src="@item.Kullanici.ProfilAvatarYolu" alt="">
+                            </div>
+                            <div class="col-10 col-md-9">
+                                <div class="h5 m-0"><a href="#" class="cs-renk">@item.Kullanici.Name</a></div>
+                                <div class="h7 text-muted">@item.Kullanici.Name @item.Kullanici.Surname,@(Convert.ToInt32(DateTime.Now.Year - item.Kullanici.DogumTarihi.Year))</div>
+                            </div>
+                        </div><br>
+                        <p class="text-normal">@item.Kullanici.Bio</p>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <span class="h6 font-weight-normal list-group-item">Düzenlediğim:<span class="h5 font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).Count()</span>&nbsp;&nbsp;Katıldığım: <span class="h5 font-weight-bold">@item.KatildigiIlanlar.Count()</span></span>
+                        <span class="h6 font-weight-normal list-group-item">İlgilendiğim:<span class="h5 font-weight-bold">@item.IlgilendigiIlanlar.Count()</span>&nbsp;&nbsp;Onay bekleyen:<span class="h5 font-weight-bold">@item.KullaniciIlanlari.Where(i=>i.Silindi == false && i.Yayindami==false).Count()</span></span>
+                    </div>
                 </div>
-                <div class="list-group list-group-flush">
-                    <span class="h6 font-weight-normal list-group-item">Düzenlediğim:<span class="h5 font-weight-bold">25</span>&nbsp;&nbsp;Katıldığım: <span class="h5 font-weight-bold">18</span></span>
-                    <span class="h6 font-weight-normal list-group-item">İlgilendiğim:<span class="h5 font-weight-bold">2</span>&nbsp;&nbsp;Onay bekleyen:<span class="h5 font-weight-bold">3</span></span>
-                </div>
-            </div>
             <div class="row">&nbsp;</div>
             <div class="card gedf-card">
                 <div class="card-body">
@@ -55,6 +58,5 @@
         </div>
         <!--col-md-3 bitiş-->
         @RenderBody()
-       </div><!--row bitiş-->
-    </div> <!--sayfa içerik bitiş-->
-
+    </div><!--row bitiş-->
+</div> <!--sayfa içerik bitiş-->
