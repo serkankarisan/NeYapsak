@@ -21,7 +21,10 @@ namespace NeYapsak.PL.Controllers
         public ActionResult Main()
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
-            ViewBag.ilanlar = repoI.GetAll().Where(i => i.Silindi == false && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+
+            ViewBag.ilanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != "6e8edacb-d8f9-47b3-91f1-028643139e1d" && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+
+            ViewBag.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId== "6e8edacb-d8f9-47b3-91f1-028643139e1d" && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
             return View();
         }
 
