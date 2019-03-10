@@ -96,27 +96,43 @@ namespace NeYapsak.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model)
+        public ActionResult Login(LoginRegisterViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+                return Redirect("/Home/Index#Giris");
             var usermanager = IdentityTools.NewUserManager();
-            var kullanici = usermanager.FindByEmail(model.Email);
+            var kullanici = usermanager.FindByName(model.loginView.Email);
             if (kullanici == null)
             {
-                ModelState.AddModelError("", "Böyle Bir Kullanıcı Kayıtlı Değil!");
-                return View(model);
+                ModelState.AddModelError("", "Böyle bir kullanıcı kayıtlı değil!");
+                return Redirect("/Home/Index#Giris");
             }
             else
             {
-                var authManager = HttpContext.GetOwinContext().Authentication;
-                var identity = usermanager.CreateIdentity(kullanici, "ApplicationCookie");
-                var authProperty = new AuthenticationProperties
+                if (!usermanager.CheckPassword(kullanici, model.loginView.Password))
                 {
-                    IsPersistent = model.RememberMe
-                };
-                authManager.SignIn(authProperty, identity);
-                return Redirect(string.IsNullOrEmpty(model.returnUrl) ? "/" : model.returnUrl);
+                    ModelState.AddModelError("", "Girilen şifre yanlış!");
+                    return Redirect("/Home/Index#Giris");
+                }
+                else
+                {
+                    if (kullanici.EmailConfirmed)
+                    {
+                    var authManager = HttpContext.GetOwinContext().Authentication;
+                    var identity = usermanager.CreateIdentity(kullanici, "ApplicationCookie");
+                    var authProperty = new AuthenticationProperties
+                    {
+                        IsPersistent = model.loginView.RememberMe
+                    };
+                    authManager.SignIn(authProperty, identity);
+                    return RedirectToAction("Main","Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "E-Posta doğrulamasını yapman gerekmektedir!");
+                        return Redirect("/Home/Index#Giris");
+                    }
+                }
             }
         }
         [Authorize]

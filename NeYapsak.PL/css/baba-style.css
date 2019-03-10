@@ -337,7 +337,7 @@ footer {
   color: #e7e6f1;
   background: #2F3032;
 }
-#KayitOl {
+.tutorials-link-logreg {
     display: block;
     background-color: transparent;
     position: relative;
@@ -355,11 +355,12 @@ footer {
     transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
-    #KayitOl:hover {
+    .tutorials-link-logreg:hover {
         color: #e7e6f1;
         background: #f74c3c;
         box-shadow: 0 6px 12px -4px rgba(0, 0, 0, 0.3);
     }
+
 
 a.tutorials-link {
   display: block;

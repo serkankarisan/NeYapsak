@@ -195,7 +195,7 @@
                                             @Html.ValidationMessageFor(model => model.RegisterView.ConfirmPassword)
                                         </div> <!-- form-group// -->
                                         <div class="form-group col-xs-12 col-md-offset-3 col-md-6 text-center">
-                                            <input class="tutorials-link" type="submit" id="KayitOl" value="Kayıt Ol" />
+                                            <input class="tutorials-link-logreg" type="submit" id="KayitOl" value="Kayıt Ol" />
                                         </div> <!-- form-group// -->
                                     }
 
@@ -224,20 +224,32 @@
                                 <div class="col-md-6 text-center"><span class="btn btn-dark sc-login-tw"><a href="#" class="btn"> <i class="fa fa-twitter"></i> Twitter ile giriş yap</a></span></div>
                                 <div class="col-md-6 text-center"><span class="btn btn-dark sc-login-fb"><a href="#" class="btn btn-block btn-outline-primary"> <i class="fa fa-facebook"></i>&nbsp;Facebook ile giriş yap</a></span></div>
                             </div>
-                            <form>
+                            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
                                 <div class="form-group col-xs-12 col-md-6 text-center">
-                                    <input name="" class="form-control" placeholder="E-Mail adresin" type="email">
+                                    <label>E-Posta Adresin</label>@Html.EditorFor(model => model.loginView.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.loginView.Email)
                                 </div> <!-- form-group// -->
                                 <div class="form-group col-xs-12 col-md-6 text-center">
-                                    <input class="form-control" placeholder="******" type="password">
+                                    <label>Şifren</label>@Html.EditorFor(model => model.loginView.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.loginView.Password)
                                 </div> <!-- form-group// -->
-                                <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center">
-                                    <a class="tutorials-link" href="#Giris" role="button"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;Giriş Yap</a>
+                                <div class="form-group col-xs-12 col-md-12 text-center">
+                                        <div class="checkbox">
+                                            @Html.CheckBoxFor(model => model.loginView.RememberMe)
+                                            @Html.ValidationMessageFor(model => model.loginView.RememberMe, "", new { @class = "text-danger" })
+                                            @Html.Label("Beni Hatırla", htmlAttributes: new { @class = "h5" })
+                                        </div>
                                 </div>
+                                <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center">
+                                    <input class="tutorials-link-logreg" type="submit" id="GirisYap" value="Giriş Yap" />
+                                    @*<a class="tutorials-link" href="#Giris" role="button"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;Giriş Yap</a>*@
+                                </div>
+                            }
                                 <div class="row">
                                     <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center"><a class="large" href="#" style="color:#f74c3c">Şifreni mi unuttun ?</a></div>
                                 </div>
-                            </form>
                         </article>
                     </div> <!-- card.// -->
                 </div>
