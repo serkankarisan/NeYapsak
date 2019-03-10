@@ -67,10 +67,10 @@ $(document).ready(function(){
 	});
 
 	// On render, adjust body padding to ensure last Scroll target can reach top of screen
-	var height = $('#howto').innerHeight();
+	var height = $('#Kayit').innerHeight();
 	var windowHeight = $(window).height();
 	var navHeight = $('nav.navbar').innerHeight();
-	var siblingHeight = $('#howto').nextAll().innerHeight();
+	var siblingHeight = $('#Kayit').nextAll().innerHeight();
 
 
 	if(height < windowHeight){
@@ -79,10 +79,10 @@ $(document).ready(function(){
 
 	// On window resize, adjust body padding to ensure last Scroll target can reach top of screen
 	$(window).resize(function(event){
-		var height = $('#howto').innerHeight();
+		var height = $('#Kayit').innerHeight();
 		var windowHeight = $(window).height();
 		var navHeight = $('nav.navbar').innerHeight();
-		var siblingHeight = $('#howto').nextAll().innerHeight();
+		var siblingHeight = $('#Kayit').nextAll().innerHeight();
 		
 		
 		if(height < windowHeight){

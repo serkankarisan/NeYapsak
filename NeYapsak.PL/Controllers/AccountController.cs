@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using NeYapsak.BLL.Identity;
+using NeYapsak.BLL.Repository;
 using NeYapsak.DAL.Context;
 using NeYapsak.Entity.Identity;
 using NeYapsak.PL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,15 +18,7 @@ namespace NeYapsak.PL.Controllers
 {
     public class AccountController : BaseController
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult Register()
-        {
-            return View();
-        }
+        Mailing mail = new Mailing();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -49,7 +44,13 @@ namespace NeYapsak.PL.Controllers
             if (result.Succeeded)
             {
                 usermanager.AddToRole(user.Id, "User");
-                return RedirectToAction("Index", "Home");//sayfa hazırlanıyor.
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code="" }, protocol: Request.Url.Scheme);
+                IdentityMessage msg = new IdentityMessage();
+                msg.Destination = user.Email;
+                msg.Body = "Nerdeyse tamamlandı! NeYapsak ağına katılmak için <a href=\"" + callbackUrl + "\">bu link</a>e tıkla.";
+                msg.Subject = "NeYapsak Hesap Doğrulama Servisi";
+                mail.SendMail(msg);
+                return View("DisplayEmail");
             }
             else
             {
@@ -59,6 +60,30 @@ namespace NeYapsak.PL.Controllers
                 }
             }
             return RedirectToAction("Index", "Home", model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ConfirmEmail(string userId)
+        {
+            if (userId == null)
+            {
+                return View("Error");
+            }
+            var usermanager = IdentityTools.NewUserManager();
+            ApplicationUser user = new ApplicationUser();
+            NeYapsakContext ent = new NeYapsakContext();
+            user = ent.Users.Where(u => u.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                user.EmailConfirmed = true;
+                ent.SaveChanges();
+            }
+            else
+            {
+                return View("Error");
+            }
+            return View("ConfirmEmail");
         }
 
         [AllowAnonymous]

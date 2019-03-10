@@ -560,7 +560,7 @@ a.tutorials-link:hover {
 #demo {
   background: #F3F4F8;
 }
-#howto{
+#Kayit{
   background: #F3F4F8;
 }
 #demo h4 {
@@ -730,39 +730,39 @@ a.tutorials-link:hover {
   transform: translate3d(0, -4px, 0);
 }
 
-#features {
+#Kayit {
   padding-bottom: 0;
   color: #333;
 }
-#features .feature-container {
+#Kayit .feature-container {
   margin-bottom: 80px;
 }
 @media (min-width: 768px) {
-  #features .feature-container {
+  #Kayit .feature-container {
     margin-bottom: 80px;
   }
 }
-#features .feature {
+#Kayit .feature {
   padding: 25px 0;
 }
 @media (min-width: 768px) {
-  #features .feature {
+  #Kayit .feature {
     padding: 50px 0;
   }
 }
-#features .feature svg {
+#Kayit .feature svg {
   width: 40px;
   height: 40px;
   margin-bottom: 15px;
   fill: currentColor;
 }
 @media (min-width: 768px) {
-  #features .feature svg {
+  #Kayit .feature svg {
     width: 60px;
     height: 60px;
   }
 }
-#features .feature h4 {
+#Kayit .feature h4 {
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
@@ -770,13 +770,13 @@ a.tutorials-link:hover {
   letter-spacing: 2px;
   color: #f74c3c;
 }
-#features .feature p {
+#Kayit .feature p {
   font-size: 14px;
   font-weight: 300;
   color: #BDC4D0;
   letter-spacing: 1px;
 }
-#features .animated-scroll {
+#Kayit .animated-scroll {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -789,7 +789,7 @@ a.tutorials-link:hover {
   border-radius: 6px;
   overflow: hidden;
 }
-#features .animated-scroll .scroll-header {
+#Kayit .animated-scroll .scroll-header {
   display: flex;
   flex-direction: row;
   flex-grow: 0;
@@ -799,13 +799,13 @@ a.tutorials-link:hover {
   justify-content: center;
   background: #826dd5;
 }
-#features .animated-scroll .scroll-header .scroll-nav {
+#Kayit .animated-scroll .scroll-header .scroll-nav {
   width: 15%;
   height: 8px;
   margin-right: 5%;
   border-radius: 4px;
 }
-#features .animated-scroll .scroll-header .sn-1 {
+#Kayit .animated-scroll .scroll-header .sn-1 {
   -webkit-animation-name: scrollColor-1;
           animation-name: scrollColor-1;
   -webkit-animation-iteration-count: infinite;
@@ -817,7 +817,7 @@ a.tutorials-link:hover {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
-#features .animated-scroll .scroll-header .sn-2 {
+#Kayit .animated-scroll .scroll-header .sn-2 {
   -webkit-animation-name: scrollColor-2;
           animation-name: scrollColor-2;
   -webkit-animation-iteration-count: infinite;
@@ -829,7 +829,7 @@ a.tutorials-link:hover {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
-#features .animated-scroll .scroll-header .sn-3 {
+#Kayit .animated-scroll .scroll-header .sn-3 {
   margin-right: 0;
   -webkit-animation-name: scrollColor-3;
           animation-name: scrollColor-3;
@@ -842,7 +842,7 @@ a.tutorials-link:hover {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
-#features .animated-scroll .scroll-header svg.cursor {
+#Kayit .animated-scroll .scroll-header svg.cursor {
   position: absolute;
   top: 28px;
   left: 50%;
@@ -860,7 +860,7 @@ a.tutorials-link:hover {
           animation-fill-mode: forwards;
   z-index: 2;
 }
-#features .animated-scroll .scroll-body {
+#Kayit .animated-scroll .scroll-body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -869,7 +869,7 @@ a.tutorials-link:hover {
   padding-top: 20px;
   overflow: hidden;
 }
-#features .animated-scroll .scroll-child {
+#Kayit .animated-scroll .scroll-child {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 150px;
@@ -889,7 +889,7 @@ a.tutorials-link:hover {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
-#features .animated-scroll .sc-back-to-top {
+#Kayit .animated-scroll .sc-back-to-top {
   flex-basis: 40px;
   width: 40px;
   margin: 0 auto;
@@ -906,7 +906,7 @@ a.tutorials-link:hover {
           animation-fill-mode: forwards;
   z-index: 0;
 }
-#features .focus-events {
+#Kayit .focus-events {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -919,7 +919,7 @@ a.tutorials-link:hover {
   border-radius: 6px;
   overflow: hidden;
 }
-#features .focus-events .scroll-header {
+#Kayit .focus-events .scroll-header {
   display: flex;
   flex-direction: row;
   flex-grow: 0;
@@ -929,13 +929,13 @@ a.tutorials-link:hover {
   justify-content: center;
   background: #e6e8f0;
 }
-#features .focus-events .scroll-header .scroll-nav {
+#Kayit .focus-events .scroll-header .scroll-nav {
   width: 15%;
   height: 8px;
   margin-right: 5%;
   border-radius: 4px;
 }
-#features .focus-events .scroll-header .sn-1 {
+#Kayit .focus-events .scroll-header .sn-1 {
   -webkit-animation-name: focusColor-1;
           animation-name: focusColor-1;
   -webkit-animation-iteration-count: infinite;
@@ -947,7 +947,7 @@ a.tutorials-link:hover {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
-#features .focus-events .scroll-header .sn-2 {
+#Kayit .focus-events .scroll-header .sn-2 {
   -webkit-animation-name: focusColor-2;
           animation-name: focusColor-2;
   -webkit-animation-iteration-count: infinite;
@@ -959,7 +959,7 @@ a.tutorials-link:hover {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
-#features .focus-events .scroll-header svg.cursor {
+#Kayit .focus-events .scroll-header svg.cursor {
   position: absolute;
   top: 28px;
   left: 50%;
@@ -977,7 +977,7 @@ a.tutorials-link:hover {
           animation-fill-mode: forwards;
   z-index: 2;
 }
-#features .focus-events .scroll-body {
+#Kayit .focus-events .scroll-body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -986,7 +986,7 @@ a.tutorials-link:hover {
   padding-top: 20px;
   overflow: hidden;
 }
-#features .focus-events .scroll-child {
+#Kayit .focus-events .scroll-child {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 150px;
@@ -1007,27 +1007,27 @@ a.tutorials-link:hover {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
-#features .focus-events .scroll-child .header {
+#Kayit .focus-events .scroll-child .header {
   height: 14px;
   width: 50%;
   margin: 0 auto 8px;
   border-radius: 8px;
   background: #dcdfeb;
 }
-#features .focus-events .scroll-child .sub-header {
+#Kayit .focus-events .scroll-child .sub-header {
   height: 10px;
   width: 40%;
   margin: 0 auto 22px;
   border-radius: 6px;
   background: #e3e5ef;
 }
-#features .focus-events .scroll-child .body {
+#Kayit .focus-events .scroll-child .body {
   width: 70%;
   height: 8px;
   margin: 0 auto 8px;
   background: #e0e2ed;
 }
-#features .focus-events .sc-2 .header {
+#Kayit .focus-events .sc-2 .header {
   -webkit-animation-name: focusHeaderColor;
           animation-name: focusHeaderColor;
   -webkit-animation-iteration-count: infinite;

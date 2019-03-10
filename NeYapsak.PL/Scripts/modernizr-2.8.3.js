@@ -7,7 +7,7 @@
  */
 
 /*
- * Modernizr tests which native CSS3 and HTML5 features are available in
+ * Modernizr tests which native CSS3 and HTML5 Kayit are available in
  * the current UA and makes the results available to you in two ways:
  * as properties on a global Modernizr object, and as classes on the
  * <html> element. This information allows you to progressively enhance
@@ -781,7 +781,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
     // Because we are forced to try/catch this, we'll go aggressive.
 
-    // Just FWIW: IE8 Compat mode supports these features completely:
+    // Just FWIW: IE8 Compat mode supports these Kayit completely:
     //   www.quirksmode.org/dom/html5.html
     // But IE8 doesn't support either with local files
 
@@ -844,7 +844,7 @@ window.Modernizr = (function( window, document, undefined ) {
     };
 
     /*>>webforms*/
-    // input features and input types go directly onto the ret object, bypassing the tests loop.
+    // input Kayit and input types go directly onto the ret object, bypassing the tests loop.
     // Hold this guy to execute in a moment.
     function webforms() {
         /*>>input*/
