@@ -14,8 +14,12 @@ namespace NeYapsak.PL.Controllers
     public class HomeController : BaseController
     {
         
-        public ActionResult Index()
+        public ActionResult Index(string ReturnUrl)
         {
+            if (!string.IsNullOrEmpty(ReturnUrl))
+            {
+                return Redirect("/Home/Index#Giris");
+            }
             return View();
         }
         [Authorize]
