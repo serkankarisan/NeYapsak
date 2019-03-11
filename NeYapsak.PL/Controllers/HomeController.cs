@@ -18,7 +18,7 @@ namespace NeYapsak.PL.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public ActionResult Main()
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
@@ -31,7 +31,7 @@ namespace NeYapsak.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize]
+        [Authorize]
         public ActionResult Main(Ilan model)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
