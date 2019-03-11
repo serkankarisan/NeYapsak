@@ -53,12 +53,12 @@ namespace NeYapsak.PL.Controllers
             }
             return View(model);
         }
-
+        [Authorize]
         public ActionResult EventDetail()
         {
             return View();
         }
-
+        [Authorize]
         public ActionResult User()
         {
             return View();
