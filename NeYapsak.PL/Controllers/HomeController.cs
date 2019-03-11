@@ -1,4 +1,5 @@
-﻿using NeYapsak.BLL.Repository;
+﻿using Microsoft.AspNet.Identity;
+using NeYapsak.BLL.Repository;
 using NeYapsak.DAL.Context;
 using NeYapsak.Entity.Entity;
 using NeYapsak.PL.Models;
@@ -22,9 +23,9 @@ namespace NeYapsak.PL.Controllers
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
 
-            ViewBag.ilanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != "6e8edacb-d8f9-47b3-91f1-028643139e1d" && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            ViewBag.ilanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
 
-            ViewBag.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId== "6e8edacb-d8f9-47b3-91f1-028643139e1d" && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            ViewBag.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId== HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
             return View();
         }
 
@@ -44,7 +45,7 @@ namespace NeYapsak.PL.Controllers
             yeni.Silindi = false;
             yeni.Yayindami = true;//Değişecek.
             yeni.Ozet = model.Ozet;
-            yeni.KullaniciId = "6e8edacb-d8f9-47b3-91f1-028643139e1d";
+            yeni.KullaniciId = HttpContext.User.Identity.GetUserId();
             yeni.GoruntulenmeSayaci = 1;
             if (repoI.Add(yeni))
             {

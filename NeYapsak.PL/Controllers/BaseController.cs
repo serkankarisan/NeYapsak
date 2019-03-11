@@ -1,4 +1,5 @@
-﻿using NeYapsak.BLL.Repository;
+﻿using Microsoft.AspNet.Identity;
+using NeYapsak.BLL.Repository;
 using NeYapsak.DAL.Context;
 using NeYapsak.Entity.Entity;
 using NeYapsak.Entity.Identity;
@@ -21,10 +22,10 @@ namespace NeYapsak.PL.Controllers
             Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
 
             UserViewModel usermodel = new UserViewModel();
-            usermodel.Kullanici = repoU.Get(u => u.Id == "6e8edacb-d8f9-47b3-91f1-028643139e1d");
-            usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == "6e8edacb-d8f9-47b3-91f1-028643139e1d").ToList();
-            usermodel.IlgilendigiIlanlar= repoIlg.GetAll().Where(i=>i.KullaniciId== "6e8edacb-d8f9-47b3-91f1-028643139e1d").ToList();
-            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == "6e8edacb-d8f9-47b3-91f1-028643139e1d").ToList();
+            usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
+            usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
+            usermodel.IlgilendigiIlanlar= repoIlg.GetAll().Where(i=>i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
+            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
             ViewBag.user =usermodel ;
 
             base.OnActionExecuting(filterContext);
