@@ -1,7 +1,9 @@
 ﻿@model NeYapsak.PL.Models.UserViewModel
 @{
-    ViewBag.Title = "User";
-    Layout = "~/Views/Shared/_Layout-3-TopMenu-User.cshtml";
+                /**/
+
+                ViewBag.Title = "User";
+                Layout = "~/Views/Shared/_Layout-3-TopMenu-User.cshtml";
 }
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <div class="container emp-profile">
@@ -12,47 +14,47 @@
                     item = ViewBag.user;
                 }
                 <img id="profilresim" class="rounded-circle" style="height:250px" src="@item.Kullanici.ProfilAvatarYolu" alt="">
-                @using (Html.BeginForm("User", "Home", FormMethod.Post, new { encType = "multipart/form-data" }))
+                @using (Html.BeginForm("User", "Home", FormMethod.Post, new { encType = "multipart/form-data",id="resimform" }))
                 {
                     <div class="file btn btn-lg btn-primary">
                         Fotoğraf Seç
-                        <input type="file" name="PictureUpload" value="" id="btnresimsec" />
+                        <input type="file" name="PictureUpload" value="" id="btnresimsec" onchange="document.getElementById('resimform').submit();"/>
                     </div><br /><br />
-                    <input class="file btn btn-lg btn-primary" type="submit" name="Kaydet" value="Resmi Kaydet" />
+                    <input id="rsmkaydet" class="file btn btn-lg btn-primary" type="submit" name="Kaydet" value="Resmi Kaydet" style="display:none" />
                 }
             </div>
         </div>
         <div class="col-md-6">
             <div class="profile-head tab-content profile-tab">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label>Adı</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <p>@item.Kullanici.Name</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label>Soyadı</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <p>@item.Kullanici.Surname</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label>E-Posta</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <p>@item.Kullanici.Email</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label>Yaş</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <p>@(Convert.ToInt32(DateTime.Now.Year - item.Kullanici.DogumTarihi.Year))</p>
                     </div>
                 </div>
