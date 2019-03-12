@@ -72,7 +72,17 @@ namespace NeYapsak.BLL.Repository
 
         public bool Update(T entity)
         {
-            throw new NotImplementedException();
+            bool Sonuc = false;
+            try
+            {
+                Sonuc = Convert.ToBoolean(_neYapsakContext.SaveChanges());
+            }
+            catch (Exception ex)
+            {
+                string hata = ex.Message;
+                //throw new Exception("Kayıt yapılamadı!");
+            }
+            return Sonuc;
         }
 
         public T Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, params Expression<Func<T, object>>[] includes)
