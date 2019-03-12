@@ -1,9 +1,11 @@
-﻿
+﻿@model NeYapsak.PL.Models.UserViewModel
 @{
-    ViewBag.Title = "User";
-    Layout = "~/Views/Shared/_Layout-3-TopMenu-User.cshtml";
-}
+                /**/
 
+                ViewBag.Title = "User";
+                Layout = "~/Views/Shared/_Layout-3-TopMenu-User.cshtml";
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <div class="container emp-profile">
     <div class="row">
         <div class="col-md-4">
@@ -11,50 +13,82 @@
                 @{NeYapsak.PL.Models.UserViewModel item = new NeYapsak.PL.Models.UserViewModel();
                     item = ViewBag.user;
                 }
-                <img class="rounded-circle" style="height:250px" src="@item.Kullanici.ProfilAvatarYolu" alt="">
-                <div class="file btn btn-lg btn-primary">
-                    Fotoğrafı Değiştir
-                    <input type="file" name="file" /><!--kişi kendi sayfasına gelince çıkacak olan-->
-                </div>
+                <img id="profilresim" class="rounded-circle" style="height:250px" src="@item.Kullanici.ProfilAvatarYolu" alt="">
+                @using (Html.BeginForm("User", "Home", FormMethod.Post, new { encType = "multipart/form-data",id="resimform" }))
+                {
+                    <div class="file btn btn-lg btn-primary">
+                        Fotoğraf Seç
+                        <input type="file" name="PictureUpload" value="" id="btnresimsec" onchange="document.getElementById('resimform').submit();"/>
+                    </div><br /><br />
+                    <input id="rsmkaydet" class="file btn btn-lg btn-primary" type="submit" name="Kaydet" value="Resmi Kaydet" style="display:none" />
+                }
             </div>
         </div>
         <div class="col-md-6">
             <div class="profile-head tab-content profile-tab">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label>Adı</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <p>@item.Kullanici.Name</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label>Soyadı</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <p>@item.Kullanici.Surname</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label>E-Posta</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <p>@item.Kullanici.Email</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label>Yaş</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <p>@(Convert.ToInt32(DateTime.Now.Year - item.Kullanici.DogumTarihi.Year))</p>
                     </div>
                 </div>
             </div>
-            <p class="text-normal cs-renk-tab">@item.Kullanici.Bio</p>
-            <p class="text-normal cs-renk-tab">Düzenlediği: <span class="font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).Count()</span>&nbsp;&nbsp; Katıldığı: <span class="font-weight-bold">@item.KatildigiIlanlar.Count()</span>&nbsp;&nbsp;İlgilendiği:<span class="font-weight-bold">@item.IlgilendigiIlanlar.Count()</span>&nbsp;&nbsp;Onayımı Bekleyen:<span class="font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == false).Count()</span></p>
+            @using (Html.BeginForm("HKDuzenle", "Home", FormMethod.Post, new { encType = "multipart/form-data" }))
+            {<div class="row">
+                    <div class="col-md-8">
+
+                        <p id="hk-bilgisi" class="text-normal cs-renk-tab">@item.Kullanici.Bio</p>
+                        <div id="hkyenigir" class="row" style="display:none;">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" cols="20" data-val="true" data-val-length="Bio Bio karakterden uzun olmamalıdır!" data-val-length-max="300" id="hkyeni" maxlength="300" minlength="10" name="Kullanici.Bio" placeholder="Etkinliğini 300 karakter ile açıkla" required="True" rows="2" style="width: 275px;height:100px;">@item.Kullanici.Bio</textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-md-4 text-left">
+                        <div class="row justify-content">
+                            <input type="submit" style="display:none" id="hkkaydet" name="hkkaydet" value="Kaydet" class="btn cs-arka-renk btn-sm mb-1" />
+                        </div>
+                        <div class="row justify-content">
+                            <button type="button" id="hkduzenle" name="button" class="btn cs-arka-renk btn-sm mb-1 ">Düzenle</button>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <p class="text-normal cs-renk-tab">Düzenlediği: <span class="font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).Count()</span>&nbsp;&nbsp; Katıldığı: <span class="font-weight-bold">@item.KatildigiIlanSayisi</span>&nbsp;&nbsp;İlgilendiği:<span class="font-weight-bold">@item.IlgilendigiIlanSayisi</span>&nbsp;&nbsp;Onayımı Bekleyen:<span class="font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == false).Count()</span></p>
         </div>
         <div class="col-md-2">
             <!--şimdilikboş-->
@@ -63,9 +97,7 @@
     <div class="row">
         <!--kişi kendi sayfasına gelince çıkacak olan-->
         <div class="col-md-4">
-            <div class="row justify-content-center">
-                <button type="button" name="button" class="btn cs-arka-renk btn-sm mb-1 ">Hakkımdayı Düzenle</button>
-            </div>
+            &nbsp;
         </div>
         <div class="col-md-8">
             <h4 class="text-center">Etkinlik İşlemleri</h4>
@@ -80,79 +112,7 @@
                     </div>
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
-                            @foreach (NeYapsak.Entity.Entity.Ilan kullaniciilanlari in item.KullaniciIlanlari)
-                            {
-                                <div class="card gedf-card">
-                                    <!--gedf ile alttan margin veriyor-->
-                                    <div class="card-header">
-                                        <!--bu sayede başlığın arka planı grimsi ve içeriğe mesafelendirme yapmış. card body ve card header da var-->
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <!--dflex ile yan yana getiriyor. bir nevi float-->
-                                            <a class="card-link" href="#">
-                                                <h5 class="card-title cs-renk">@kullaniciilanlari.Baslik</h5>
-                                            </a>
-                                            <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @kullaniciilanlari.Kontenjan</div>
-                                            <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler</div>
-                                            <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar</div>
-                                            <div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-9">
-                                                <div class="row">
-                                                    <p class="card-text">
-                                                        @kullaniciilanlari.Ozet
-                                                    </p>
-                                                </div><br>
-                                                <div style="position:absolute;bottom:0px;">
-                                                    <div class="row">
-                                                        <div class="col-md-1">
-                                                            <img class="rounded-circle" width="45" src="@kullaniciilanlari.User.ProfilAvatarYolu" alt="">
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="h5 m-0"><a href="#" class="cs-renk">@kullaniciilanlari.User.Name</a></div>
-                                                            <div class="h7 text-muted">@kullaniciilanlari.User.Name @kullaniciilanlari.User.Surname,@(Convert.ToInt32(DateTime.Now.Year - kullaniciilanlari.User.DogumTarihi.Year))</div>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <div class="row">
-                                                                <div class="col-md-6 col-sm-6 col-xs-12"><a href="#" class="card-link cs-renk"><i class="fa fa-question-circle"></i> Etkinlik Sahibine Sor</a></div>
-                                                                <div class="col-md-6 col-sm-6 col-xs-12"><a href="#" class="card-link cs-renk"><i class="fa fa-plus"></i> Katılma İsteği Gönder</a></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <!--text muted ile silik tonda grili yazı-->
-                                                <div class="row text-muted">
-                                                    <p>Oluşturulma tarihi: @kullaniciilanlari.OlusturmaTarihi</p>
-                                                </div>
-                                                <div class="row text-muted">
-                                                    <p>Başlangıç Zamanı: @kullaniciilanlari.BaslangicTarihi</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <h7>Bu etkinliği paylaş!</h7>&nbsp;
-                                        <a href="#" class="card-link cs-renk-siy sc-share-fb"><i class="fa fa-facebook"></i> Facebook</a>
-                                        <a href="#" class="card-link cs-renk-siy sc-share-tw"><i class="fa fa-twitter"></i> Twitter</a>
-                                        <a href="#" class="card-link cs-renk-siy sc-share-wa"><i class="fa fa-whatsapp"></i> Whatsapp</a>
-                                        <span class="dropdown pull-right">
-                                            <button class="btn btn-link dropdown-toggle cs-renk" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-h"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                                                <div class="h6 dropdown-header">Bu İlanı</div>
-                                                <a class="dropdown-item" href="#">Şikayet Et/Bildir</a>
-                                            </div>
-                                        </span>
-                                    </div>
-                                </div>
-                            }
+                            etkinlikler gelecek.
                         </div>
                     </div>
                 </div><!--1.kart bitiş-->
@@ -216,4 +176,25 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var hkyenigir = document.getElementById("hkyenigir");
+        var hkduzenleBtn = document.getElementById("hkduzenle");
+        var hkkaydetBtn = document.getElementById("hkkaydet");
+        var hkeski = document.getElementById("hk-bilgisi");
+        hkduzenleBtn.onclick = function hkFunction() {
+            if (hkyenigir.style.display === "none") {
+                hkyenigir.style.display = "block";
+                hkduzenleBtn.textContent = "Vazgeç";
+                hkeski.style.display = "none";
+                hkkaydetBtn.style.display = "block";
+            } else {
+                hkyenigir.style.display = "none";
+                hkduzenleBtn.textContent = "Düzenle";
+                hkeski.style.display = "block";
+                hkkaydetBtn.style.display = "none";
+            }
+        }
+    });
 
+</script>

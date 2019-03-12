@@ -25,9 +25,9 @@ namespace NeYapsak.PL.Controllers
             UserViewModel usermodel = new UserViewModel();
             usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
             usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
-            usermodel.IlgilendigiIlanlar= repoIlg.GetAll().Where(i=>i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
-            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
-            ViewBag.user =usermodel ;
+            usermodel.IlgilendigiIlanSayisi = repoIlg.GetAll().Where(i=>i.KullaniciId == HttpContext.User.Identity.GetUserId()).Count();
+            usermodel.KatildigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId()).Count();
+            ViewBag.user = usermodel ;
 
             base.OnActionExecuting(filterContext);
         }

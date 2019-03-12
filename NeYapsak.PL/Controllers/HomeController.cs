@@ -2,6 +2,7 @@
 using NeYapsak.BLL.Repository;
 using NeYapsak.DAL.Context;
 using NeYapsak.Entity.Entity;
+using NeYapsak.Entity.Identity;
 using NeYapsak.PL.Models;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,44 @@ namespace NeYapsak.PL.Controllers
         public ActionResult User()
         {
             return View();
+        }
+        [HttpPost]
+        [Authorize]
+        public ActionResult User(UserViewModel model)
+        {
+            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
+            if (model.PictureUpload != null)
+            {
+                //string name = Path.GetFileNameWithoutExtension(model.PictureUpload.FileName);
+                //string ext = Path.GetExtension(model.PictureUpload.FileName);
+                ////Resim upload edilecek.
+                //name = name.Replace(" ", "");
+                string filename = model.PictureUpload.FileName;
+                string imagePath = Server.MapPath("/images/" + filename);
+                model.PictureUpload.SaveAs(imagePath);
+                ApplicationUser degisen = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
+                degisen.ProfilAvatarYolu = "/images/" + filename;
+                if (repoU.Update(degisen))
+                    return RedirectToAction("User");
+                return View(model);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult HKDuzenle(UserViewModel model)
+        {
+            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
+            if (model.Kullanici.Bio != null &&model.Kullanici.Bio.Length>=10)
+            {
+                ApplicationUser degisen = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
+                degisen.Bio = model.Kullanici.Bio;
+                if (repoU.Update(degisen))
+                    return RedirectToAction("User");
+                return View("User",model);
+            }
+            return View("User");
         }
     }
 }
