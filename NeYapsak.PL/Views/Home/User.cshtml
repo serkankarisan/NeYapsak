@@ -11,14 +11,14 @@
                 @{NeYapsak.PL.Models.UserViewModel item = new NeYapsak.PL.Models.UserViewModel();
                     item = ViewBag.user;
                 }
-                <img class="rounded-circle" style="height:250px" src="@item.Kullanici.ProfilAvatarYolu" alt="">
+                <img id="profilresim" class="rounded-circle" style="height:250px" src="@item.Kullanici.ProfilAvatarYolu" alt="">
                 @using (Html.BeginForm("User", "Home", FormMethod.Post, new { encType = "multipart/form-data" }))
                 {
                     <div class="file btn btn-lg btn-primary">
                         Fotoğraf Seç
-                        <input type="file" name="PictureUpload" value="" />
+                        <input type="file" name="PictureUpload" value="" id="btnresimsec" />
                     </div><br /><br />
-                        <input class="file btn btn-lg btn-primary" type="submit" name="Kaydet" value="Resmi Kaydet" />
+                    <input class="file btn btn-lg btn-primary" type="submit" name="Kaydet" value="Resmi Kaydet" />
                 }
             </div>
         </div>
@@ -57,30 +57,37 @@
                     </div>
                 </div>
             </div>
-            <p id="hk-bilgisi" class="text-normal cs-renk-tab">@item.Kullanici.Bio</p>
             @using (Html.BeginForm("HKDuzenle", "Home", FormMethod.Post, new { encType = "multipart/form-data" }))
-            {
-                <div id="hkyenigir" class="row" style="display:none;">
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-9">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <textarea class="form-control" cols="20" data-val="true" data-val-length="Bio Bio karakterden uzun olmamalıdır!" data-val-length-max="300" id="ilan-ozet" maxlength="300" minlength="10" name="Kullanici.Bio" placeholder="Etkinliğini 300 karakter ile açıkla" required="True" rows="2" style="width: 275px;height:100px;">@item.Kullanici.Bio</textarea>
-                                @*@Html.TextAreaFor(model => model.Kullanici.Bio, new { @class = "form-control", name = "ilan-ozet", id = "ilan-ozet", style = "width: 275px;height:100px;", minlength = "10", maxlength = "300", placeholder = "Etkinliğini 300 karakter ile açıkla", required = true })*@
-                                @Html.ValidationMessageFor(model => model.Kullanici.Bio)
-                            </div>
+            {<div class="row">
+                    <div class="col-md-8">
+
+                        <p id="hk-bilgisi" class="text-normal cs-renk-tab">@item.Kullanici.Bio</p>
+                        <div id="hkyenigir" class="row" style="display:none;">
                             <div class="col-md-3">
-                                <input type="submit" name="hkkaydet" value="Kaydet" class="btn cs-arka-renk btn-sm mb-1" />
-                                <br />
-                                <button type="button" id="hkvazgec" name="button" class="btn cs-arka-renk btn-sm mb-1 ">Vazgeç</button>
                             </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" cols="20" data-val="true" data-val-length="Bio Bio karakterden uzun olmamalıdır!" data-val-length-max="300" id="hkyeni" maxlength="300" minlength="10" name="Kullanici.Bio" placeholder="Etkinliğini 300 karakter ile açıkla" required="True" rows="2" style="width: 275px;height:100px;">@item.Kullanici.Bio</textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-md-4 text-left">
+                        <div class="row justify-content">
+                            <input type="submit" style="display:none" id="hkkaydet" name="hkkaydet" value="Kaydet" class="btn cs-arka-renk btn-sm mb-1" />
+                        </div>
+                        <div class="row justify-content">
+                            <button type="button" id="hkduzenle" name="button" class="btn cs-arka-renk btn-sm mb-1 ">Düzenle</button>
                         </div>
                     </div>
-                </div><br />
+                </div>
+
             }
-                <p class="text-normal cs-renk-tab">Düzenlediği: <span class="font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).Count()</span>&nbsp;&nbsp; Katıldığı: <span class="font-weight-bold">@item.KatildigiIlanSayisi</span>&nbsp;&nbsp;İlgilendiği:<span class="font-weight-bold">@item.IlgilendigiIlanSayisi</span>&nbsp;&nbsp;Onayımı Bekleyen:<span class="font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == false).Count()</span></p>
-            </div>
+            <p class="text-normal cs-renk-tab">Düzenlediği: <span class="font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).Count()</span>&nbsp;&nbsp; Katıldığı: <span class="font-weight-bold">@item.KatildigiIlanSayisi</span>&nbsp;&nbsp;İlgilendiği:<span class="font-weight-bold">@item.IlgilendigiIlanSayisi</span>&nbsp;&nbsp;Onayımı Bekleyen:<span class="font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == false).Count()</span></p>
+        </div>
         <div class="col-md-2">
             <!--şimdilikboş-->
         </div>
@@ -88,9 +95,7 @@
     <div class="row">
         <!--kişi kendi sayfasına gelince çıkacak olan-->
         <div class="col-md-4">
-            <div class="row justify-content-center">
-                <button type="button" id="hkduzenle" name="button" class="btn cs-arka-renk btn-sm mb-1 ">Hakkımdayı Düzenle</button>
-            </div>
+            &nbsp;
         </div>
         <div class="col-md-8">
             <h4 class="text-center">Etkinlik İşlemleri</h4>
@@ -171,31 +176,23 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#hkduzenle").click(function () {
-            $("#hkyenigir").css({
-                "display": "block",
-            });
-            $("#hk-bilgisi").css({
-                "display": "none",
-            });
-            
-        });
-        $("#hkkaydet").click(function () {
-            $("#hkyenigir").css({
-                "display": "none",
-            });
-            $("#hk-bilgisi").css({
-                "display": "block",
-            });
-        });
-        $("#hkvazgec").click(function () {
-            $("#hkyenigir").css({
-                "display": "none",
-            });
-            $("#hk-bilgisi").css({
-                "display": "block",
-            });
-        });
+        var hkyenigir = document.getElementById("hkyenigir");
+        var hkduzenleBtn = document.getElementById("hkduzenle");
+        var hkkaydetBtn = document.getElementById("hkkaydet");
+        var hkeski = document.getElementById("hk-bilgisi");
+        hkduzenleBtn.onclick = function hkFunction() {
+            if (hkyenigir.style.display === "none") {
+                hkyenigir.style.display = "block";
+                hkduzenleBtn.textContent = "Vazgeç";
+                hkeski.style.display = "none";
+                hkkaydetBtn.style.display = "block";
+            } else {
+                hkyenigir.style.display = "none";
+                hkduzenleBtn.textContent = "Düzenle";
+                hkeski.style.display = "block";
+                hkkaydetBtn.style.display = "none";
+            }
+        }
     });
-   
+
 </script>
