@@ -14,7 +14,7 @@
                     item = ViewBag.user;
                 }
                 <img id="profilresim" class="rounded-circle" style="height:250px" src="@item.Kullanici.ProfilAvatarYolu" alt="">
-                @using (Html.BeginForm("User", "Home", FormMethod.Post, new { encType = "multipart/form-data",id="resimform" }))
+                @using (Html.BeginForm("MyProfile", "Home", FormMethod.Post, new { encType = "multipart/form-data",id="resimform" }))
                 {
                     <div class="file btn btn-lg btn-primary">
                         Fotoğraf Seç
@@ -125,7 +125,7 @@
                                         @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KullaniciIlanlari)
                                         {
                                             <tr>
-                                                <td><a href="/Home/EventDetail" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
                                                 <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
                                                 <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
                                             </tr>
