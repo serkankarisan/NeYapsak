@@ -218,12 +218,14 @@
     <Content Include="Views\Shared\_Layout-1-TopMenu-Main.cshtml" />
     <Content Include="Views\Shared\_Layout-2-TopMenu-Details.cshtml" />
     <Content Include="Views\Home\Main.cshtml" />
-    <Content Include="Views\Home\EventDetail.cshtml" />
+    <Content Include="Views\Home\MyEventDetail.cshtml" />
     <Content Include="Views\Shared\_Layout-3-TopMenu-User.cshtml" />
-    <Content Include="Views\Home\User.cshtml" />
+    <Content Include="Views\Home\MyProfile.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Shared\_Layout-4-ForAccount.cshtml" />
+    <Content Include="Views\Home\OtherProfile.cshtml" />
+    <Content Include="Views\Home\OtherEventDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -112,7 +112,28 @@
                     </div>
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
-                            etkinlikler gelecek.
+                            <div class="row">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>İlan Başlığı</th>
+                                            <th>Oluşturulma Tarihi</th>
+                                            <th>Başlangıç Tarihi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KullaniciIlanlari)
+                                        {
+                                            <tr>
+                                                <td><a href="/Home/EventDetail" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
+                                                <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    </table>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div><!--1.kart bitiş-->

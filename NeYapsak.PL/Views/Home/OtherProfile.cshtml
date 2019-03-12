@@ -1,0 +1,64 @@
+﻿@model NeYapsak.PL.Models.UserViewModel
+@{
+                /**/
+
+                /**/
+
+                ViewBag.Title = "User";
+                Layout = "~/Views/Shared/_Layout-3-TopMenu-User.cshtml";
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<div class="container emp-profile">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img id="profilresim" class="rounded-circle" style="height:250px" src="@Model.Kullanici.ProfilAvatarYolu" alt="">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="profile-head tab-content profile-tab">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Adı</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p>@Model.Kullanici.Name</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Soyadı</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p>@Model.Kullanici.Surname</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>E-Posta</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p>@Model.Kullanici.Email</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Yaş</label>
+                    </div>
+                    <div class="col-md-9">
+                        <p>@(Convert.ToInt32(DateTime.Now.Year - Model.Kullanici.DogumTarihi.Year))</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-md-8">
+                        <p id="hk-bilgisi" class="text-normal cs-renk-tab">@Model.Kullanici.Bio</p>
+                    </div>
+                </div>
+            <p class="text-normal cs-renk-tab">Düzenlediği: <span class="font-weight-bold">@Model.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).Count()</span>&nbsp;&nbsp; Katıldığı: <span class="font-weight-bold">@Model.KatildigiIlanSayisi</span>&nbsp;&nbsp;İlgilendiği:<span class="font-weight-bold">@Model.IlgilendigiIlanSayisi</span>&nbsp;&nbsp;Onayımı Bekleyen:<span class="font-weight-bold">@Model.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == false).Count()</span></p>
+        </div>
+        <div class="col-md-2">
+            <!--şimdilikboş-->
+        </div>
+    </div>
+</div>

@@ -187,7 +187,7 @@
                                 <!--bu sayede başlığın arka planı grimsi ve içeriğe mesafelendirme yapmış. card body ve card header da var-->
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!--dflex ile yan yana getiriyor. bir nevi float-->
-                                    <a class="card-link" href="#">
+                                    <a class="card-link" href="/Home/MyEventDetail/@item.Id">
                                         <h5 class="card-title cs-renk">@item.Baslik</h5>
                                     </a>
                                     <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @item.Kontenjan</div>
@@ -212,7 +212,7 @@
                                                           <img class="rounded-circle" width="45" src="@item.User.ProfilAvatarYolu" alt="">
                                                       </div>
                                                       <div class="col-md-3">
-                                                          <div class="h5 m-0"><a href="/Home/User" class="cs-renk">@item.User.Name</a></div>
+                                                          <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@item.User.Name</a></div>
                                                           <div class="h7 text-muted">@item.User.Name @item.User.Surname,@(Convert.ToInt32(DateTime.Now.Year - item.User.DogumTarihi.Year))</div>
                                                       </div>
                                                       <div class="col-md-8">
@@ -276,7 +276,7 @@
                         <!--bu sayede başlığın arka planı grimsi ve içeriğe mesafelendirme yapmış. card body ve card header da var-->
                         <div class="d-flex justify-content-between align-items-center">
                             <!--dflex ile yan yana getiriyor. bir nevi float-->
-                            <a class="card-link" href="#">
+                            <a class="card-link" href="/Home/OtherEventDetail/@item.Id">
                                 <h5 class="card-title cs-renk">@item.Baslik</h5>
                             </a>
                             <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @item.Kontenjan</div>
@@ -301,7 +301,7 @@
                                             <img class="rounded-circle" width="45" src="@item.User.ProfilAvatarYolu" alt="">
                                         </div>
                                         <div class="col-md-3">
-                                            <div class="h5 m-0"><a href="#" class="cs-renk">@item.User.Name</a></div>
+                                            <div class="h5 m-0"><a href="/Home/OtherProfile/@item.KullaniciId" class="cs-renk">@item.User.Name</a></div>
                                             <div class="h7 text-muted">@item.User.Name @item.User.Surname,@(Convert.ToInt32(DateTime.Now.Year - item.User.DogumTarihi.Year))</div>
                                         </div>
                                         <div class="col-md-8">

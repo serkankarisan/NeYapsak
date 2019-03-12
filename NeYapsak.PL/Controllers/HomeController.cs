@@ -59,18 +59,40 @@ namespace NeYapsak.PL.Controllers
             return View(model);
         }
         [Authorize]
-        public ActionResult EventDetail()
+        public ActionResult MyEventDetail(int Id)
+        {
+            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            Ilan etk = repoI.Get(i => i.Id == Id);
+            return View(etk);
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult MyEventDetail(Ilan model)//değişebilir.
         {
             return View();
         }
         [Authorize]
-        public ActionResult User()
+        public ActionResult MyProfile()
         {
             return View();
+        }
+        [Authorize]
+        public ActionResult OtherProfile(string Id)
+        {
+            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
+            Repository<Ilgilenen> repoIlg = new Repository<Ilgilenen>(new NeYapsakContext());
+            Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
+            Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
+            UserViewModel usermodel=new UserViewModel();
+            usermodel.Kullanici= repoU.GetAll().Where(u => u.Id == Id).FirstOrDefault();
+            usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == Id).ToList();
+            usermodel.IlgilendigiIlanSayisi = repoIlg.GetAll().Where(i => i.KullaniciId == Id).Count();
+            usermodel.KatildigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == Id).Count();
+            return View(usermodel);
         }
         [HttpPost]
         [Authorize]
-        public ActionResult User(UserViewModel model)
+        public ActionResult MyProfile(UserViewModel model)
         {
             Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
             if (model.PictureUpload != null)
@@ -85,7 +107,7 @@ namespace NeYapsak.PL.Controllers
                 ApplicationUser degisen = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
                 degisen.ProfilAvatarYolu = "/images/" + filename;
                 if (repoU.Update(degisen))
-                    return RedirectToAction("User");
+                    return RedirectToAction("MyProfile");
                 return View(model);
             }
             return View();
@@ -101,10 +123,17 @@ namespace NeYapsak.PL.Controllers
                 ApplicationUser degisen = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
                 degisen.Bio = model.Kullanici.Bio;
                 if (repoU.Update(degisen))
-                    return RedirectToAction("User");
-                return View("User",model);
+                    return RedirectToAction("MyProfile");
+                return View("MyProfile", model);
             }
-            return View("User");
+            return View("MyProfile");
+        }
+        [Authorize]
+        public ActionResult OtherEventDetail(int Id)
+        {
+            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            Ilan etk = repoI.Get(i => i.Id == Id);
+            return View(etk);
         }
     }
 }
