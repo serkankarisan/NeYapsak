@@ -135,5 +135,44 @@ namespace NeYapsak.PL.Controllers
             Ilan etk = repoI.Get(i => i.Id == Id);
             return View(etk);
         }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult EtkDuzenle(Ilan model)
+        {
+            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            if (!string.IsNullOrEmpty(model.Baslik) && !string.IsNullOrEmpty(model.BaslangicTarihi.ToString()) && !string.IsNullOrEmpty(model.Il) && !string.IsNullOrEmpty(model.Ilce) && model.Kontenjan != 0 && !string.IsNullOrEmpty(model.OlusturmaTarihi.ToString()))
+            {
+                Ilan degisen = repoI.GetAll().Where(i => i.Id == model.Id).FirstOrDefault();
+                degisen.BaslangicTarihi = model.BaslangicTarihi;
+                degisen.Baslik = model.Baslik;
+                degisen.GoruntulenmeSayaci = model.GoruntulenmeSayaci;
+                degisen.Il = model.Il;
+                degisen.Ilce = model.Ilce;
+                degisen.Kontenjan = model.Kontenjan;
+                degisen.Konum = model.Konum;
+                degisen.Ozet = model.Ozet;
+                if (repoI.Update(degisen))
+                {
+                    return Redirect("/Home/MyEventDetail/"+degisen.Id);
+
+                }
+                return View("MyEventDetail", model);
+            }
+            return View("MyEventDetail",model);
+        }
+        [Authorize]
+        public ActionResult EtkSil(int Id)
+        {
+            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            Ilan etk = repoI.Get(i => i.Id == Id);
+            etk.Silindi = true;
+            if (repoI.Delete(Id))
+            {
+                return Redirect("/Home/Main");
+
+            }
+            return View("MyEventDetail", etk);
+        }
     }
 }
