@@ -22,7 +22,8 @@
                         @*<input type="text" name="ilan-baslik" class="form-control" id="ilan-baslik" placeholder="Ne yapmayı planlıyorsun ? " style="width: 450px; height: 35px;">*@
                     </div><br>
                     <div class="row">
-                        <label class="etk-ols-lbl">Gerçekleşeceği şehri seçin: </label><select disabled="true" name="il" style="width: 275px; height: 35px;" class="form-control">
+                        <label class="etk-ols-lbl">Gerçekleşeceği şehri seçin: </label>
+                    <select disabled="true" name="il" style="width: 275px; height: 35px;" class="form-control">
                             @*<option value="">Şehir Seçiniz</option>*@
                             <option value="İstanbul">İstanbul</option>
                             @*<option value="Ankara">Ankara</option>
@@ -115,7 +116,8 @@
                         </select><br>
                     </div><br>
                     <div class="row">
-                        <label class="etk-ols-lbl">Gerçekleşeceği ilçeyi seçin: </label><select name="ilce" class="form-control" style="width: 275px; height: 35px;" required>
+                        <label class="etk-ols-lbl">Gerçekleşeceği ilçeyi seçin: </label>
+                    <select name="ilce" class="form-control" style="width: 275px; height: 35px;" required>
                             <option value="">İlçe Seçiniz</option>
                             <option value="Üsküdar">Üsküdar</option>
                             <option value="Kadıköy">Kadıköy</option>
@@ -209,7 +211,7 @@
                                               <div>
                                                   <div class="row">
                                                       <div class="col-md-1">
-                                                          <img class="rounded-circle" width="45" src="@item.User.ProfilAvatarYolu" alt="">
+                                                          <img class="rounded-circle" width="45" height="45" src="@item.User.ProfilAvatarYolu" alt="">
                                                       </div>
                                                       <div class="col-md-3">
                                                           <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@item.User.Name</a></div>
@@ -298,7 +300,7 @@
                                 <div>
                                     <div class="row">
                                         <div class="col-md-1">
-                                            <img class="rounded-circle" width="45" src="@item.User.ProfilAvatarYolu" alt="">
+                                            <img class="rounded-circle" width="45" height="45" src="@item.User.ProfilAvatarYolu" alt="">
                                         </div>
                                         <div class="col-md-3">
                                             <div class="h5 m-0"><a href="/Home/OtherProfile/@item.KullaniciId" class="cs-renk">@item.User.Name</a></div>

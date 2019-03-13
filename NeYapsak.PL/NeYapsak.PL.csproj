@@ -234,6 +234,7 @@
     <Content Include="Views\Account\PasswordResetSuccess.cshtml" />
     <Content Include="Views\Home\OtherProfile.cshtml" />
     <Content Include="Views\Home\OtherEventDetail.cshtml" />
+    <Content Include="Views\Home\EtkSil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
