@@ -208,6 +208,42 @@ namespace NeYapsak.PL.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(PasswordChangeViewModel model)
+        {
+            var usermanager = IdentityTools.NewUserManager();
+            var kullanici = usermanager.FindById(HttpContext.User.Identity.GetUserId());
+            if (!ModelState.IsValid)
+                return View(model);
+            else if (!usermanager.CheckPassword(kullanici,model.OldPassword))
+            {
+                ModelState.AddModelError("", "Mevcut şifren bu değil!");
+                return View(model);
+            }
+            var result = usermanager.ChangePassword(kullanici.Id, model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                IdentityMessage msg = new IdentityMessage();
+                msg.Subject = "Şifren değiştirildi!";
+                msg.Destination = kullanici.Email;
+                msg.Body = "Merhaba " + kullanici.Name + " az önce sitemiz üzerinden bir şifre yenileme işlemi gerçekleştirdin. Yeni şifreni sitemize bol bol giriş yaparak iyi günlerde kullanmanı dileriz.";
+                mail.SendMail(msg);
+                HttpContext.GetOwinContext().Authentication.SignOut();
+                return View("PasswordResetSuccess");
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
