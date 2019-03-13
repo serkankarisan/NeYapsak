@@ -53,7 +53,19 @@ namespace NeYapsak.BLL.Repository
 
         public bool Delete(int Id)
         {
-            throw new NotImplementedException();
+            bool Sonuc = false;
+            try
+            {
+                Sonuc = Convert.ToBoolean(_neYapsakContext.SaveChanges());
+                Sonuc = true;
+            }
+            catch (Exception ex)
+            {
+                string hata = ex.Message;
+                Sonuc = false;
+                //throw new Exception("Kayıt yapılamadı!");
+            }
+            return Sonuc;
         }
 
         public IList<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, params Expression<Func<T, object>>[] includes)
@@ -76,10 +88,12 @@ namespace NeYapsak.BLL.Repository
             try
             {
                 Sonuc = Convert.ToBoolean(_neYapsakContext.SaveChanges());
+                Sonuc = true;
             }
             catch (Exception ex)
             {
                 string hata = ex.Message;
+                Sonuc = false;
                 //throw new Exception("Kayıt yapılamadı!");
             }
             return Sonuc;
