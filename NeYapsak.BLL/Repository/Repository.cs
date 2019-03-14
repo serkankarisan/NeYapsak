@@ -57,7 +57,7 @@ namespace NeYapsak.BLL.Repository
             try
             {
                 Sonuc = Convert.ToBoolean(_neYapsakContext.SaveChanges());
-                Sonuc = true;
+                //Sonuc = true;
             }
             catch (Exception ex)
             {
@@ -87,8 +87,10 @@ namespace NeYapsak.BLL.Repository
             bool Sonuc = false;
             try
             {
+
+                //_neYapsakContext.Entry(entity).State = EntityState.Modified;
                 Sonuc = Convert.ToBoolean(_neYapsakContext.SaveChanges());
-                Sonuc = true;
+                //Sonuc = true;
             }
             catch (Exception ex)
             {
