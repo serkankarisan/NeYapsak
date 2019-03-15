@@ -195,6 +195,7 @@
                                             @Html.ValidationMessageFor(model => model.RegisterView.ConfirmPassword)
                                         </div> <!-- form-group// -->
                                         <div class="form-group col-xs-12 col-md-offset-3 col-md-6 text-center">
+                                            @Html.ValidationSummary("", new { @class = "text-danger" })
                                             <input class="tutorials-link-logreg" type="submit" id="KayitOl" value="Kayıt Ol" />
                                         </div> <!-- form-group// -->
                                     }

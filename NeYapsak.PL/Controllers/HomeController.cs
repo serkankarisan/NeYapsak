@@ -66,6 +66,7 @@ namespace NeYapsak.PL.Controllers
             return View(etk);
         }
         [Authorize]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult MyEventDetail(Ilan model)//değişebilir.
         {
@@ -91,6 +92,7 @@ namespace NeYapsak.PL.Controllers
             return View(usermodel);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public ActionResult MyProfile(UserViewModel model)
         {
@@ -114,6 +116,7 @@ namespace NeYapsak.PL.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public ActionResult HKDuzenle(UserViewModel model)
         {
@@ -137,6 +140,7 @@ namespace NeYapsak.PL.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public ActionResult EtkDuzenle(Ilan model)
         {

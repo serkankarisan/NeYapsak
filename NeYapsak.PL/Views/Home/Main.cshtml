@@ -23,7 +23,7 @@
                     </div><br>
                     <div class="row">
                         <label class="etk-ols-lbl">Gerçekleşeceği şehri seçin: </label>
-                    <select disabled="true" name="il" style="width: 275px; height: 35px;" class="form-control">
+                        <select disabled="true" name="il" style="width: 275px; height: 35px;" class="form-control">
                             @*<option value="">Şehir Seçiniz</option>*@
                             <option value="İstanbul">İstanbul</option>
                             @*<option value="Ankara">Ankara</option>
@@ -113,11 +113,13 @@
                                 <option value="77">Yalova</option>
                                 <option value="66">Yozgat</option>
                                 <option value="67">Zonguldak</option>*@
-                        </select><br>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Baslik)
+                        <br>
                     </div><br>
                     <div class="row">
                         <label class="etk-ols-lbl">Gerçekleşeceği ilçeyi seçin: </label>
-                    <select name="ilce" class="form-control" style="width: 275px; height: 35px;" required>
+                        <select name="ilce" class="form-control" style="width: 275px; height: 35px;" required>
                             <option value="">İlçe Seçiniz</option>
                             <option value="Üsküdar">Üsküdar</option>
                             <option value="Kadıköy">Kadıköy</option>
@@ -125,7 +127,9 @@
                             <option value="Karaköy">Karaköy</option>
                             <option value="Taksim">Taksim</option>
                             <option value="Bağcılar">Bağcılar</option>
-                        </select><br>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Baslik)
+                        <br>
                     </div><br>
                     <div class="row">
                         <label class="etk-ols-lbl">Tam konumunu seçin(Opsiyonel):</label>googlemapstenseçmeyaptırmak<br>
@@ -154,9 +158,10 @@
                     <div class="row">
                         <label class="etk-ols-lbl">Etkinliğiniz için etiketleri seçin: </label>checkboxlar açılacak şekilde bir js <br>
                     </div><br>
-                    <div class="justify-content-center row">
-                        <div class="align-items-center"><button id="etkinlik-olustur" type="submit" class="etkinlik-olustur">Oluştur!</button></div>
-                    </div>
+                          <div class="justify-content-center row">
+                              @Html.ValidationSummary("", new { @class = "text-danger" })
+                              <div class="align-items-center"><button id="etkinlik-olustur" type="submit" class="etkinlik-olustur">Oluştur!</button></div>
+                          </div>
                 </div>
             </div>
         }
@@ -208,26 +213,26 @@
                                                 @item.Ozet
                                             </p>
                                         </div><br>
-                                              <div>
-                                                  <div class="row">
-                                                      <div class="col-md-1">
-                                                          <img class="rounded-circle" width="45" height="45" src="@item.User.ProfilAvatarYolu" alt="">
-                                                      </div>
-                                                      <div class="col-md-3">
-                                                          <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@item.User.Name</a></div>
-                                                          <div class="h7 text-muted">@item.User.Name @item.User.Surname,@(Convert.ToInt32(DateTime.Now.Year - item.User.DogumTarihi.Year))</div>
-                                                      </div>
-                                                      <div class="col-md-8">
-                                                          <div class="row">
-                                                             &nbsp;
-                                                          </div>
-                                                          <div class="row">
-                                                              <div class="col-md-6 col-sm-6 col-xs-12"><a href="#" class="card-link cs-renk"><i class="fa fa-question-circle"></i> Etkinlik Sahibine Sor</a></div>
-                                                              <div class="col-md-6 col-sm-6 col-xs-12"><a href="#" class="card-link cs-renk"><i class="fa fa-plus"></i> Katılma İsteği Gönder</a></div>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </div>
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <img class="rounded-circle" width="45" height="45" src="@item.User.ProfilAvatarYolu" alt="">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@item.User.Name</a></div>
+                                                    <div class="h7 text-muted">@item.User.Name @item.User.Surname,@(Convert.ToInt32(DateTime.Now.Year - item.User.DogumTarihi.Year))</div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="row">
+                                                        &nbsp;
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12"><a href="#" class="card-link cs-renk"><i class="fa fa-question-circle"></i> Etkinlik Sahibine Sor</a></div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12"><a href="#" class="card-link cs-renk"><i class="fa fa-plus"></i> Katılma İsteği Gönder</a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-3">
                                         <!--text muted ile silik tonda grili yazı-->
@@ -316,18 +321,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <!--text muted ile silik tonda grili yazı-->
-                                    <div class="row text-muted">
-                                        <p>Oluşturulma tarihi: @item.OlusturmaTarihi</p>
-                                    </div>
-                                    <div class="row text-muted">
-                                        <p>Başlangıç Zamanı: @item.BaslangicTarihi</p>
-                                    </div>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <!--text muted ile silik tonda grili yazı-->
+                                <div class="row text-muted">
+                                    <p>Oluşturulma tarihi: @item.OlusturmaTarihi</p>
+                                </div>
+                                <div class="row text-muted">
+                                    <p>Başlangıç Zamanı: @item.BaslangicTarihi</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <h7>Bu etkinliği paylaş!</h7>&nbsp;
