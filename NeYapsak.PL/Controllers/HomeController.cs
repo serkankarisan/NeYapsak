@@ -46,15 +46,18 @@ namespace NeYapsak.PL.Controllers
             Ilan yeni = new Ilan();
             yeni.Baslik = model.Baslik;
 
-            if (yeni.BaslangicTarihi > DateTime.Now)
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if (model.BaslangicTarihi < DateTime.Now)
             {
                 ModelState.AddModelError("", "Başlangıç Tarihi İleri Bir Tarih Olmalı!");
-                return View(model);
+                return View("MyEventDetail", model);
             }
-            if (yeni.Kontenjan > 0)
+            if (model.Kontenjan <= 0)
             {
                 ModelState.AddModelError("", "Kontenjan 0'dan Büyük Olmalı!");
-                return View(model);
+                return View("MyEventDetail", model);
             }
             yeni.BaslangicTarihi = model.BaslangicTarihi;
             yeni.Il = "İstanbul";
@@ -159,20 +162,19 @@ namespace NeYapsak.PL.Controllers
         public ActionResult EtkDuzenle(Ilan model)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
-
-            if (!ModelState.IsValid)
-                return View(model);
-
             Ilan degisen = repoI.GetAll().Where(i => i.Id == model.Id).FirstOrDefault();
-            if (degisen.BaslangicTarihi > DateTime.Now)
+            if (!ModelState.IsValid)
+                return View(degisen);
+
+            if (model.BaslangicTarihi < DateTime.Now)
             {
                 ModelState.AddModelError("", "Başlangıç Tarihi İleri Bir Tarih Olmalı!");
-                return View(model);
+                return View("MyEventDetail", degisen);
             }
-            if (degisen.Kontenjan > 0)
+            if (model.Kontenjan <= 0)
             {
                 ModelState.AddModelError("", "Kontenjan 0'dan Büyük Olmalı!");
-                return View(model);
+                return View("MyEventDetail", degisen);
             }
             degisen.BaslangicTarihi = model.BaslangicTarihi;
             degisen.Baslik = model.Baslik;
@@ -187,7 +189,7 @@ namespace NeYapsak.PL.Controllers
                 return Redirect("/Home/MyEventDetail/" + degisen.Id);
 
             }
-            return View("MyEventDetail", model);
+            return View("MyEventDetail", degisen);
         }
         [Authorize]
         public ActionResult EtkSil(int Id)
