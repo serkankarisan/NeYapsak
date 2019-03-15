@@ -18,7 +18,7 @@
         <div class="d-flex justify-content-end">
             <button type="button" name="button" class="btn btn-light btn-md mb-1 ">Mesaj Kutum</button>&nbsp;
             <a href="~/Account/ChangePassword" class="btn btn-light btn-md mb-1 ">Şifre İşlemleri</a>&nbsp;
-            @using (Html.BeginForm("LogOut", "Account",FormMethod.Post))
+            @using (Html.BeginForm("LogOut", "Account", FormMethod.Post))
             {
                 <input type="submit" name="button" class="btn btn-dark btn-sm " value="Çıkış Yap">
             }
@@ -26,7 +26,7 @@
     </nav>
 
     @RenderBody()
-    
+
     <footer>
         <div class="container-fluid">
             <div class="row">
@@ -39,6 +39,8 @@
         </div>
     </footer>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/anasayfa-app.js"></script>
     <!--sıradaki iki script, ilanı bildir seçeneğinin nokta noktadan gelmesi için şart-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -47,21 +49,21 @@
             crossorigin="anonymous"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <script>
-            window.onscroll = function() {scrollFunction()};
+        window.onscroll = function () { scrollFunction() };
 
-    function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("myBtn").style.display = "block";
-      } else {
-        document.getElementById("myBtn").style.display = "none";
-      }
-    }
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
 
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    }
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
     </script>
 </body>
 </html>

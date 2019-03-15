@@ -147,148 +147,150 @@
         </div><!-- /.container -->
     </section>
 
-        <section id="Kayit">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="section-header">
-                            Kayıt Ol
-                        </div>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-
-                <div class="row">
-                    <div class="feature-container col-xs-12">
-                        <div class="row">
-                            <div class="card">
-                                
-                                <article class="card-body">
-                                    <p class="card-title mb-4 mt-1 text-center font-weight-normal">Aşağıda yer alan bilgileri verip aramıza katılabilirsin. Gireceğin bilgilerin doğruluğundan emin ol, bir daha değiştirme şansın olmayacak. Eğer Twitter veya Facebook hesabını kullanarak kaydolacaksan seni <strong><a href="#Giris" style="text-decoration:none;color:#f74c3c">Giriş Yap</a></strong> bölümüne alalım.</p>
-                                    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <div class="form-group col-xs-12 col-md-6 text-center">
-                                            <label>Adın</label> @Html.EditorFor(model => model.RegisterView.Name, new { htmlAttributes = new { @class = "form-control", required=true }  })
-                                            @Html.ValidationMessageFor(model => model.RegisterView.Name)
-                                        </div> <!-- form-group// -->
-                                        <div class="form-group col-xs-12 col-md-6 text-center">
-                                            <label>Soyadın</label>@Html.EditorFor(model => model.RegisterView.Surname, new { htmlAttributes = new { @class = "form-control", required = true } })
-                                            @Html.ValidationMessageFor(model => model.RegisterView.Surname)
-                                        </div> <!-- form-group// -->
-                                        <div class="form-group col-xs-12 col-md-6 text-center">
-                                            <label>E-Posta Adresin</label>
-                                            @Html.EditorFor(model => model.RegisterView.Email, new { htmlAttributes = new { @class = "form-control", required = true, type = "email" } })
-                                            @Html.ValidationMessageFor(model => model.RegisterView.Email)
-                                        </div> <!-- form-group// -->
-                                        <div class="form-group col-xs-12 col-md-6 text-center">
-                                            <label>Doğum Tarihin</label>
-                                            @Html.EditorFor(model => model.RegisterView.DogumTarihi, new { htmlAttributes = new { @class = "form-control vertical-center", type = "date", required = true } })
-                                            @Html.ValidationMessageFor(model => model.RegisterView.DogumTarihi)
-
-                                        </div> <!-- form-group// -->
-                                        <div class="form-group col-xs-12 col-md-6 text-center">
-                                            <label>Şifren</label>@Html.EditorFor(model => model.RegisterView.Password, new { htmlAttributes = new { @class = "form-control", required = true } })
-                                            @Html.ValidationMessageFor(model => model.RegisterView.Password)
-                                        </div> <!-- form-group// -->
-                                        <div class="form-group col-xs-12 col-md-6 text-center">
-                                            <label>Şifren(Tekrar)</label>@Html.EditorFor(model => model.RegisterView.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", required = true } })
-                                            @Html.ValidationMessageFor(model => model.RegisterView.ConfirmPassword)
-                                        </div> <!-- form-group// -->
-                                        <div class="form-group col-xs-12 col-md-offset-3 col-md-6 text-center">
-                                            @Html.ValidationSummary("", new { @class = "text-danger" })
-                                            <input class="tutorials-link-logreg" type="submit" id="KayitOl" value="Kayıt Ol" />
-                                        </div> <!-- form-group// -->
-                                    }
-
-                                </article>
-                            </div> <!-- card.// -->
-                        </div><!-- /.row -->
-                    </div><!-- /.feature-container -->
-
-                </div><!-- /.row -->
-            </div><!-- /.container -->
-        </section><!-- /#Kayit -->
-
-        <section id="Giris">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="section-header">
-                            Giriş Yap
-                        </div>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-                <div class="row">
-                    <div class="card">
-                        <article class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 text-center"><span class="btn btn-dark sc-login-tw"><a href="#" class="btn"> <i class="fa fa-twitter"></i> Twitter ile giriş yap</a></span></div>
-                                <div class="col-md-6 text-center"><span class="btn btn-dark sc-login-fb"><a href="#" class="btn btn-block btn-outline-primary"> <i class="fa fa-facebook"></i>&nbsp;Facebook ile giriş yap</a></span></div>
-                            </div>
-                            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
-                            {
-                                @Html.AntiForgeryToken()
-                                <div class="form-group col-xs-12 col-md-6 text-center">
-                                    <label>E-Posta Adresin</label>@Html.EditorFor(model => model.loginView.Email, new { htmlAttributes = new { @class = "form-control", required = true, type="email" } })
-                                    @Html.ValidationMessageFor(model => model.loginView.Email)
-                                </div> <!-- form-group// -->
-                                <div class="form-group col-xs-12 col-md-6 text-center">
-                                    <label>Şifren</label>@Html.EditorFor(model => model.loginView.Password, new { htmlAttributes = new { @class = "form-control", required=true } })
-                                    @Html.ValidationMessageFor(model => model.loginView.Password)
-                                </div> <!-- form-group// -->
-                                <div class="form-group col-xs-12 col-md-12 text-center">
-                                        <div class="checkbox">
-                                            @Html.CheckBoxFor(model => model.loginView.RememberMe)
-                                            @Html.ValidationMessageFor(model => model.loginView.RememberMe, "", new { @class = "text-danger" })
-                                            @Html.Label("Beni Hatırla", htmlAttributes: new { @class = "h5" })
-                                        </div>
-                                </div>
-                                <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center">
-                                    <input class="tutorials-link-logreg" type="submit" id="GirisYap" value="Giriş Yap" />
-                                    @*<a class="tutorials-link" href="#Giris" role="button"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;Giriş Yap</a>*@
-                                </div>
-                            }
-                                <div class="row">
-                                    <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center"><a class="large" href="~/Account/ForgotPassword" style="color:#f74c3c">Şifreni mi unuttun ?</a></div>
-                                </div>
-                        </article>
-                    </div> <!-- card.// -->
-                </div>
-            </div><!-- /.container -->
-        </section>
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h4>
-                            This is a footer
-                        </h4>
+    <section id="Kayit">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="section-header">
+                        Kayıt Ol
                     </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+
+            <div class="row">
+                <div class="feature-container col-xs-12">
+                    <div class="row">
+                        <div class="card">
+
+                            <article class="card-body">
+                                <p class="card-title mb-4 mt-1 text-center font-weight-normal">Aşağıda yer alan bilgileri verip aramıza katılabilirsin. Gireceğin bilgilerin doğruluğundan emin ol, bir daha değiştirme şansın olmayacak. Eğer Twitter veya Facebook hesabını kullanarak kaydolacaksan seni <strong><a href="#Giris" style="text-decoration:none;color:#f74c3c">Giriş Yap</a></strong> bölümüne alalım.</p>
+                                @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-group col-xs-12 col-md-6 text-center">
+                                        <label>Adın</label> @Html.EditorFor(model => model.RegisterView.Name, new { htmlAttributes = new { @class = "form-control", required = true } })
+                                        @Html.ValidationMessageFor(model => model.RegisterView.Name, "", new { @class = "text-danger" })
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-6 text-center">
+                                        <label>Soyadın</label>@Html.EditorFor(model => model.RegisterView.Surname, new { htmlAttributes = new { @class = "form-control", required = true } })
+                                        @Html.ValidationMessageFor(model => model.RegisterView.Surname, "", new { @class = "text-danger" })
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-6 text-center">
+                                        <label>E-Posta Adresin</label>
+                                        @Html.EditorFor(model => model.RegisterView.Email, new { htmlAttributes = new { @class = "form-control", required = true, type = "email" } })
+                                        @Html.ValidationMessageFor(model => model.RegisterView.Email, "", new { @class = "text-danger" })
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-6 text-center">
+                                        <label>Doğum Tarihin</label>
+                                        @Html.EditorFor(model => model.RegisterView.DogumTarihi, new { htmlAttributes = new { @class = "form-control vertical-center", type = "date", required = true } })
+                                        @Html.ValidationMessageFor(model => model.RegisterView.DogumTarihi, "", new { @class = "text-danger" })
+
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-6 text-center">
+                                        <label>Şifren</label>@Html.EditorFor(model => model.RegisterView.Password, new { htmlAttributes = new { @class = "form-control", required = true } })
+                                        @Html.ValidationMessageFor(model => model.RegisterView.Password, "", new { @class = "text-danger" })
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-6 text-center">
+                                        <label>Şifren(Tekrar)</label>@Html.EditorFor(model => model.RegisterView.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", required = true } })
+                                        @Html.ValidationMessageFor(model => model.RegisterView.ConfirmPassword,"", new { @class = "text-danger" })
+                                    </div> <!-- form-group// -->
+                                    <div class="form-group col-xs-12 col-md-offset-3 col-md-6 text-center">
+                                        @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                                        <input class="tutorials-link-logreg" type="submit" id="KayitOl" value="Kayıt Ol" />
+                                    </div> <!-- form-group// -->
+                                }
+
+                            </article>
+                        </div> <!-- card.// -->
+                    </div><!-- /.row -->
+                </div><!-- /.feature-container -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /#Kayit -->
+
+    <section id="Giris">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="section-header">
+                        Giriş Yap
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="card">
+                    <article class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 text-center"><span class="btn btn-dark sc-login-tw"><a href="#" class="btn"> <i class="fa fa-twitter"></i> Twitter ile giriş yap</a></span></div>
+                            <div class="col-md-6 text-center"><span class="btn btn-dark sc-login-fb"><a href="#" class="btn btn-block btn-outline-primary"> <i class="fa fa-facebook"></i>&nbsp;Facebook ile giriş yap</a></span></div>
+                        </div>
+                        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group col-xs-12 col-md-6 text-center">
+                                <label>E-Posta Adresin</label>@Html.EditorFor(model => model.loginView.Email, new { htmlAttributes = new { @class = "form-control", required = true, type = "email" } })
+                                @Html.ValidationMessageFor(model => model.loginView.Email, "", new { @class = "text-danger" })
+                            </div> <!-- form-group// -->
+                            <div class="form-group col-xs-12 col-md-6 text-center">
+                                <label>Şifren</label>@Html.EditorFor(model => model.loginView.Password, new { htmlAttributes = new { @class = "form-control", required = true } })
+                                @Html.ValidationMessageFor(model => model.loginView.Password, "", new { @class = "text-danger" })
+                            </div> <!-- form-group// -->
+                            <div class="form-group col-xs-12 col-md-12 text-center">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(model => model.loginView.RememberMe)
+                                    @Html.ValidationMessageFor(model => model.loginView.RememberMe, "", new { @class = "text-danger" })
+                                    @Html.Label("Beni Hatırla", htmlAttributes: new { @class = "h5" })
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center">
+                                <input class="tutorials-link-logreg" type="submit" id="GirisYap" value="Giriş Yap" />
+                                @*<a class="tutorials-link" href="#Giris" role="button"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;Giriş Yap</a>*@
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center"><a class="large" href="~/Account/ForgotPassword" style="color:#f74c3c">Şifreni mi unuttun ?</a></div>
+                        </div>
+                    </article>
+                </div> <!-- card.// -->
+            </div>
+        </div><!-- /.container -->
+    </section>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>
+                        This is a footer
+                    </h4>
                 </div>
             </div>
-        </footer>
-        <a href="#home" role="button" class="scrollTop">
-            <svg class="lnr lnr-chevron-up"><use xlink:href="#lnr-chevron-up"></use></svg>
-        </a>
-        <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
-        <script>
-            window.onscroll = function () { scrollFunction() };
+        </div>
+    </footer>
+    <a href="#home" role="button" class="scrollTop">
+        <svg class="lnr lnr-chevron-up"><use xlink:href="#lnr-chevron-up"></use></svg>
+    </a>
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+    <script>
+        window.onscroll = function () { scrollFunction() };
 
-            function scrollFunction() {
-                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                    document.getElementById("myBtn").style.display = "block";
-                } else {
-                    document.getElementById("myBtn").style.display = "none";
-                }
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
             }
+        }
 
-            // When the user clicks on the button, scroll to the top of the document
-            function topFunction() {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            }
-        </script>
-        <script src="/js/index.js"></script>
-    </body>
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+    <script src="/js/index.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
 </html>
