@@ -78,12 +78,12 @@ namespace NeYapsak.PL.Controllers
             user.Surname = model.RegisterView.Surname;
             user.Email = model.RegisterView.Email;
             user.UserName = model.RegisterView.Email;
-            user.DogumTarihi =model.RegisterView.DogumTarihi;
+            user.DogumTarihi = model.RegisterView.DogumTarihi;
             var result = usermanager.Create(user, model.RegisterView.Password);
             if (result.Succeeded)
             {
                 usermanager.AddToRole(user.Id, "User");
-                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code="" }, protocol: Request.Url.Scheme);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = "" }, protocol: Request.Url.Scheme);
                 IdentityMessage msg = new IdentityMessage();
                 msg.Destination = user.Email;
                 msg.Body = "Nerdeyse tamamlandı! NeYapsak ağına katılmak için <a href=\"" + callbackUrl + "\">bu link</a>e tıkla.";
@@ -169,13 +169,13 @@ namespace NeYapsak.PL.Controllers
             }
             else
             {
-                if (kullanici.Id!=userId)
+                if (kullanici.Id != userId)
                 {
                     return View("Error");
                 }
                 else
                 {
-                    if (!UserManager.VerifyUserTokenAsync(kullanici.Id,"ResetPassword",code).Result)
+                    if (!UserManager.VerifyUserTokenAsync(kullanici.Id, "ResetPassword", code).Result)
                     {
                         return View("Error");
                     }
@@ -187,7 +187,7 @@ namespace NeYapsak.PL.Controllers
                         return View("PasswordReset", model);
                     }
                 }
-                
+
             }
         }
         [HttpPost]
@@ -222,7 +222,7 @@ namespace NeYapsak.PL.Controllers
             var kullanici = usermanager.FindById(HttpContext.User.Identity.GetUserId());
             if (!ModelState.IsValid)
                 return View(model);
-            else if (!usermanager.CheckPassword(kullanici,model.OldPassword))
+            else if (!usermanager.CheckPassword(kullanici, model.OldPassword))
             {
                 ModelState.AddModelError("", "Mevcut şifren bu değil!");
                 return View(model);
@@ -276,14 +276,14 @@ namespace NeYapsak.PL.Controllers
                 {
                     if (kullanici.EmailConfirmed)
                     {
-                    var authManager = HttpContext.GetOwinContext().Authentication;
-                    var identity = usermanager.CreateIdentity(kullanici, "ApplicationCookie");
-                    var authProperty = new AuthenticationProperties
-                    {
-                        IsPersistent = model.loginView.RememberMe
-                    };
-                    authManager.SignIn(authProperty, identity);
-                    return RedirectToAction("Main","Home");
+                        var authManager = HttpContext.GetOwinContext().Authentication;
+                        var identity = usermanager.CreateIdentity(kullanici, "ApplicationCookie");
+                        var authProperty = new AuthenticationProperties
+                        {
+                            IsPersistent = model.loginView.RememberMe
+                        };
+                        authManager.SignIn(authProperty, identity);
+                        return RedirectToAction("Main", "Home");
                     }
                     else
                     {
@@ -293,7 +293,7 @@ namespace NeYapsak.PL.Controllers
                 }
             }
         }
-        
+
         [Authorize]
         [HttpPost]
         public ActionResult LogOut()
