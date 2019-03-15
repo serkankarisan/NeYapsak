@@ -19,11 +19,11 @@
                 </div><br>
                 <div class="row">
                     <label class="etk-ols-lbl">Etkinlik başlığı: </label><input type="text" readonly name="Baslik" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Baslik" required>
-                    @Html.ValidationMessageFor(model => model.Baslik)
+                    @Html.ValidationMessageFor(model => model.Baslik, "", new { @class = "text-danger" })
                 </div><br>
                 <div class="row">
                     <label class="etk-ols-lbl">Gerçekleşeceği şehir </label><input type="text" readonly name="il" class="form-control" id="etk-il" style="width: 450px; height: 35px;" value="@Model.Il" required><br>
-                    @Html.ValidationMessageFor(model => model.Il)
+                    @Html.ValidationMessageFor(model => model.Il, "", new { @class = "text-danger" })
                 </div><br>
                 <div class="row">
                     <label class="etk-ols-lbl">Gerçekleşeceği ilçe </label>
@@ -36,34 +36,33 @@
                         <option value="Taksim">Taksim</option>
                         <option value="Bağcılar">Bağcılar</option>
                     </select>
-                    @Html.ValidationMessageFor(model => model.Ilce)
+                    @Html.ValidationMessageFor(model => model.Ilce, "", new { @class = "text-danger" })
                     <input type="text" readonly name="ilce" class="form-control" id="etk-ilce" style="width: 450px; height: 35px;" value="@Model.Ilce" required><br>
                 </div><br>
                 <div class="row">
                     <label class="etk-ols-lbl">Konum:</label><input type="text" readonly name="konum" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="Girilmemiş" required><br>
-                    @Html.ValidationMessageFor(model => model.Konum)
+                    @Html.ValidationMessageFor(model => model.Konum, "", new { @class = "text-danger" })
                 </div><br>
                 <div class="row">
                     <label class="etk-ols-lbl form">Oluşturulma tarihi: </label><input type="datetime-local" id="etk-OlusturmaTarihi" name="OlusturmaTarihi" value="@Model.OlusturmaTarihi.ToString("s")" required readonly class="form-control" style="width: 450px;"><br>
-                    @Html.ValidationMessageFor(model => model.OlusturmaTarihi)
+                    @Html.ValidationMessageFor(model => model.OlusturmaTarihi, "", new { @class = "text-danger" })
                 </div><br>
                 <div class="row">
                     <label class="etk-ols-lbl form">Gerçekleşeceği vakit: </label><input type="datetime-local" id="ilan-vakit" name="BaslangicTarihi" value="@Model.BaslangicTarihi.ToString("s")" required readonly class="form-control" style="width: 450px;"><br>
-                    @Html.ValidationMessageFor(model => model.BaslangicTarihi)
+                    @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
                 </div><br>
                 <div class="row">
                     <label class="etk-ols-lbl">Kalan kontenjan: </label><input type="number" readonly name="Kontenjan" id="ilan-baslik" class="form-control" style="width:50px;height:30px;padding-right:0" value="@Model.Kontenjan" required><br>
-                    @Html.ValidationMessageFor(model => model.Kontenjan)
+                    @Html.ValidationMessageFor(model => model.Kontenjan, "", new { @class = "text-danger" })
                 </div><br>
                 <div class="row">
                     <label class="etk-ols-lbl">Etkinlik özeti: </label><textarea required type="text" readonly name="Ozet" id="ilan-baslik" style="width: 450px;" maxlength="300" placeholder="Etkinliğini 300 karakter ile açıklamanın beklenmiş olduğu kısım" class="form-control">@Model.Ozet</textarea><br>
-                    @Html.ValidationMessageFor(model => model.Ozet)
+                    @Html.ValidationMessageFor(model => model.Ozet, "", new { @class = "text-danger" })
                 </div><br>
                 <div class="row">
                     <label class="etk-ols-lbl">Etiketler: </label>Tıklanabilir etiketler <br>
                 </div><br>
                 <div class="justify-content-center row">
-                    @Html.ValidationSummary("", new { @class = "text-danger" })
                     <div class="col-md-3">
                         <a id="etk-duzenle" href="#etk-ols" class="btn cs-arka-renk" onclick="myetkFunction();">Etkinliği Düzenle</a>
                     </div>

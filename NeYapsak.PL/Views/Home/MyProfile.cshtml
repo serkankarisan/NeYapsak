@@ -73,8 +73,7 @@
                                 <div class="row">
                                     <div class="col-md-9">
                                         <textarea class="form-control" cols="20" data-val="true" data-val-length="Bio Bio karakterden uzun olmamalıdır!" data-val-length-max="300" id="hkyeni" maxlength="300" minlength="10" name="Kullanici.Bio" placeholder="Etkinliğini 300 karakter ile açıkla" required="True" rows="2" style="width: 275px;height:100px;">@item.Kullanici.Bio</textarea>
-                                        @Html.ValidationMessageFor(model => model.Kullanici.Bio)
-                                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.Kullanici.Bio, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +124,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KullaniciIlanlari)
+                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KullaniciIlanlari.Where(i => i.Silindi == false).ToList())
                                         {
                                             <tr>
                                                 <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>

@@ -9,7 +9,7 @@
         <div class="card-header justify-content-center text-center">
             <button id="btn-ols" class="btn"><strong>Etkinlik Oluştur</strong></button>
         </div>
-        @using (Html.BeginForm("Main", "Home", FormMethod.Post))
+        @using (Html.BeginForm("Main", "Home", new { il = "İstanbul" }, FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
@@ -18,7 +18,7 @@
                     <div class="row">
                         <label class="etk-ols-lbl">Etkinliğiniz için başlık girin: </label>
                         @Html.EditorFor(model => model.Baslik, new { htmlAttributes = new { @class = "form-control", id = "ilan-baslik", placeholder = "Ne yapmayı planlıyorsun ? ", style = "width: 450px; height: 35px;", required = true } })
-                        @Html.ValidationMessageFor(model => model.Baslik)
+                        @Html.ValidationMessageFor(model => model.Baslik, "", new { @class = "text-danger" })
                         @*<input type="text" name="ilan-baslik" class="form-control" id="ilan-baslik" placeholder="Ne yapmayı planlıyorsun ? " style="width: 450px; height: 35px;">*@
                     </div><br>
                     <div class="row">
@@ -114,7 +114,7 @@
                                 <option value="66">Yozgat</option>
                                 <option value="67">Zonguldak</option>*@
                         </select>
-                        @Html.ValidationMessageFor(model => model.Baslik)
+                        @*@Html.ValidationMessageFor(model => model.Il,"", new { @class = "text-danger" })*@
                         <br>
                     </div><br>
                     <div class="row">
@@ -128,7 +128,7 @@
                             <option value="Taksim">Taksim</option>
                             <option value="Bağcılar">Bağcılar</option>
                         </select>
-                        @Html.ValidationMessageFor(model => model.Baslik)
+                        @Html.ValidationMessageFor(model => model.Ilce, "", new { @class = "text-danger" })
                         <br>
                     </div><br>
                     <div class="row">
@@ -137,7 +137,7 @@
                     <div class="row">
                         <label class="etk-ols-lbl form">Ne zaman gerçekleşeceğini seçin: </label>
                         @Html.EditorFor(model => model.BaslangicTarihi, new { htmlAttributes = new { @class = "form-control vertical-center", type = "datetime-local", id = "ilan-vakit", style = "width: 275px;", required = true } })
-                        @Html.ValidationMessageFor(model => model.BaslangicTarihi)
+                        @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
 
                         @*<input type="datetime-local" id="ilan-vakit"
                             name="ilan-vakit" value="2012-12-21T00:00"
@@ -146,22 +146,21 @@
                     <div class="row">
                         <label class="etk-ols-lbl">Kaç kişi lazım: </label>
                         @Html.EditorFor(model => model.Kontenjan, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", name = "ilan-baslik", id = "ilan-baslik", style = "width:50px;height:30px;padding-right:0", value = "1", required = true } })
-                        @Html.ValidationMessageFor(model => model.Kontenjan)
+                        @Html.ValidationMessageFor(model => model.Kontenjan, "", new { @class = "text-danger" })
                         @*<input type="number" min="1" name="ilan-baslik" id="ilan-baslik" class="form-control" style="width:50px;height:30px;padding-right:0" value="1">*@<br>
                     </div><br>
                     <div class="row">
                         <label class="etk-ols-lbl">Etkinliğiniz için bir özet girin: </label>
                         @Html.TextAreaFor(model => model.Ozet, new { @class = "form-control", name = "ilan-ozet", id = "ilan-ozet", style = "width: 275px;height:100px;", minlength = "10", maxlength = "300", placeholder = "Etkinliğini 300 karakter ile açıkla", required = true })
-                        @Html.ValidationMessageFor(model => model.Ozet)
+                        @Html.ValidationMessageFor(model => model.Ozet, "", new { @class = "text-danger" })
                         @*<textarea name="ilan-ozet" id="ilan-ozet" style="width: 450px;" maxlength="300" placeholder="Etkinliğini 300 karakter ile açıkla" class="form-control" required></textarea>*@<br>
                     </div><br>
                     <div class="row">
                         <label class="etk-ols-lbl">Etkinliğiniz için etiketleri seçin: </label>checkboxlar açılacak şekilde bir js <br>
                     </div><br>
-                          <div class="justify-content-center row">
-                              @Html.ValidationSummary("", new { @class = "text-danger" })
-                              <div class="align-items-center"><button id="etkinlik-olustur" type="submit" class="etkinlik-olustur">Oluştur!</button></div>
-                          </div>
+                    <div class="justify-content-center row">
+                        <div class="align-items-center"><button id="etkinlik-olustur" type="submit" class="etkinlik-olustur">Oluştur!</button></div>
+                    </div>
                 </div>
             </div>
         }
