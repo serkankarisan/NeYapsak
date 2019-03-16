@@ -107,7 +107,7 @@
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0 text-center">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <button id="btncollapseOne" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 Yayındaki etkinliklerim
                             </button>
                         </h5>
@@ -142,7 +142,7 @@
             <div class="card">
                 <div class="card-header" id="headingTwo">
                     <h5 class="mb-0 text-center">
-                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <button id="btncollapseTwo" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                             Onayımı bekleyen etkinlikler
                         </button>
                     </h5>
@@ -200,7 +200,12 @@
 </div>
 </div>
 <script type="text/javascript">
+    
     $(document).ready(function () {
+        var url = window.location.href.split('#');
+        if (url[1] === "collapseTwo") {
+            $('#btncollapseTwo').trigger('click');
+        }
         var hkyenigir = document.getElementById("hkyenigir");
         var hkduzenleBtn = document.getElementById("hkduzenle");
         var hkkaydetBtn = document.getElementById("hkkaydet");
