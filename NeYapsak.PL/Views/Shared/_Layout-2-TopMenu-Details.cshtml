@@ -32,8 +32,8 @@
                           <p class="text-normal">@item.Kullanici.Bio</p>
                 </div>
                 <div class="list-group list-group-flush">
-                    <span class="h6 font-weight-normal list-group-item">Düzenlediğim:<span class="h5 font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).Count()</span>&nbsp;&nbsp;Katıldığım: <span class="h5 font-weight-bold">@item.KatildigiIlanSayisi</span></span>
-                    <span class="h6 font-weight-normal list-group-item">İlgilendiğim:<span class="h5 font-weight-bold">@item.IlgilendigiIlanSayisi</span>&nbsp;&nbsp;Onayımı bekleyen:<span class="h5 font-weight-bold">@item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == false).Count()</span></span>
+                    <span class="h6 font-weight-normal list-group-item">Düzenlediğim:<span class="h5 font-weight-bold">@item.KullaniciIlanlari.Count()</span>&nbsp;&nbsp;Katıldığım: <span class="h5 font-weight-bold">@item.KatildigiIlanSayisi</span></span>
+                    <span class="h6 font-weight-normal list-group-item">İlgilendiğim:<span class="h5 font-weight-bold">@item.IlgilendigiIlanSayisi</span>&nbsp;&nbsp;Onayımı bekleyen:<span class="h5 font-weight-bold">@item.OnayimiBekleyenIlanlar.Count()</span></span>
                 </div>
             </div>
             <div class="row">&nbsp;</div>

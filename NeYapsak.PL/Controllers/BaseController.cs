@@ -19,14 +19,14 @@ namespace NeYapsak.PL.Controllers
         {
             Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
             Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
-            Repository<Ilgilenen> repoIlg = new Repository<Ilgilenen>(new NeYapsakContext());
             Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
 
             UserViewModel usermodel = new UserViewModel();
             usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
             usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
-            usermodel.IlgilendigiIlanSayisi = repoIlg.GetAll().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).Count();
-            usermodel.KatildigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId()).Count();
+            usermodel.IlgilendigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay==false).Count();
+            usermodel.KatildigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == true).Count();
+            usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false).Select(k => k.Ilan).Distinct().Where(i=>i.KullaniciId== HttpContext.User.Identity.GetUserId()).ToList();
             ViewBag.user = usermodel;
 
             base.OnActionExecuting(filterContext);

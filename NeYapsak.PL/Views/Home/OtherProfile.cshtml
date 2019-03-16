@@ -55,7 +55,7 @@
                         <p id="hk-bilgisi" class="text-normal cs-renk-tab">@Model.Kullanici.Bio</p>
                     </div>
                 </div>
-            <p class="text-normal cs-renk-tab">Düzenlediği: <span class="font-weight-bold">@Model.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).Count()</span>&nbsp;&nbsp; Katıldığı: <span class="font-weight-bold">@Model.KatildigiIlanSayisi</span>&nbsp;&nbsp;İlgilendiği:<span class="font-weight-bold">@Model.IlgilendigiIlanSayisi</span>&nbsp;&nbsp;Onayımı Bekleyen:<span class="font-weight-bold">@Model.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == false).Count()</span></p>
+            <p class="text-normal cs-renk-tab">Düzenlediği: <span class="font-weight-bold">@Model.KullaniciIlanlari.Count()</span>&nbsp;&nbsp; Katıldığı: <span class="font-weight-bold">@Model.KatildigiIlanSayisi</span>&nbsp;&nbsp;İlgilendiği:<span class="font-weight-bold">@Model.IlgilendigiIlanSayisi</span>&nbsp;&nbsp;Onayını Bekleyen:<span class="font-weight-bold">@Model.OnayimiBekleyenIlanlar.Count()</span></p>
         </div>
         <div class="col-md-2">
             <!--şimdilikboş-->

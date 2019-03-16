@@ -197,8 +197,8 @@
                                         <h5 class="card-title cs-renk">@item.Baslik</h5>
                                     </a>
                                     <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @item.Kontenjan</div>
-                                    <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler</div>
-                                    <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar</div>
+                                    <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @item.Katilanlar.Where(i => i.Onay == false).Count()</div>
+                                    <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @item.Katilanlar.Where(i => i.Onay == true).Count()</div>
                                     <div>
 
                                     </div>
@@ -285,8 +285,8 @@
                                 <h5 class="card-title cs-renk">@item.Baslik</h5>
                             </a>
                             <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @item.Kontenjan</div>
-                            <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler</div>
-                            <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar</div>
+                            <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @item.Katilanlar.Where(i => i.Onay == false).Count()</div>
+                            <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @item.Katilanlar.Where(i => i.Onay == true).Count()</div>
                             <div>
 
                             </div>
@@ -351,7 +351,4 @@
             }
         </div>
     </div>
-
-
-
 </div>

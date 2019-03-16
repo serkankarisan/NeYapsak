@@ -14,5 +14,6 @@ namespace NeYapsak.PL.Models
         public HttpPostedFileBase PictureUpload { get; set; }
         public int IlgilendigiIlanSayisi { get; set; }
         public int KatildigiIlanSayisi { get; set; }
+        public List<Ilan> OnayimiBekleyenIlanlar { get; set; }
     }
 }

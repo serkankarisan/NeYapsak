@@ -98,14 +98,14 @@ namespace NeYapsak.PL.Controllers
         public ActionResult OtherProfile(string Id)
         {
             Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
-            Repository<Ilgilenen> repoIlg = new Repository<Ilgilenen>(new NeYapsakContext());
             Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
             Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
             UserViewModel usermodel = new UserViewModel();
             usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == Id).FirstOrDefault();
             usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == Id).ToList();
-            usermodel.IlgilendigiIlanSayisi = repoIlg.GetAll().Where(i => i.KullaniciId == Id).Count();
-            usermodel.KatildigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == Id).Count();
+            usermodel.IlgilendigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay==false).Count();
+            usermodel.KatildigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay == true).Count();
+            usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
             return View(usermodel);
         }
         [HttpPost]
