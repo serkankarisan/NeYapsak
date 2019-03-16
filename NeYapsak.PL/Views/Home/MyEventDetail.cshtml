@@ -68,7 +68,7 @@
                     </div>
                     <div class="col-md-3">
                         <!-- Button trigger modal -->
-                        <button id="etk-sil" type="button" class="btn cs-arka-renk" data-toggle="modal" data-target="#exampleModalCenter">
+                        <button id="etk-sil" type="button" class="btn cs-arka-renk" data-toggle="modal" data-target="#etkinlikSilModalCenter">
                             Etkinliği Sil
                         </button>
                        
@@ -77,11 +77,11 @@
                 </div>
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="etkinlikSilModalCenter" tabindex="-1" role="dialog" aria-labelledby="etkinlikSilModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Etkinlik Silinsin Mi?</h5>
+                            <h5 class="modal-title" id="etkinlikSilModalLongTitle">Etkinlik Silinsin Mi?</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -113,6 +113,12 @@
             etksilBtn.style.display = "none";
             etkIlce.style.display = "none";
             selectIlce.style.display = "block";
+            var seciliilce = $("#etk-ilce").val();
+            $("#etk-ilce-sec > option").each(function (i) {
+                if (this.value === seciliilce) {
+                    selectIlce.selectedIndex = i;
+                }
+            });
             $(".form-control").removeAttr("readonly");
             $("#etk-il").attr('readonly', true);
             $("#etk-OlusturmaTarihi").attr('readonly', true);
