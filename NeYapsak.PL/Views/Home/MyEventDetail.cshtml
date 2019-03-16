@@ -67,8 +67,32 @@
                         <a id="etk-duzenle" href="#etk-ols" class="btn cs-arka-renk" onclick="myetkFunction();">Etkinliği Düzenle</a>
                     </div>
                     <div class="col-md-3">
-                        <a id="etk-sil" href="/Home/EtkSil/@Model.Id" class="btn cs-arka-renk">Etkinliği Sil</a>
+                        <!-- Button trigger modal -->
+                        <button id="etk-sil" type="button" class="btn cs-arka-renk" data-toggle="modal" data-target="#exampleModalCenter">
+                            Etkinliği Sil
+                        </button>
+                       
                         <button id="etk-kaydet" type="submit" class="btn cs-arka-renk" style="display:none;">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Etkinlik Silinsin Mi?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                          Merhaba @Model.User.Name etkinliği silmek istediğine emin misin?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                            <a href="/Home/EtkSil/@Model.Id" class="btn cs-arka-renk">Etkinliği Sil</a>
+                        </div>
                     </div>
                 </div>
             </div>
