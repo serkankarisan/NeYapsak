@@ -144,7 +144,6 @@ namespace NeYapsak.Entity.Entity
         public bool Silindi { get => _silindi; set => _silindi = value; }
 
         public virtual List<Etiket> Etiketler { get; set; }
-        public virtual List<Ilgilenen> Ilgilenenler { get; set; }
         public virtual List<Katilan> Katilanlar { get; set; }
         public virtual List<IlanHareket> IlanHareketler { get; set; }
 

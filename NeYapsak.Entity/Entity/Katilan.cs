@@ -18,6 +18,7 @@ namespace NeYapsak.Entity.Entity
         private int _ilanId;
         private string _kullaniciId;
         private DateTime _tarih;
+        private bool _onay;
         private bool _silindi;
         #endregion
 
@@ -36,8 +37,11 @@ namespace NeYapsak.Entity.Entity
 
         [ForeignKey("KullaniciId")]
         public virtual ApplicationUser User { get; set; }
+        public bool Onay { get => _onay; set => _onay = value; }
+
         public Katilan()
         {
+            Onay = false;
             Silindi = false;
         }
     }

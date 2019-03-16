@@ -78,7 +78,6 @@
     <Compile Include="Entity\Etiket.cs" />
     <Compile Include="Entity\Ilan.cs" />
     <Compile Include="Entity\IlanHareket.cs" />
-    <Compile Include="Entity\Ilgilenen.cs" />
     <Compile Include="Entity\Katilan.cs" />
     <Compile Include="Entity\SikayetVeOneri.cs" />
     <Compile Include="Identity\ApplicationRole.cs" />
