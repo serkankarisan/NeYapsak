@@ -103,8 +103,8 @@ namespace NeYapsak.PL.Controllers
             UserViewModel usermodel = new UserViewModel();
             usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == Id).FirstOrDefault();
             usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == Id).ToList();
-            usermodel.IlgilendigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay==false).Count();
-            usermodel.KatildigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay == true).Count();
+            usermodel.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == false).Select(k => k.Ilan).Distinct().ToList();
+            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == true).Select(k => k.Ilan).Distinct().ToList();
             usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
             return View(usermodel);
         }
@@ -203,6 +203,37 @@ namespace NeYapsak.PL.Controllers
 
             }
             return View("MyEventDetail", etk);
+        }
+        //[HttpPost]
+        public JsonResult KatilmaIstegi(int iId)
+        {
+            string result = "false";
+            Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
+            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            Katilan kat = new Katilan();
+            foreach (Katilan item in repoI.Get(i => i.Id == iId).Katilanlar)
+            {
+                if (item.KullaniciId == HttpContext.User.Identity.GetUserId())
+                {
+                    ModelState.AddModelError("", "Daha Önce Katılma İsteği Gönderdiniz!");
+                    result = "Daha Önce Katılma İsteği Gönderdiniz!";
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            kat.IlanId = iId;
+            kat.KullaniciId = HttpContext.User.Identity.GetUserId();
+            kat.Tarih = DateTime.Now;
+            kat.Silindi = false;
+            kat.Onay = false;
+            if (repoK.Add(kat))
+            {
+                result = "true";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
+            return Json(result,JsonRequestBehavior.AllowGet);
         }
     }
 }
