@@ -90,7 +90,7 @@
                 </div>
 
             }
-            <p class="text-normal cs-renk-tab">Düzenlediği: <span class="font-weight-bold">@item.KullaniciIlanlari.Count()</span>&nbsp;&nbsp; Katıldığı: <span class="font-weight-bold">@item.KatildigiIlanSayisi</span>&nbsp;&nbsp;İlgilendiği:<span class="font-weight-bold">@item.IlgilendigiIlanSayisi</span>&nbsp;&nbsp;Onayımı Bekleyen:<span class="font-weight-bold">@item.OnayimiBekleyenIlanlar.Count()</span></p>
+            <p class="text-normal cs-renk-tab">Düzenlediğim: <span class="font-weight-bold">@item.KullaniciIlanlari.Count()</span>&nbsp;&nbsp; Katıldığım: <span class="font-weight-bold">@item.KatildigiIlanlar.Count()</span>&nbsp;&nbsp;İlgilendiğim: <span class="font-weight-bold">@item.IlgilendigiIlanlar.Count()</span>&nbsp;&nbsp;Onayımı Bekleyen: <span class="font-weight-bold">@item.OnayimiBekleyenIlanlar.Count()</span></p>
         </div>
         <div class="col-md-2">
             <!--şimdilikboş-->
@@ -166,7 +166,12 @@
                                             <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
                                             <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
                                             <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
-                                            <td> <a id="etk-duzenle" href="/Home/MyEventDetail/@userviewilan.Id" class="btn cs-arka-renk">Onay İşlemleri</a></td>
+                                            <td> <a id="etk-duzenle" href="#" class="btn cs-arka-renk">
+                                                     <div class="row">
+                                                             <div class="col-md-9" style="padding-right:0px;">Onay İşlemleri</div>
+                                                             <div class="col-md-1" style="text-shadow: 2px 2px 3px #000;color:white;font-weight:bold">@userviewilan.Katilanlar.Where(i => i.Onay == false).Count()</div>
+                                                     </div>
+                                                 </a></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -185,7 +190,28 @@
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        <div class="row">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>İlan Başlığı</th>
+                                        <th>Oluşturulma Tarihi</th>
+                                        <th>Başlangıç Tarihi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.IlgilendigiIlanlar)
+                                    {
+                                        <tr>
+                                            <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                            <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
+                                            <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
+                                            <td> <a id="etk-duzenle" href="#" class="btn cs-arka-renk">Vazgeç</a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -12,8 +12,8 @@ namespace NeYapsak.PL.Models
         public ApplicationUser Kullanici { get; set; }
         public List<Ilan> KullaniciIlanlari { get; set; }
         public HttpPostedFileBase PictureUpload { get; set; }
-        public int IlgilendigiIlanSayisi { get; set; }
-        public int KatildigiIlanSayisi { get; set; }
+        public List<Ilan> IlgilendigiIlanlar { get; set; }
+        public List<Ilan> KatildigiIlanlar { get; set; }
         public List<Ilan> OnayimiBekleyenIlanlar { get; set; }
     }
 }
