@@ -1,5 +1,6 @@
 ﻿@model NeYapsak.Entity.Entity.Ilan
 @{
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     Layout = "~/Views/Shared/_Layout-2-TopMenu-Details.cshtml";
 }
 
@@ -42,9 +43,76 @@
                 <label class="etk-ols-lbl">Etiketler: </label>Tıklanabilir etiketler <br>
             </div><br>
             <div class="justify-content-center row">
-                <div class="align-items-center"> <button type="submit" class="btn cs-arka-renk">Katılma İsteği Gönder</button>&nbsp; <button type="submit" class="btn cs-arka-renk">Mesaj Gönder</button></div>
+                <div class="align-items-center">
+                    <a id="katilmak" href="#" data-id="@Model.Id" class="btn cs-arka-renk katilmaistek"><i class="fa fa-plus"></i> Katılma İsteği Gönder</a>&nbsp; <button type="submit" class="btn cs-arka-renk">Mesaj Gönder</button></div>
             </div>
         </div>
     </div>
     <!--- \\\\\\\Etkinlik Oluşturma Bitiş-->
 </div>
+<!-- Modal -->
+<div class="modal fade" id="KatilmaModalCenter" tabindex="-1" role="dialog" aria-labelledby="KatilmaModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="KatilmaModalLongTitle"></h5>
+                <button id="modal-cik" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-bodyy" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button id="modal-tamam" type="button" class="btn btn-secondary" data-dismiss="modal">Tamam</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ktldurum = "";
+        $(".katilmaistek").click(function () {
+            var ID = $(this).data("id");
+            sontiklananetkId = ID;
+            $.ajax({
+                type: "POST",
+                url: '/Home/KatilmaIstegi',
+                data: { iId: ID },
+                success: function (result) {
+                    if (result === "true") {
+                        $('#KatilmaModalLongTitle').attr("class", "text-success")
+                        $('#KatilmaModalLongTitle').text("İstek Gönderildi");
+                        $('#modal-bodyy').text("Katılma İsteğini etkinlik Sahibine İlettik.");
+                    }
+                    else if (result === "false") {
+                        $('#KatilmaModalLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalLongTitle').text("İstek Gönderilemedi");
+                        $('#modal-bodyy').text("Katılma İsteğini etkinlik Sahibine İletemedik.");
+                    }
+                    else {
+                        $('#KatilmaModalLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalLongTitle').text("İstek Gönderilemedi");
+                        $('#modal-bodyy').text(result);
+                    }
+                    ktldurum = result;
+                    $('#KatilmaModalCenter').modal('show');
+                }
+            });
+        });
+        $("#modal-tamam").click(function () {
+            console.log("tmm clk" + sontiklananetkId);
+            if (ktldurum === "true") {
+                window.location.href = "/Home/Main";
+
+            }
+        });
+        $("#modal-cik").click(function () {
+            console.log("cik clk" + sontiklananetkId);
+            if (ktldurum === "true") {
+                window.location.href = "/Home/Main";
+
+            }
+        });
+    });
+</script>

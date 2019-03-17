@@ -5,6 +5,32 @@
     ViewBag.Title = "User";
     Layout = "~/Views/Shared/_Layout-3-TopMenu-User.cshtml";
 }
+<style type="text/css">
+    .btn-sekillendir-sml {
+        display: block;
+        border-radius: 20px;
+        background-color: transparent;
+        position: relative;
+        width: 125px;
+        margin: 0 auto 1px;
+        padding: 1px 0;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-align: center;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 2px;
+        color: #f74c3c;
+        border: 2px solid #f74c3c;
+        transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .btn-sekillendir-sml:hover {
+            color: #e7e6f1;
+            background: #f74c3c;
+            box-shadow: 0 6px 12px -4px rgba(0, 0, 0, 0.3);
+        }
+</style>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <div class="container emp-profile">
     <div class="row">
@@ -63,28 +89,26 @@
             {
                 @Html.AntiForgeryToken()
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-10">
 
                         <p id="hk-bilgisi" class="text-normal cs-renk-tab">@item.Kullanici.Bio</p>
                         <div id="hkyenigir" class="row" style="display:none;">
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" cols="20" data-val="true" data-val-length="Bio Bio karakterden uzun olmamalıdır!" data-val-length-max="300" id="hkyeni" maxlength="300" minlength="10" name="Kullanici.Bio" placeholder="Etkinliğini 300 karakter ile açıkla" required="True" rows="2" style="width: 275px;height:100px;">@item.Kullanici.Bio</textarea>
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" cols="20" data-val="true" data-val-length="Bio Bio karakterden uzun olmamalıdır!" data-val-length-max="300" id="hkyeni" maxlength="300" minlength="10" name="Kullanici.Bio" placeholder="Etkinliğini 300 karakter ile açıkla" required="True" rows="3">@item.Kullanici.Bio</textarea>
                                         @Html.ValidationMessageFor(model => model.Kullanici.Bio, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
                         </div><br />
                     </div>
-                    <div class="col-md-4 text-left">
+                    <div class="col-md-2 text-left">
                         <div class="row justify-content">
-                            <input type="submit" style="display:none" id="hkkaydet" name="hkkaydet" value="Kaydet" class="btn cs-arka-renk btn-sm mb-1" />
+                            <input type="submit" style="display:none" id="hkkaydet" name="hkkaydet" value="Kaydet" class="btn btn-sekillendir-sml btn-sm mb-1" />
                         </div>
                         <div class="row justify-content">
-                            <button type="button" id="hkduzenle" name="button" class="btn cs-arka-renk btn-sm mb-1 ">Düzenle</button>
+                            <button type="button" id="hkduzenle" name="button" class="btn btn-sekillendir-sml btn-sm mb-1 ">Düzenle</button>
                         </div>
                     </div>
                 </div>
@@ -124,14 +148,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami==true).ToList())
+                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).ToList())
                                         {
-                                        <tr>
-                                            <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
-                                            <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
-                                            <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
-                                            <td> <a id="etk-duzenle" href="/Home/MyEventDetail/@userviewilan.Id" class="btn cs-arka-renk">İncele</a></td>
-                                        </tr>
+                                            <tr>
+                                                <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
+                                                <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
+                                                <td> <a id="etk-duzenle" href="/Home/MyEventDetail/@userviewilan.Id" class="btn btn-sekillendir-sml">İncele</a></td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -166,12 +190,14 @@
                                             <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
                                             <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
                                             <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
-                                            <td> <a id="etk-duzenle" href="#" class="btn cs-arka-renk">
-                                                     <div class="row">
-                                                             <div class="col-md-9" style="padding-right:0px;">Onay İşlemleri</div>
-                                                             <div class="col-md-1" style="text-shadow: 2px 2px 3px #000;color:white;font-weight:bold">@userviewilan.Katilanlar.Where(i => i.Onay == false).Count()</div>
-                                                     </div>
-                                                 </a></td>
+                                            <td>
+                                                <a id="etk-duzenle" href="#" class="btn cs-arka-renk">
+                                                    <div class="row">
+                                                        <div class="col-md-9" style="padding-right:0px;">Onay İşlemleri</div>
+                                                        <div class="col-md-1" style="text-shadow: 2px 2px 3px #000;color:white;font-weight:bold">@userviewilan.Katilanlar.Where(i => i.Onay == false).Count()</div>
+                                                    </div>
+                                                </a>
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
@@ -206,7 +232,7 @@
                                             <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
                                             <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
                                             <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
-                                            <td> <a id="etk-duzenle" href="#" class="btn cs-arka-renk">Vazgeç</a></td>
+                                            <td> <a id="ktl-iptal" href="#" data-id="@userviewilan.Id" class="btn btn-sekillendir-sml ktl-iptal">Vazgeç</a></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -215,6 +241,29 @@
                     </div>
                 </div>
             </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="KatilmaModalCenter" tabindex="-1" role="dialog" aria-labelledby="KatilmaModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="KatilmaModalLongTitle"></h5>
+                            <button id="modal-cik" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div id="modal-bodyy" class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button id="modal-tamam" type="button" class="btn btn-secondary" data-dismiss="modal">Tamam</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="card">
                 <div class="card-header" id="headingFour">
                     <h5 class="mb-0 text-center">
@@ -273,4 +322,49 @@
         }
     });
 
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".ktl-iptal").click(function () {
+            var ID = $(this).data("id");
+            console.log("click" + ID);
+            $.ajax({
+                //console.log("ajax");
+                type: "POST",
+                url: '/Home/KatilmaIptal',
+                data: { iIdIptal: ID },
+                success: function (result) {
+                    if (result === "true") {
+                        console.log("true" + ID);
+                        $('#KatilmaModalLongTitle').attr("class", "text-success")
+                        $('#KatilmaModalLongTitle').text("İşlem Başarılı");
+                        $('#modal-bodyy').text("Katılma İsteğini Geri Çektik.");
+                    }
+                    else{
+                        console.log("false" + ID);
+                        $('#KatilmaModalLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
+                        $('#modal-bodyy').text("Katılma İsteğini Geri Alamadık!.");
+                    }
+                    ktldurum = result;
+                    $('#KatilmaModalCenter').modal('show');
+                }
+            });
+        });
+        $("#modal-tamam").click(function () {
+            console.log("tmm clk");
+            if (ktldurum === "true") {
+                window.location.href = "/Home/MyProfile";
+
+            }
+        });
+        $("#modal-cik").click(function () {
+            console.log("cik clk");
+            if (ktldurum === "true") {
+                window.location.href = "/Home/MyProfile";
+
+            }
+        });
+    });
 </script>

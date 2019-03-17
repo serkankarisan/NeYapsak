@@ -24,9 +24,9 @@ namespace NeYapsak.PL.Controllers
             UserViewModel usermodel = new UserViewModel();
             usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
             usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
-            usermodel.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == false).Select(k => k.Ilan).Distinct().ToList();
-            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == true).Select(k => k.Ilan).Distinct().ToList();
-            usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false).Select(k => k.Ilan).Distinct().Where(i=>i.KullaniciId== HttpContext.User.Identity.GetUserId()).ToList();
+            usermodel.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == false && k.Silindi==false).Select(k => k.Ilan).Distinct().ToList();
+            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == true && k.Silindi==false).Select(k => k.Ilan).Distinct().ToList();
+            usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi==false).Select(k => k.Ilan).Distinct().Where(i=>i.KullaniciId== HttpContext.User.Identity.GetUserId() && i.Silindi==false).ToList();
             ViewBag.user = usermodel;
 
             base.OnActionExecuting(filterContext);

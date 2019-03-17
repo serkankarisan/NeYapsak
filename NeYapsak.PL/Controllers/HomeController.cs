@@ -103,9 +103,9 @@ namespace NeYapsak.PL.Controllers
             UserViewModel usermodel = new UserViewModel();
             usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == Id).FirstOrDefault();
             usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == Id).ToList();
-            usermodel.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == false).Select(k => k.Ilan).Distinct().ToList();
-            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == true).Select(k => k.Ilan).Distinct().ToList();
-            usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
+            usermodel.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay == false && k.Silindi==false).Select(k => k.Ilan).Distinct().ToList();
+            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
+            usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == Id && i.Silindi == false).ToList();
             return View(usermodel);
         }
         [HttpPost]
@@ -204,20 +204,32 @@ namespace NeYapsak.PL.Controllers
             }
             return View("MyEventDetail", etk);
         }
-        //[HttpPost]
+        [HttpPost]
         public JsonResult KatilmaIstegi(int iId)
         {
             string result = "false";
             Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
-            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             Katilan kat = new Katilan();
-            foreach (Katilan item in repoI.Get(i => i.Id == iId).Katilanlar)
+            foreach (Katilan item in repoK.GetAll(k => k.IlanId == iId).ToList())
             {
                 if (item.KullaniciId == HttpContext.User.Identity.GetUserId())
                 {
-                    ModelState.AddModelError("", "Daha Önce Katılma İsteği Gönderdiniz!");
-                    result = "Daha Önce Katılma İsteği Gönderdiniz!";
-                    return Json(result, JsonRequestBehavior.AllowGet);
+                    if (item.Silindi == true)
+                    {
+                        item.Silindi = false;
+                        if (repoK.Update(item))
+                        {
+                            result = "true";
+                            return Json(result, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Daha Önce Katılma İsteği Gönderdiniz!");
+                        result = "Daha Önce Katılma İsteği Gönderdiniz!";
+                        return Json(result, JsonRequestBehavior.AllowGet);
+                    }
+                   
                 }
             }
 
@@ -233,7 +245,21 @@ namespace NeYapsak.PL.Controllers
 
             }
 
-            return Json(result,JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult KatilmaIptal(int iIdIptal)
+        {
+            string result = "false";
+            Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
+            Katilan katilan = repoK.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.IlanId == iIdIptal).FirstOrDefault();
+            katilan.Silindi = true;
+            if (repoK.Delete(katilan.Id))
+            {
+                result = "true";
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
