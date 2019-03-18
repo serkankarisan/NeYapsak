@@ -191,10 +191,10 @@
                                             <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
                                             <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
                                             <td>
-                                                <a id="etk-duzenle" href="#" class="btn cs-arka-renk">
+                                                <a id="etk-duzenle" href="/Home/EventConfirmPage/@userviewilan.Id" class="btn cs-arka-renk">
                                                     <div class="row">
-                                                        <div class="col-md-9" style="padding-right:0px;">Onay İşlemleri</div>
-                                                        <div class="col-md-1" style="text-shadow: 2px 2px 3px #000;color:white;font-weight:bold">@userviewilan.Katilanlar.Where(i => i.Onay == false).Count()</div>
+                                                        <div class="col-md-9" style="color:white;padding-right:0px;">Onay İşlemleri</div>
+                                                        <div class="col-md-1" style="text-shadow: 2px 2px 3px #000;color:white;font-weight:bold">@userviewilan.Katilanlar.Where(i => i.Onay == false && i.Silindi==false).Count()</div>
                                                     </div>
                                                 </a>
                                             </td>
@@ -294,7 +294,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 <script type="text/javascript">
     

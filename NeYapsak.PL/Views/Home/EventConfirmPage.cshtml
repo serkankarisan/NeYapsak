@@ -1,0 +1,159 @@
+﻿@model NeYapsak.Entity.Entity.Ilan
+@{
+    ViewBag.Title = "EventConfirmPage";
+    Layout = "~/Views/Shared/_Layout-3-TopMenu-User.cshtml";
+}
+
+<style type="text/css">
+    .btn-sekillendir-sml {
+        display: block;
+        border-radius: 20px;
+        background-color: transparent;
+        position: relative;
+        width: 125px;
+        margin: 0 auto 1px;
+        padding: 1px 0;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-align: center;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 2px;
+        color: #f74c3c;
+        border: 2px solid #f74c3c;
+        transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .btn-sekillendir-sml:hover {
+            color: #e7e6f1;
+            background: #f74c3c;
+            box-shadow: 0 6px 12px -4px rgba(0, 0, 0, 0.3);
+        }
+</style>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<div class="container emp-profile">
+    <div class="card-body">
+        @{NeYapsak.PL.Models.UserViewModel item = new NeYapsak.PL.Models.UserViewModel();
+            item = ViewBag.user;
+        }
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>İlan Başlığı</th>
+                        <th>Oluşturulma Tarihi</th>
+                        <th>Başlangıç Tarihi</th>
+                    </tr>
+                    <tr>
+                        <th><p><a href="/Home/MyEventDetail/@Model.Id" class="cs-renk">@Model.Baslik</a></p></th>
+                        <th><p class="text-muted">@Model.OlusturmaTarihi</p></th>
+                        <th><p class="text-muted">@Model.BaslangicTarihi</p></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Katılmak İsteyen</th>
+                        <th>İstek Tarihi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.OnayimiBekleyenIlanlar)
+                    {
+
+                        foreach (NeYapsak.Entity.Entity.Katilan katilanlari in userviewilan.Katilanlar.Where(k=>k.Silindi==false && k.Onay==false))
+                        {
+                            <tr>
+                                <td><img class="rounded-circle" width="45" height="45" src="@katilanlari.User.ProfilAvatarYolu" alt=""></td>
+                                <td><p class="text-muted">@katilanlari.User.Name @katilanlari.User.Surname</p></td>
+                                <td><p class="text-muted">@katilanlari.Tarih</p></td>
+                                <td>
+                                    <div class="row">
+                                        <a id="ktl-iptal" href="#" data-id="@katilanlari.Id" class="btn btn-sekillendir-sml ktl-iptal">Onayla</a><a id="ktl-iptal" href="#" data-id="@katilanlari.Id" class="btn btn-sekillendir-sml ktl-iptal">Reddet</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="KatilmaModalCenter" tabindex="-1" role="dialog" aria-labelledby="KatilmaModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="KatilmaModalLongTitle"></h5>
+                <button id="modal-cik" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-bodyy" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button id="modal-tamam" type="button" class="btn btn-secondary" data-dismiss="modal">Tamam</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+         var EtkId=@Model.Id;
+        $(".ktl-iptal").click(function () {
+            var ID = $(this).data("id");
+            console.log(this.text);
+            var DR = "";
+            if (this.text === "Onayla") {
+                DR = "Onayla";
+            }
+            else if (this.text === "Reddet") {
+                DR = "Reddet";
+            }
+            console.log("click" + ID + DR + EtkId);
+            $.ajax({
+                //console.log("ajax");
+                type: "POST",
+                url: '/Home/EtkOnayla',
+                data: { kIDOnay: ID, durum: DR },
+                success: function (result) {
+                    if (result === "true") {
+                        console.log("true" + ID);
+                        $('#KatilmaModalLongTitle').attr("class", "text-success")
+                        $('#KatilmaModalLongTitle').text("İşlem Başarılı");
+                        $('#modal-bodyy').text("Katılma İsteğini Geri Çektik.");
+                    }
+                    else {
+                        console.log("false" + ID);
+                        $('#KatilmaModalLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
+                        $('#modal-bodyy').text("Katılma İsteğini Geri Alamadık!.");
+                    }
+                    ktldurum = result;
+                    $('#KatilmaModalCenter').modal('show');
+                }
+            });
+        });
+        $("#modal-tamam").click(function () {
+            console.log("tmm clk");
+            if (ktldurum === "true") {
+                window.location.href = "/Home/EventConfirmPage/" + EtkId;
+            }
+        });
+        $("#modal-cik").click(function () {
+            console.log("cik clk");
+            if (ktldurum === "true") {
+                window.location.href = "/Home/EventConfirmPage/" + EtkId;
+            }
+        });
+    });
+</script>

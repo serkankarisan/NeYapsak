@@ -261,5 +261,33 @@ namespace NeYapsak.PL.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult EtkOnayla(int kIDOnay,string durum)
+        {
+            string result = "false";
+            Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
+            Katilan katilan = repoK.GetAll().Where(k =>k.Id == kIDOnay).FirstOrDefault();
+            if (durum=="Onayla")
+            {
+                katilan.Onay = true;
+            }
+            else if (durum == "Reddet")
+            {
+                katilan.Silindi = true;
+            }
+            if (repoK.Update(katilan))
+            {
+                result = "true";
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [Authorize]
+        public ActionResult EventConfirmPage(int Id)
+        {
+            UserViewModel uvmodel =new UserViewModel();
+            uvmodel = ViewBag.user;
+            return View(uvmodel.OnayimiBekleyenIlanlar.Where(i=>i.Id==Id).FirstOrDefault());
+        }
     }
 }
