@@ -32,10 +32,113 @@
 </style>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <div class="container emp-profile">
+
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>İlan Başlığı</th>
+                    <th>Oluşturulma Tarihi</th>
+                    <th>Başlangıç Tarihi</th>
+                </tr>
+                <tr>
+                    <th><p><a href="/Home/MyEventDetail/@Model.Id" class="cs-renk">@Model.Baslik</a></p></th>
+                    <th><p class="text-muted">@Model.OlusturmaTarihi</p></th>
+                    <th><p class="text-muted">@Model.BaslangicTarihi</p></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <!-- Onaylanmışlar -->
     <div class="card-body">
         @{NeYapsak.PL.Models.UserViewModel item = new NeYapsak.PL.Models.UserViewModel();
             item = ViewBag.user;
+            List<NeYapsak.Entity.Entity.Ilan> Onaylanmislar = ViewBag.Onayladiklarim;
         }
+        @if (Onaylanmislar.Count() == 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Onay Bekleyen Etkinlik Bulunamadı.</th>
+                    </tr>
+                </thead>
+            </table>
+        }
+        else if (Onaylanmislar.Count() != 0)
+        {
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Onay Bekleyen İstekler</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Katılmak İsteyen</th>
+                            <th>İstek Tarihi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in Onaylanmislar)
+                        {
+
+                            foreach (NeYapsak.Entity.Entity.Katilan katilanlar in userviewilan.Katilanlar.Where(k => k.Silindi == false && k.Onay == true))
+                            {
+                                <tr>
+                                    <td><img class="rounded-circle" width="45" height="45" src="@katilanlar.User.ProfilAvatarYolu" alt=""></td>
+                                    <td><p class="text-muted">@katilanlar.User.Name @katilanlar.User.Surname</p></td>
+                                    <td><p class="text-muted">@katilanlar.Tarih</p></td>
+                                    <td>
+                                        <div class="row">
+                                            <!-- Button trigger modal -->
+                                            <button id="btn-onay-iptal" type="button" class="btn btn-sekillendir-sml " data-toggle="modal" data-target="#ConfirmModalIptal">
+                                                İptal Et
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="ConfirmModalIptal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalIptalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="ConfirmModalIptalLabel"></h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div id="confirm-iptal-modal-bodyy" class="modal-body">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="row">
+                                                                <div class="col-md-3">&nbsp;</div>
+                                                                <a id="ktl-onay-iptal" href="#" data-id="@katilanlar.Id" class="btn btn-sekillendir-sml col-md-3 ktl-onay-iptal">Evet</a>
+                                                                <button type="button" class="btn btn-sekillendir-sml col-md-3" data-dismiss="modal">İptal</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+
+    <!-- Onay Bekleyenler -->
+    <div class="card-body">
         @if (item.OnayimiBekleyenIlanlar.Count() == 0)
         {
             <table class="table">
@@ -52,14 +155,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>İlan Başlığı</th>
-                            <th>Oluşturulma Tarihi</th>
-                            <th>Başlangıç Tarihi</th>
-                        </tr>
-                        <tr>
-                            <th><p><a href="/Home/MyEventDetail/@Model.Id" class="cs-renk">@Model.Baslik</a></p></th>
-                            <th><p class="text-muted">@Model.OlusturmaTarihi</p></th>
-                            <th><p class="text-muted">@Model.BaslangicTarihi</p></th>
+                            <th>Onay Bekleyen İstekler</th>
                         </tr>
                     </thead>
                 </table>
@@ -158,6 +254,12 @@
         $('#ConfirmModalLabel').text("Emin Misin?");
         $('#confirm-modal-bodyy').text("Katılma İsteğini Onaylamak İstediğine Emin Misin?");
     });
+    $("#btn-onay-iptal").click(function () {
+        console.log(this.text);
+        $('#ConfirmModalIptalLabel').attr("class", " text-info")
+        $('#ConfirmModalIptalLabel').text("Emin Misin?");
+        $('#confirm-iptal-modal-bodyy').text("Katılanlardan Çıkarmak İstediğine Emin Misin?");
+    });
     $("#btn-reddet").click(function () {
         console.log(this.text);
         btnModalRed.style.display = "block";
@@ -221,6 +323,35 @@
             if (ktldurum === "true") {
                 window.location.href = "/Home/EventConfirmPage/" + EtkId;
             }
+        });
+
+        $(".ktl-onay-iptal").click(function () {
+            $('#ConfirmModalIptal').modal('hide');
+            var ID = $(this).data("id");
+            var btntext = this.text;
+            console.log(this.text);
+            $.ajax({
+                //console.log("ajax");
+                type: "POST",
+                url: '/Home/EtkOnayIptal',
+                data: { kIDOnay: ID},
+                success: function (result) {
+                    if (result === "true") {
+                        console.log("true" + ID);
+                        $('#KatilmaModalLongTitle').attr("class", "text-success")
+                        $('#KatilmaModalLongTitle').text("İşlem Başarılı");
+                            $('#modal-bodyy').text("Katılanlardan Çıkarıldı.");
+                    }
+                    else {
+                        console.log("false" + ID);
+                        $('#KatilmaModalLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
+                        $('#modal-bodyy').text("Katılanlardan Çıkaramadık!.");
+                    }
+                    ktldurum = result;
+                    $('#KatilmaModalCenter').modal('show');
+                }
+            });
         });
     });
 </script>

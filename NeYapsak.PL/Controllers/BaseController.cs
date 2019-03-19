@@ -29,6 +29,8 @@ namespace NeYapsak.PL.Controllers
             usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi==false).Select(k => k.Ilan).Distinct().Where(i=>i.KullaniciId== HttpContext.User.Identity.GetUserId() && i.Silindi==false).ToList();
             ViewBag.user = usermodel;
 
+            ViewBag.Onayladiklarim= repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
             base.OnActionExecuting(filterContext);
         }
     }

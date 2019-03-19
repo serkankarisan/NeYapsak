@@ -250,7 +250,7 @@ namespace NeYapsak.PL.Controllers
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             Repository<ApplicationUser> repoA = new Repository<ApplicationUser>(new NeYapsakContext());
             Ilan i = repoI.GetAll().Where(k => k.Id == iId).FirstOrDefault();
-            ApplicationUser a = repoA.GetAll().Where(au=>au.Id==HttpContext.User.Identity.GetUserId()).FirstOrDefault();
+            ApplicationUser a = repoA.GetAll().Where(au => au.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
             kat.IlanId = iId;
             kat.KullaniciId = HttpContext.User.Identity.GetUserId();
             kat.Tarih = DateTime.Now;
@@ -261,7 +261,7 @@ namespace NeYapsak.PL.Controllers
                 IdentityMessage msg = new IdentityMessage();
                 msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
                 msg.Destination = i.User.Email;
-                msg.Body = "Merhaba " + a.Name+ ", " + i.User.Name + " " + i.User.Surname + " " + i.BaslangicTarihi + " tarihinde yapacağın " + i.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
+                msg.Body = "Merhaba " + a.Name + ", " + i.User.Name + " " + i.User.Surname + " " + i.BaslangicTarihi + " tarihinde yapacağın " + i.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
                 mail.SendMail(msg);
                 result = "true";
                 return Json(result, JsonRequestBehavior.AllowGet);
@@ -321,6 +321,30 @@ namespace NeYapsak.PL.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult EtkOnayIptal(int kIDOnay)
+        {
+            string result = "false";
+            Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
+            Katilan katilan = repoK.GetAll().Where(k => k.Id == kIDOnay).FirstOrDefault();
+            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            Ilan i = repoI.GetAll().Where(k => k.Id == katilan.IlanId).FirstOrDefault();
+
+            katilan.Onay = false;
+            katilan.Silindi = true;
+            if (!repoK.Update(katilan))
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            i.Kontenjan += 1;
+            if (!repoI.Update(i))
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            result = "true";
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [Authorize]
         public ActionResult EventConfirmPage(int Id)
         {
