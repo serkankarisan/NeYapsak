@@ -71,7 +71,7 @@
                         <button id="etk-sil" type="button" class="btn cs-arka-renk" data-toggle="modal" data-target="#etkinlikSilModalCenter">
                             Etkinliği Sil
                         </button>
-                       
+
                         <button id="etk-kaydet" type="submit" class="btn cs-arka-renk" style="display:none;">Kaydet</button>
                     </div>
                 </div>
@@ -87,11 +87,11 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                          Merhaba @Model.User.Name etkinliği silmek istediğine emin misin?
+                            Merhaba @Model.User.Name etkinliği silmek istediğine emin misin?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
                             <a href="/Home/EtkSil/@Model.Id" class="btn cs-arka-renk">Etkinliği Sil</a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
                         </div>
                     </div>
                 </div>
@@ -131,5 +131,11 @@
             $(".form-control").attr('readonly', true);
         }
     }
-
+    var silindi = "@Model.Silindi";
+    var yayin = "@Model.Yayindami";
+    if (silindi === "True" || yayin==="False") {
+        etkduzenleBtn.style.display = "none"
+        etkkaydetBtn.style.display = "none"
+        etksilBtn.style.display = "none"
+    }
 </script>

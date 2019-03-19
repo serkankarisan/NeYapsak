@@ -36,56 +36,97 @@
         @{NeYapsak.PL.Models.UserViewModel item = new NeYapsak.PL.Models.UserViewModel();
             item = ViewBag.user;
         }
-        <div class="row">
+        @if (item.OnayimiBekleyenIlanlar.Count() == 0)
+        {
             <table class="table">
                 <thead>
                     <tr>
-                        <th>İlan Başlığı</th>
-                        <th>Oluşturulma Tarihi</th>
-                        <th>Başlangıç Tarihi</th>
-                    </tr>
-                    <tr>
-                        <th><p><a href="/Home/MyEventDetail/@Model.Id" class="cs-renk">@Model.Baslik</a></p></th>
-                        <th><p class="text-muted">@Model.OlusturmaTarihi</p></th>
-                        <th><p class="text-muted">@Model.BaslangicTarihi</p></th>
+                        <th>Onay Bekleyen Etkinlik Bulunamadı.</th>
                     </tr>
                 </thead>
             </table>
-        </div>
+        }
+        else if (item.OnayimiBekleyenIlanlar.Count() != 0)
+        {
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>İlan Başlığı</th>
+                            <th>Oluşturulma Tarihi</th>
+                            <th>Başlangıç Tarihi</th>
+                        </tr>
+                        <tr>
+                            <th><p><a href="/Home/MyEventDetail/@Model.Id" class="cs-renk">@Model.Baslik</a></p></th>
+                            <th><p class="text-muted">@Model.OlusturmaTarihi</p></th>
+                            <th><p class="text-muted">@Model.BaslangicTarihi</p></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
 
-        <div class="row">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Katılmak İsteyen</th>
-                        <th>İstek Tarihi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.OnayimiBekleyenIlanlar)
-                    {
-
-                        foreach (NeYapsak.Entity.Entity.Katilan katilanlari in userviewilan.Katilanlar.Where(k=>k.Silindi==false && k.Onay==false))
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Katılmak İsteyen</th>
+                            <th>İstek Tarihi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.OnayimiBekleyenIlanlar)
                         {
-                            <tr>
-                                <td><img class="rounded-circle" width="45" height="45" src="@katilanlari.User.ProfilAvatarYolu" alt=""></td>
-                                <td><p class="text-muted">@katilanlari.User.Name @katilanlari.User.Surname</p></td>
-                                <td><p class="text-muted">@katilanlari.Tarih</p></td>
-                                <td>
-                                    <div class="row">
-                                        <a id="ktl-iptal" href="#" data-id="@katilanlari.Id" class="btn btn-sekillendir-sml ktl-iptal">Onayla</a><a id="ktl-iptal" href="#" data-id="@katilanlari.Id" class="btn btn-sekillendir-sml ktl-iptal">Reddet</a>
-                                    </div>
-                                </td>
-                            </tr>
+
+                            foreach (NeYapsak.Entity.Entity.Katilan katilanlar in userviewilan.Katilanlar.Where(k => k.Silindi == false && k.Onay == false))
+                            {
+                                <tr>
+                                    <td><img class="rounded-circle" width="45" height="45" src="@katilanlar.User.ProfilAvatarYolu" alt=""></td>
+                                    <td><p class="text-muted">@katilanlar.User.Name @katilanlar.User.Surname</p></td>
+                                    <td><p class="text-muted">@katilanlar.Tarih</p></td>
+                                    <td>
+                                        <div class="row">
+                                            <!-- Button trigger modal -->
+                                            <button id="btn-onayla" type="button" class="btn btn-sekillendir-sml " data-toggle="modal" data-target="#ConfirmModal">
+                                                Onayla
+                                            </button>
+                                            <button id="btn-reddet" type="button" class="btn btn-sekillendir-sml " data-toggle="modal" data-target="#ConfirmModal">
+                                                Reddet
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="ConfirmModalLabel"></h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div id="confirm-modal-bodyy" class="modal-body">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="row">
+                                                                <div class="col-md-3">&nbsp;</div>
+                                                                <a id="ktl-onay" href="#" data-id="@katilanlar.Id" class="btn btn-sekillendir-sml col-md-3 ktl-iptal">Onayla</a><a id="ktl-red" href="#" data-id="@katilanlar.Id" class="btn btn-sekillendir-sml col-md-3 ktl-iptal">Reddet</a>
+                                                                <button type="button" class="btn btn-sekillendir-sml col-md-3" data-dismiss="modal">İptal</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        }
     </div>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="KatilmaModalCenter" tabindex="-1" role="dialog" aria-labelledby="KatilmaModalCenterTitle" aria-hidden="true">
@@ -107,10 +148,30 @@
     </div>
 </div>
 <script type="text/javascript">
+    var btnModalOnay = document.getElementById("ktl-onay");
+    var btnModalRed = document.getElementById("ktl-red");
+    $("#btn-onayla").click(function () {
+        console.log(this.text);
+        btnModalRed.style.display = "none";
+        btnModalOnay.style.display = "block";
+        $('#ConfirmModalLabel').attr("class", " text-info")
+        $('#ConfirmModalLabel').text("Emin Misin?");
+        $('#confirm-modal-bodyy').text("Katılma İsteğini Onaylamak İstediğine Emin Misin?");
+    });
+    $("#btn-reddet").click(function () {
+        console.log(this.text);
+        btnModalRed.style.display = "block";
+        btnModalOnay.style.display = "none";
+        $('#ConfirmModalLabel').attr("class", " text-info")
+        $('#ConfirmModalLabel').text("Emin Misin?");
+        $('#confirm-modal-bodyy').text("Katılma İsteğini Reddetmek İstediğine Emin Misin?");
+    });
     $(document).ready(function () {
          var EtkId=@Model.Id;
         $(".ktl-iptal").click(function () {
+            $('#ConfirmModal').modal('hide');
             var ID = $(this).data("id");
+            var btntext = this.text;
             console.log(this.text);
             var DR = "";
             if (this.text === "Onayla") {
@@ -130,7 +191,13 @@
                         console.log("true" + ID);
                         $('#KatilmaModalLongTitle').attr("class", "text-success")
                         $('#KatilmaModalLongTitle').text("İşlem Başarılı");
-                        $('#modal-bodyy').text("Katılma İsteğini Geri Çektik.");
+                        if (btntext ==="Onayla") {
+                            $('#modal-bodyy').text("Katılma İsteğini Onayladın.");
+                        }
+                        else if (btntext === "Reddet") {
+                            $('#modal-bodyy').text("Katılma İsteğini Reddettin.");
+                        }
+
                     }
                     else {
                         console.log("false" + ID);

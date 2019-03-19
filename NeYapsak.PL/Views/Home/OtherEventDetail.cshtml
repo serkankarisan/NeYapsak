@@ -44,7 +44,8 @@
             </div><br>
             <div class="justify-content-center row">
                 <div class="align-items-center">
-                    <a id="katilmak" href="#" data-id="@Model.Id" class="btn cs-arka-renk katilmaistek"><i class="fa fa-plus"></i> Katılma İsteği Gönder</a>&nbsp; <button type="submit" class="btn cs-arka-renk">Mesaj Gönder</button></div>
+                    <a id="katilmak" href="#" data-id="@Model.Id" class="btn cs-arka-renk katilmaistek"><i class="fa fa-plus"></i> Katılma İsteği Gönder</a>&nbsp; <button id="mesaj" type="submit" class="btn cs-arka-renk">Mesaj Gönder</button>
+                </div>
             </div>
         </div>
     </div>
@@ -114,5 +115,13 @@
 
             }
         });
+        var btnmsj = document.getElementById("mesaj");
+        var btnktl = document.getElementById("katilmak");
+    var silindi = "@Model.Silindi";
+    var yayin = "@Model.Yayindami";
+        if (silindi === "True" || yayin === "False") {
+            btnktl.style.display = "none"
+            btnmsj.style.display = "none"
+    }
     });
 </script>

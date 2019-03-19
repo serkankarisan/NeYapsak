@@ -132,33 +132,46 @@
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0 text-center">
                             <button id="btncollapseOne" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Yayındaki etkinliklerim
+                                Yayındaki Etkinliklerim
                             </button>
                         </h5>
                     </div>
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
                             <div class="row">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>İlan Başlığı</th>
-                                            <th>Oluşturulma Tarihi</th>
-                                            <th>Başlangıç Tarihi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).ToList())
-                                        {
+                                @if (item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).Count() == 0)
+                                {
+                                    <table class="table">
+                                        <thead>
                                             <tr>
-                                                <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
-                                                <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
-                                                <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
-                                                <td> <a id="etk-duzenle" href="/Home/MyEventDetail/@userviewilan.Id" class="btn btn-sekillendir-sml">İncele</a></td>
+                                                <th>Yayında Etkinliğin Yok.</th>
                                             </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                    </table>
+                                }
+                                else if (item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).Count() != 0)
+                                {
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>İlan Başlığı</th>
+                                                <th>Oluşturulma Tarihi</th>
+                                                <th>Başlangıç Tarihi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).ToList())
+                                            {
+                                                <tr>
+                                                    <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                    <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
+                                                    <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
+                                                    <td> <a id="etk-duzenle" href="/Home/MyEventDetail/@userviewilan.Id" class="btn btn-sekillendir-sml">İncele</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
                             </div>
                         </div>
                     </div>
@@ -168,40 +181,53 @@
                 <div class="card-header" id="headingTwo">
                     <h5 class="mb-0 text-center">
                         <button id="btncollapseTwo" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Onayımı bekleyen etkinlikler
+                            Onayımı Bekleyen Etkinlikler
                         </button>
                     </h5>
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
                         <div class="row">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>İlan Başlığı</th>
-                                        <th>Oluşturulma Tarihi</th>
-                                        <th>Başlangıç Tarihi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.OnayimiBekleyenIlanlar)
-                                    {
+                            @if (item.OnayimiBekleyenIlanlar.Count() == 0)
+                            {
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                            <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
-                                            <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
-                                            <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
-                                            <td>
-                                                <a id="etk-duzenle" href="/Home/EventConfirmPage/@userviewilan.Id" class="btn cs-arka-renk">
-                                                    <div class="row">
-                                                        <div class="col-md-9" style="color:white;padding-right:0px;">Onay İşlemleri</div>
-                                                        <div class="col-md-1" style="text-shadow: 2px 2px 3px #000;color:white;font-weight:bold">@userviewilan.Katilanlar.Where(i => i.Onay == false && i.Silindi==false).Count()</div>
-                                                    </div>
-                                                </a>
-                                            </td>
+                                            <th>Onay Bekleyen Etkinlik Yok.</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                </table>
+                            }
+                            else if (item.OnayimiBekleyenIlanlar.Count() != 0)
+                            {
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>İlan Başlığı</th>
+                                            <th>Oluşturulma Tarihi</th>
+                                            <th>Başlangıç Tarihi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.OnayimiBekleyenIlanlar)
+                                        {
+                                            <tr>
+                                                <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
+                                                <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
+                                                <td>
+                                                    <a id="etk-duzenle" href="/Home/EventConfirmPage/@userviewilan.Id" class="btn cs-arka-renk">
+                                                        <div class="row">
+                                                            <div class="col-md-9" style="color:white;padding-right:0px;">Onay İşlemleri</div>
+                                                            <div class="col-md-1" style="text-shadow: 2px 2px 3px #000;color:white;font-weight:bold">@userviewilan.Katilanlar.Where(i => i.Onay == false && i.Silindi == false).Count()</div>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
                         </div>
                     </div>
                 </div>
@@ -210,33 +236,75 @@
                 <div class="card-header" id="headingThree">
                     <h5 class="mb-0 text-center">
                         <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            İlgilendiğim(Onay beklediğim) etkinlikler
+                            İlgilendiğim(Onay Beklediğim) Etkinlikler
                         </button>
                     </h5>
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
                         <div class="row">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>İlan Başlığı</th>
-                                        <th>Oluşturulma Tarihi</th>
-                                        <th>Başlangıç Tarihi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.IlgilendigiIlanlar)
-                                    {
+                            @if (item.IlgilendigiIlanlar.Count() == 0)
+                            {
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                            <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
-                                            <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
-                                            <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
-                                            <td> <a id="ktl-iptal" href="#" data-id="@userviewilan.Id" class="btn btn-sekillendir-sml ktl-iptal">Vazgeç</a></td>
+                                            <th>İlgilendiğin Etkinlik Yok.</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                </table>
+                            }
+                            else if (item.IlgilendigiIlanlar.Count() != 0)
+                            {
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>İlan Başlığı</th>
+                                            <th>Oluşturulma Tarihi</th>
+                                            <th>Başlangıç Tarihi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.IlgilendigiIlanlar)
+                                        {
+                                            <tr>
+                                                <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
+                                                <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
+                                                <td>
+                                                    <!-- Button trigger modal -->
+                                                    <button id="btn-onayla" type="button" class="btn btn-sekillendir-sml " data-toggle="modal" data-target="#ConfirmModal">
+                                                        Vazgeç
+                                                    </button>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="ConfirmModalLabel">Emin Misin?</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div id="confirm-modal-bodyy" class="modal-body">
+                                                                    Vazgeçmek İstediğine Emin Misin?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <div class="row">
+                                                                        <div class="col-md-3">&nbsp;</div>
+                                                                        <a id="ktl-iptal" href="#" data-id="@userviewilan.Id" class="btn btn-sekillendir-sml col-md-3 ktl-iptal">Vazgeç</a>
+                                                                        <button type="button" class="btn btn-sekillendir-sml col-md-3" data-dismiss="modal">İptal</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
                         </div>
                     </div>
                 </div>
@@ -268,13 +336,47 @@
                 <div class="card-header" id="headingFour">
                     <h5 class="mb-0 text-center">
                         <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                            Daha önce düzenlediğim etkinlikler
+                            Daha Önce Düzenlediğim Etkinlikler
                         </button>
                     </h5>
                 </div>
                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                     <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        <div class="row">
+                            @if (item.KullaniciIlanlari.Where(i => i.Silindi == true || i.Yayindami==false).Count() == 0)
+                            {
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Düzenlediğin Etkinliğin Yok.</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            }
+                            else if (item.KullaniciIlanlari.Where(i => i.Silindi == true || i.Yayindami == false).Count() != 0)
+                            {
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>İlan Başlığı</th>
+                                            <th>Oluşturulma Tarihi</th>
+                                            <th>Başlangıç Tarihi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KullaniciIlanlari.Where(i => i.Silindi == true || i.Yayindami==false).ToList())
+                                        {
+                                            <tr>
+                                                <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
+                                                <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
+                                                <td> <a id="etk-duzenle" href="/Home/MyEventDetail/@userviewilan.Id" class="btn btn-sekillendir-sml">İncele</a></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -282,21 +384,135 @@
                 <div class="card-header" id="headingFive">
                     <h5 class="mb-0 text-center">
                         <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                            Katıldığım etkinlikler
+                            Katılacağım Etkinlikler
                         </button>
                     </h5>
                 </div>
                 <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
                     <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        <div class="row">
+                            @if (item.KatildigiIlanlar.Where(i => i.Yayindami == true && i.Silindi==false).Count() == 0)
+                            {
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Katılacağın Etkinlik Yok.</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            }
+                            else if (item.KatildigiIlanlar.Where(i => i.Yayindami == true && i.Silindi == false).Count() != 0)
+                            {
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>İlan Başlığı</th>
+                                            <th>Oluşturulma Tarihi</th>
+                                            <th>Başlangıç Tarihi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KatildigiIlanlar.Where(i=>i.Yayindami== true && i.Silindi == false).ToList())
+                                        {
+                                            <tr>
+                                                <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
+                                                <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
+                                                <td>
+                                                    <!-- Button trigger modal -->
+                                                    <button id="btn-onayla" type="button" class="btn btn-sekillendir-sml " data-toggle="modal" data-target="#ConfirmModal">
+                                                        Vazgeç
+                                                    </button>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="ConfirmModalLabel">Emin Misin?</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div id="confirm-modal-bodyy" class="modal-body">
+                                                                    Vazgeçmek İstediğine Emin Misin?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <div class="row">
+                                                                        <div class="col-md-3">&nbsp;</div>
+                                                                        <a id="ktl-iptal" href="#" data-id="@userviewilan.Id" class="btn btn-sekillendir-sml col-md-3 ktl-iptal">Vazgeç</a>
+                                                                        <button type="button" class="btn btn-sekillendir-sml col-md-3" data-dismiss="modal">İptal</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header" id="headingSix">
+                    <h5 class="mb-0 text-center">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            Katıldığım Etkinlikler
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="row">
+                            @if (item.KatildigiIlanlar.Where(i => i.Yayindami == false || i.Silindi == true).Count() == 0)
+                            {
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Katıldığın Etkinlik Yok.</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            }
+                            else if (item.KatildigiIlanlar.Where(i => i.Yayindami == false || i.Silindi == true).Count() != 0)
+                            {
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>İlan Başlığı</th>
+                                            <th>Oluşturulma Tarihi</th>
+                                            <th>Başlangıç Tarihi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in item.KatildigiIlanlar.Where(i => i.Yayindami == false || i.Silindi==true).ToList())
+                                        {
+                                        <tr>
+                                            <td><a href="/Home/OtherEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                            <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
+                                            <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
+                                            <td>
+                                            <td> <a id="etk-duzenle" href="/Home/OtherEventDetail/@userviewilan.Id" class="btn btn-sekillendir-sml">İncele</a></td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    
+
     $(document).ready(function () {
         var url = window.location.href.split('#');
         if (url[1] === "collapseTwo") {
@@ -327,6 +543,7 @@
 
         $(".ktl-iptal").click(function () {
             var ID = $(this).data("id");
+            $('#ConfirmModal').modal('hide');
             console.log("click" + ID);
             $.ajax({
                 //console.log("ajax");
@@ -340,7 +557,7 @@
                         $('#KatilmaModalLongTitle').text("İşlem Başarılı");
                         $('#modal-bodyy').text("Katılma İsteğini Geri Çektik.");
                     }
-                    else{
+                    else {
                         console.log("false" + ID);
                         $('#KatilmaModalLongTitle').attr("class", "text-danger")
                         $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
