@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\Etiket.cs" />
+    <Compile Include="Entity\Gorusmeler.cs" />
     <Compile Include="Entity\Ilan.cs" />
     <Compile Include="Entity\IlanHareket.cs" />
     <Compile Include="Entity\Katilan.cs" />

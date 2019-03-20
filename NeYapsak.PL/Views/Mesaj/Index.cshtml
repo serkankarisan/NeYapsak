@@ -1,0 +1,55 @@
+﻿@model NeYapsak.PL.Models.MsgBoxViewModel
+@{
+    Layout = "~/Views/Shared/_Layout-2-TopMenu-Details.cshtml";
+}
+<link href="~/css/mesaj-style.css" rel="stylesheet" />
+<div class="col-md-9 gedf-main">
+    <div class="card gedf-card">
+        <div class="card-header justify-content-center text-center">
+            <strong>MESAJ KUTUM</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 bg-light">
+            <p class="text-center h6">GEÇMİŞ KONUŞMALARIM</p>
+            @Html.HiddenFor(model=>model.UserId, new { @id="bid"})
+            @foreach (var kullanici in Model.Kullanicilar)
+            {
+                <button type="submit" class="row cekcons" data-id="@kullanici.Id">
+                    <div class="col-2 col-md-3">
+                        <img class="rounded-circle" width="45" height="45" src="@kullanici.ProfilAvatarYolu" alt="">
+                    </div>
+                    <div class="col-10 col-md-9">
+                        <div class="h5 m-0"><a href="/Home/OtherProfile?Id=@kullanici.Id" class="cs-renk">@kullanici.Name</a></div>
+                        <div class="h7 text-muted">@kullanici.Name @kullanici.Surname</div>
+                    </div>
+                </button><hr>
+            }
+
+
+        </div>
+        <div class="col-md-8 pre-scrollable" style="min-height:75vh" id="partial-msh">
+            @Html.Action("SohbetGecmisi")
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.cekcons').click(function () {
+            var ArkadasId = $(this).data('id');
+            var BenimId = $("#bid").val();
+            console.log(BenimId);
+            $.ajax({
+                url: '/Mesaj/SohbetGecmisi',
+                type: "POST",
+                data: { AliciId: ArkadasId, GondericiId: BenimId },
+                success: function (result) {
+                    $("#partial-msh").html(result);
+                }
+            })
+        })
+    })
+</script>
+

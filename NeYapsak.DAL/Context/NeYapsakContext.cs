@@ -22,5 +22,6 @@ namespace NeYapsak.DAL.Context
         public virtual DbSet<IlanHareket> IlanHareketler { get; set; }
         public virtual DbSet<Katilan> Katilanlar { get; set; }
         public virtual DbSet<SikayetVeOneri> SikayetVeOneriler { get; set; }
+        public virtual DbSet<Gorusmeler> Gorusmeler { get; set; }
     }
 }

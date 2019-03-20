@@ -164,12 +164,16 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MesajController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginRegisterViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\MsgBoxViewModel.cs" />
+    <Compile Include="Models\MsgHistViewModel.cs" />
+    <Compile Include="Models\MsgModel.cs" />
     <Compile Include="Models\PasswordChangeViewModel.cs" />
     <Compile Include="Models\PasswordResetRequestViewModel.cs" />
     <Compile Include="Models\PasswordResetViewModel.cs" />
@@ -186,6 +190,7 @@
     <Content Include="css\baba-style.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\kullanici-style.css" />
+    <Content Include="css\mesaj-style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -238,6 +243,8 @@
     <Content Include="Views\Home\EtkSil.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Home\EventConfirmPage.cshtml" />
+    <Content Include="Views\Mesaj\Index.cshtml" />
+    <Content Include="Views\Mesaj\SohbetGecmisi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
