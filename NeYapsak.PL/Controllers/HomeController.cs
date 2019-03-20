@@ -23,50 +23,55 @@ namespace NeYapsak.PL.Controllers
             }
             return View();
         }
+
         [Authorize]
         public ActionResult Main()
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            MainViewModel MainModel = new MainViewModel();
 
-            ViewBag.ilanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            MainModel.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
 
-            ViewBag.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
-            return View();
+            MainModel.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+
+            return View(MainModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Main(Ilan model)
+        public ActionResult Main(MainViewModel model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
-            Ilan yeni = new Ilan();
-            yeni.Baslik = model.Baslik;
-
             if (!ModelState.IsValid)
                 return View(model);
 
-            if (model.BaslangicTarihi < DateTime.Now)
+            model.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+
+            model.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+
+            Ilan yeni = new Ilan();
+            yeni.Baslik = model.Ilan.Baslik;
+
+            if (model.Ilan.BaslangicTarihi < DateTime.Now)
             {
                 ModelState.AddModelError("", "Başlangıç Tarihi İleri Bir Tarih Olmalı!");
-                return View("MyEventDetail", model);
+                return View("Main", model);
             }
-            if (model.Kontenjan <= 0)
+            if (model.Ilan.Kontenjan <= 0)
             {
                 ModelState.AddModelError("", "Kontenjan 0'dan Büyük Olmalı!");
-                return View("MyEventDetail", model);
+                return View("Main", model);
             }
-            yeni.BaslangicTarihi = model.BaslangicTarihi;
+            yeni.BaslangicTarihi = model.Ilan.BaslangicTarihi;
             yeni.Il = "İstanbul";
-            yeni.Ilce = model.Ilce;
-            yeni.Kontenjan = model.Kontenjan;
+            yeni.Ilce = model.Ilan.Ilce;
+            yeni.Kontenjan = model.Ilan.Kontenjan;
             yeni.OlusturmaTarihi = DateTime.Now;
             yeni.Silindi = false;
             yeni.Yayindami = true;//Değişecek.
-            yeni.Ozet = model.Ozet;
+            yeni.Ozet = model.Ilan.Ozet;
+            yeni.Konum = "Girilmedi";
             yeni.KullaniciId = HttpContext.User.Identity.GetUserId();
             yeni.GoruntulenmeSayaci = 1;
             if (repoI.Add(yeni))
@@ -75,6 +80,67 @@ namespace NeYapsak.PL.Controllers
             }
             return View(model);
         }
+
+
+        [HttpPost]
+        public JsonResult KatilmaIstegiGonder(int EtkID)
+        {
+            string result = "false";
+            Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
+            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            Repository<ApplicationUser> repoA = new Repository<ApplicationUser>(new NeYapsakContext());
+            ApplicationUser User = repoA.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
+            Katilan kat = new Katilan();
+
+            foreach (Katilan katilan in repoK.GetAll(k => k.IlanId == EtkID).ToList())
+            {
+                if (katilan.KullaniciId == HttpContext.User.Identity.GetUserId())
+                {
+                    if (katilan.Silindi == true)
+                    {
+                        katilan.Silindi = false;
+                        if (repoK.Update(katilan))
+                        {
+                            //IdentityMessage msg = new IdentityMessage();
+                            //msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
+                            //msg.Destination = katilan.Ilan.User.Email;
+                            //msg.Body = "Merhaba " + katilan.Ilan.User.Name + ", " + katilan.User.Name + " " + katilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağın " + katilan.Ilan.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
+                            //mail.SendMail(msg);
+                            result = "true";
+                            return Json(result, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Daha Önce Katılma İsteği Gönderdiniz!");
+                        result = "Daha Önce Katılma İsteği Gönderdiniz!";
+                        return Json(result, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+
+            Ilan i = repoI.GetAll().Where(k => k.Id == EtkID).FirstOrDefault();
+            kat.IlanId = EtkID;
+            kat.KullaniciId = HttpContext.User.Identity.GetUserId();
+            kat.Tarih = DateTime.Now;
+            kat.Silindi = false;
+            kat.Onay = false;
+            if (repoK.Add(kat))
+            {
+                //IdentityMessage msg = new IdentityMessage();
+                //msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
+                //msg.Destination = i.User.Email;
+                //msg.Body = "Merhaba " + i.User.Name + ", " + User.Name + " " + User.Surname + " " + i.BaslangicTarihi + " tarihinde yapacağın " + i.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
+                //mail.SendMail(msg);
+                result = "true";
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
         [Authorize]
         public ActionResult MyEventDetail(int Id)
         {
@@ -87,92 +153,39 @@ namespace NeYapsak.PL.Controllers
             }
             return Redirect("/Home/Main");
         }
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        public ActionResult MyEventDetail(Ilan model)//değişebilir.
-        {
-            return View();
-        }
-        [Authorize]
-        public ActionResult MyProfile()
-        {
-            return View();
-        }
-        [Authorize]
-        public ActionResult OtherProfile(string Id)
-        {
-            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
-            Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
-            Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
-            UserViewModel usermodel = new UserViewModel();
-            usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == Id).FirstOrDefault();
-            usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == Id).ToList();
-            usermodel.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
-            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
-            usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == Id && i.Silindi == false).ToList();
-            return View(usermodel);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public ActionResult MyProfile(UserViewModel model)
-        {
-            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
-            if (model.PictureUpload != null)
-            {
-                //string name = Path.GetFileNameWithoutExtension(model.PictureUpload.FileName);
-                //string ext = Path.GetExtension(model.PictureUpload.FileName);
-                ////Resim upload edilecek.
-                //name = name.Replace(" ", "");
-                string filename = model.PictureUpload.FileName;
-                string imagePath = Server.MapPath("/images/" + filename);
-                model.PictureUpload.SaveAs(imagePath);
-                ApplicationUser degisen = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
-                degisen.ProfilAvatarYolu = "/images/" + filename;
-                if (repoU.Update(degisen))
-                    return RedirectToAction("MyProfile");
-                return View(model);
-            }
-            return View();
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult HKDuzenle(UserViewModel model)
-        {
-            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
-            if (model.Kullanici.Bio != null && model.Kullanici.Bio.Length >= 10)
-            {
-                ApplicationUser degisen = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
-                degisen.Bio = model.Kullanici.Bio;
-                if (repoU.Update(degisen))
-                    return RedirectToAction("MyProfile");
-                return View("MyProfile", model);
-            }
-            return View("MyProfile");
-        }
-        [Authorize]
-        public ActionResult OtherEventDetail(int Id)
+        public ActionResult EtkSil(int Id)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             Ilan etk = repoI.Get(i => i.Id == Id);
-            etk.GoruntulenmeSayaci += 1;
-            if (!repoI.Update(etk))
+            etk.Silindi = true;
+            if (repoI.Delete(Id))
             {
-                ModelState.AddModelError("", "Sayaç Arttırılamadı.");
+                return Redirect("/Home/Main");
+
             }
-            return View(etk);
+            return View("MyEventDetail", etk);
         }
+
+        //[Authorize]
+        //[ValidateAntiForgeryToken]
+        //[HttpPost]
+        //public ActionResult MyEventDetail(Ilan model)//değişebilir.
+        //{
+        //    return View();
+        //}
+
+        //Burada MyEventDetail postu kullanılmıyor MyEventDetail syafasından EtkinlikDuzenle Action'ına post oluyor.
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult EtkDuzenle(Ilan model)
+        public ActionResult EtkinlikDuzenle(Ilan model)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             Ilan degisen = repoI.GetAll().Where(i => i.Id == model.Id).FirstOrDefault();
+
             if (!ModelState.IsValid)
                 return View(degisen);
 
@@ -201,84 +214,112 @@ namespace NeYapsak.PL.Controllers
             }
             return View("MyEventDetail", degisen);
         }
+
+
         [Authorize]
-        public ActionResult EtkSil(int Id)
+        public ActionResult MyProfile()
         {
-            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
-            Ilan etk = repoI.Get(i => i.Id == Id);
-            etk.Silindi = true;
-            if (repoI.Delete(Id))
-            {
-                return Redirect("/Home/Main");
+            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
+            Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
+            Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
+            UserViewModel usermodel = new UserViewModel();
 
-            }
-            return View("MyEventDetail", etk);
+            usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
+
+            usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
+
+            usermodel.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
+
+            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
+
+            usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+            usermodel.OnayladigimIlanlar = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+            return View(usermodel);
         }
+
+
         [HttpPost]
-        public JsonResult KatilmaIstegi(int iId)
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult MyProfile(UserViewModel model)
+        {
+            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
+            Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
+            Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
+
+            model.Kullanici = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
+
+            model.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
+
+            model.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
+
+            model.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
+
+            model.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+            model.OnayladigimIlanlar = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+            if (model.PictureUpload != null)
+            {
+                //string name = Path.GetFileNameWithoutExtension(model.PictureUpload.FileName);
+                //string ext = Path.GetExtension(model.PictureUpload.FileName);
+                ////Resim upload edilecek.
+                //name = name.Replace(" ", "");
+                string filename = model.PictureUpload.FileName;
+                string imagePath = Server.MapPath("/images/" + filename);
+                model.PictureUpload.SaveAs(imagePath);
+                ApplicationUser degisen = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
+                degisen.ProfilAvatarYolu = "/images/" + filename;
+                if (repoU.Update(degisen))
+                    return RedirectToAction("MyProfile");
+                return View(model);
+            }
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult HakkimdaDuzenle(UserViewModel model)
+        {
+            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
+            Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
+            Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
+
+            model.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
+
+            model.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
+
+            model.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
+
+            model.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+            model.OnayladigimIlanlar = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+            if (model.Kullanici.Bio != null && model.Kullanici.Bio.Length >= 10)
+            {
+                ApplicationUser degisen = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
+                degisen.Bio = model.Kullanici.Bio;
+                model.Kullanici = degisen;
+                if (repoU.Update(degisen))
+                    return RedirectToAction("MyProfile");
+                return View("MyProfile", model);
+            }
+            return View("MyProfile", model);
+        }
+
+
+        [HttpPost]
+        public JsonResult KatilmaktanVazgec(int EtkIDIptal)
         {
             string result = "false";
             Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
-            Katilan kat = new Katilan();
-            foreach (Katilan item in repoK.GetAll(k => k.IlanId == iId).ToList())
-            {
-                if (item.KullaniciId == HttpContext.User.Identity.GetUserId())
-                {
-                    if (item.Silindi == true)
-                    {
-                        item.Silindi = false;
-                        if (repoK.Update(item))
-                        {
-                            IdentityMessage msg = new IdentityMessage();
-                            msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
-                            msg.Destination = item.Ilan.User.Email;
-                            msg.Body = "Merhaba " + item.Ilan.User.Name + ", " + item.User.Name + " " + item.User.Surname + " " + item.Ilan.BaslangicTarihi + " tarihinde yapacağın " + item.Ilan.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
-                            mail.SendMail(msg);
-                            result = "true";
-                            return Json(result, JsonRequestBehavior.AllowGet);
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Daha Önce Katılma İsteği Gönderdiniz!");
-                        result = "Daha Önce Katılma İsteği Gönderdiniz!";
-                        return Json(result, JsonRequestBehavior.AllowGet);
-                    }
-
-                }
-            }
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
-            Repository<ApplicationUser> repoA = new Repository<ApplicationUser>(new NeYapsakContext());
-            Ilan i = repoI.GetAll().Where(k => k.Id == iId).FirstOrDefault();
-            ApplicationUser a = repoA.GetAll().Where(au => au.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
-            kat.IlanId = iId;
-            kat.KullaniciId = HttpContext.User.Identity.GetUserId();
-            kat.Tarih = DateTime.Now;
-            kat.Silindi = false;
-            kat.Onay = false;
-            if (repoK.Add(kat))
-            {
-                IdentityMessage msg = new IdentityMessage();
-                msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
-                msg.Destination = i.User.Email;
-                msg.Body = "Merhaba " + a.Name + ", " + i.User.Name + " " + i.User.Surname + " " + i.BaslangicTarihi + " tarihinde yapacağın " + i.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
-                mail.SendMail(msg);
-                result = "true";
-                return Json(result, JsonRequestBehavior.AllowGet);
-
-            }
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult KatilmaIptal(int iIdIptal)
-        {
-            string result = "false";
-            Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
-            Katilan katilan = repoK.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.IlanId == iIdIptal).FirstOrDefault();
+            Katilan katilan = repoK.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.IlanId == EtkIDIptal).FirstOrDefault();
             katilan.Silindi = true;
             katilan.Onay = false;
-            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             Ilan i = repoI.GetAll().Where(k => k.Id == katilan.IlanId).FirstOrDefault();
             i.Kontenjan += 1;
             if (!repoI.Update(i))
@@ -292,13 +333,77 @@ namespace NeYapsak.PL.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
         [HttpPost]
-        public JsonResult EtkOnayla(int kIDOnay, string durum)
+        public JsonResult KatilmaIstegiIptal(int IstekIptalEtkID)
         {
             string result = "false";
             Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
-            Katilan katilan = repoK.GetAll().Where(k => k.Id == kIDOnay).FirstOrDefault();
-            if (durum == "Onayla")
+            Katilan katilan = repoK.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.IlanId == IstekIptalEtkID).FirstOrDefault();
+            katilan.Silindi = true;
+            katilan.Onay = false;
+            if (repoK.Delete(katilan.Id))
+            {
+                result = "true";
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [Authorize]
+        public ActionResult OtherProfile(string Id)
+        {
+            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
+            Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
+            Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
+            UserViewModel usermodel = new UserViewModel();
+            usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == Id).FirstOrDefault();
+            usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == Id).ToList();
+            usermodel.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
+            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
+            usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == Id && i.Silindi == false).ToList();
+            usermodel.OnayladigimIlanlar = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Where(i => i.KullaniciId == Id && i.Silindi == false).ToList();
+            return View(usermodel);
+        }
+
+
+        [Authorize]
+        public ActionResult GSayacArttir(int Id)
+        {
+            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            Ilan etk = repoI.Get(i => i.Id == Id);
+            etk.GoruntulenmeSayaci += 1;
+            if (!repoI.Update(etk))
+            {
+                ModelState.AddModelError("", "Sayaç Arttırılamadı.");
+            }
+            return Redirect("/Home/OtherEventDetail/" + Id);
+        }
+
+
+        [Authorize]
+        public ActionResult OtherEventDetail(int Id)
+        {
+            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            Ilan etk = repoI.Get(i => i.Id == Id);
+
+            ViewBag.ktldurumOnay = Convert.ToBoolean(etk.Katilanlar.Where(k => k.Silindi == false && (k.Onay == true && k.KullaniciId == HttpContext.User.Identity.GetUserId())).Count());
+
+            ViewBag.ktldurumistek = Convert.ToBoolean(etk.Katilanlar.Where(k => k.Silindi == false && (k.Onay == false && k.KullaniciId == HttpContext.User.Identity.GetUserId())).Count());
+
+            return View(etk);
+        }
+
+
+        [HttpPost]
+        public JsonResult EtkinlikOnayla(int KatilanIDOnayla, string OnayDurumu)
+        {
+            string result = "false";
+            Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
+            Katilan katilan = repoK.GetAll().Where(k => k.Id == KatilanIDOnayla).FirstOrDefault();
+            if (OnayDurumu == "Onayla")
             {
                 katilan.Onay = true;
                 Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
@@ -309,7 +414,7 @@ namespace NeYapsak.PL.Controllers
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
             }
-            else if (durum == "Reddet")
+            else if (OnayDurumu == "Reddet")
             {
                 katilan.Silindi = true;
                 katilan.Onay = false;
@@ -322,11 +427,11 @@ namespace NeYapsak.PL.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult EtkOnayIptal(int kIDOnay)
+        public JsonResult EtkinlikOnayiIptal(int KatilanIDOnayIptal)
         {
             string result = "false";
             Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
-            Katilan katilan = repoK.GetAll().Where(k => k.Id == kIDOnay).FirstOrDefault();
+            Katilan katilan = repoK.GetAll().Where(k => k.Id == KatilanIDOnayIptal).FirstOrDefault();
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             Ilan i = repoI.GetAll().Where(k => k.Id == katilan.IlanId).FirstOrDefault();
 
@@ -348,11 +453,20 @@ namespace NeYapsak.PL.Controllers
         [Authorize]
         public ActionResult EventConfirmPage(int Id)
         {
-            UserViewModel uvmodel = new UserViewModel();
-            uvmodel = ViewBag.user;
-            if (uvmodel.OnayimiBekleyenIlanlar.Where(i => i.Id == Id).FirstOrDefault() != null)
+            Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
+            Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
+            EventConfirmViewModel EventModel = new EventConfirmViewModel();
+
+            EventModel.Ilan = repoIlan.GetAll().Where(i => i.Id == Id).FirstOrDefault();
+
+            EventModel.OnayBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+            EventModel.OnaylanmisIlanlar = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+
+            if (EventModel != null)
             {
-                return View(uvmodel.OnayimiBekleyenIlanlar.Where(i => i.Id == Id).FirstOrDefault());
+                return View(EventModel);
             }
             return Redirect("/Home/MyProfile#collapseTwo");
         }

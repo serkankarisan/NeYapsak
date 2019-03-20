@@ -1,0 +1,24 @@
+﻿.btn-sekillendir-sml {
+    display: block;
+    border-radius: 20px;
+    background-color: transparent;
+    position: relative;
+    width: 125px;
+    margin: 0 auto 1px;
+    padding: 1px 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 2px;
+    color: #f74c3c;
+    border: 2px solid #f74c3c;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .btn-sekillendir-sml:hover {
+        color: #e7e6f1;
+        background: #f74c3c;
+        box-shadow: 0 6px 12px -4px rgba(0, 0, 0, 0.3);
+    }

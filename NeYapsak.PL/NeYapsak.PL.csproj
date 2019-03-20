@@ -167,9 +167,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventConfirmViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LayoutViewModel.cs" />
     <Compile Include="Models\LoginRegisterViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\MainViewModel.cs" />
     <Compile Include="Models\PasswordChangeViewModel.cs" />
     <Compile Include="Models\PasswordResetRequestViewModel.cs" />
     <Compile Include="Models\PasswordResetViewModel.cs" />
@@ -185,6 +188,7 @@
     <Content Include="css\anasayfa-style.css" />
     <Content Include="css\baba-style.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\Buton-style.css" />
     <Content Include="css\kullanici-style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -238,6 +242,7 @@
     <Content Include="Views\Home\EtkSil.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Home\EventConfirmPage.cshtml" />
+    <Content Include="Views\Home\GSayacArttir.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

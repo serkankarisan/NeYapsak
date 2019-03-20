@@ -21,25 +21,25 @@
     <div class="row">
         <!--sol, profil ve dışlink tarafı-->
         <div class="col-md-3">
-            @{NeYapsak.PL.Models.UserViewModel item = new NeYapsak.PL.Models.UserViewModel();
-                item = ViewBag.user;
+            @{NeYapsak.PL.Models.LayoutViewModel LayoutModel = new NeYapsak.PL.Models.LayoutViewModel();
+                LayoutModel = ViewBag.user;
                 }
                 <div class="card">
                     <div class="card-body p-10">
                         <div class="row">
                             <div class="col-2 col-md-3">
-                                <img class="rounded-circle" width="45" height="45" src="@item.Kullanici.ProfilAvatarYolu" alt="">
+                                <img class="rounded-circle" width="45" height="45" src="@LayoutModel.Kullanici.ProfilAvatarYolu" alt="">
                             </div>
                             <div class="col-10 col-md-9">
-                                <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@item.Kullanici.Name</a></div>
-                                <div class="h7 text-muted">@item.Kullanici.Name @item.Kullanici.Surname,@(Convert.ToInt32(DateTime.Now.Year - item.Kullanici.DogumTarihi.Year))</div>
+                                <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@LayoutModel.Kullanici.Name</a></div>
+                                <div class="h7 text-muted">@LayoutModel.Kullanici.Name @LayoutModel.Kullanici.Surname,@(Convert.ToInt32(DateTime.Now.Year - LayoutModel.Kullanici.DogumTarihi.Year))</div>
                             </div>
                         </div><br>
-                        <p class="text-normal">@item.Kullanici.Bio</p>
+                        <p class="text-normal">@LayoutModel.Kullanici.Bio</p>
                     </div>
                     <div class="list-group list-group-flush">
-                        <span class="h6 font-weight-normal list-group-item">Düzenlediğim:<span class="h5 font-weight-bold">@item.KullaniciIlanlari.Count()</span>&nbsp;&nbsp;Katıldığım: <span class="h5 font-weight-bold">@item.KatildigiIlanlar.Count()</span></span>
-                        <span class="h6 font-weight-normal list-group-item">İlgilendiğim:<span class="h5 font-weight-bold">@item.IlgilendigiIlanlar.Count()</span>&nbsp;&nbsp;Onayımı bekleyen:<span class="h5 font-weight-bold">@item.OnayimiBekleyenIlanlar.Count()</span></span>
+                        <span class="h6 font-weight-normal list-group-item">Düzenlediğim:<span class="h5 font-weight-bold">@LayoutModel.KullaniciIlanSayisi</span>&nbsp;&nbsp;Katıldığım: <span class="h5 font-weight-bold">@LayoutModel.KatildigiIlanSayisi</span></span>
+                        <span class="h6 font-weight-normal list-group-item">İlgilendiğim:<span class="h5 font-weight-bold">@LayoutModel.IlgilendigiIlanSayisi</span>&nbsp;&nbsp;Onayımı bekleyen:<span class="h5 font-weight-bold">@LayoutModel.OnayimiBekleyenIlanSayisi</span></span>
                     </div>
                 </div>
             <div class="row">&nbsp;</div>

@@ -1,4 +1,4 @@
-﻿@model NeYapsak.Entity.Entity.Ilan
+﻿@model NeYapsak.PL.Models.MainViewModel
 @{
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     Layout = "~/Views/Shared/_Layout-1-TopMenu-Main.cshtml";
@@ -10,7 +10,7 @@
         <div class="card-header justify-content-center text-center">
             <button id="btn-ols" class="btn"><strong>Etkinlik Oluştur</strong></button>
         </div>
-        @using (Html.BeginForm("Main", "Home", new { il = "İstanbul" }, FormMethod.Post))
+        @using (Html.BeginForm("Main", "Home", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
@@ -18,13 +18,13 @@
                 <div class="col-md-12">
                     <div class="row">
                         <label class="etk-ols-lbl">Etkinliğiniz için başlık girin: </label>
-                        @Html.EditorFor(model => model.Baslik, new { htmlAttributes = new { @class = "form-control", id = "ilan-baslik", placeholder = "Ne yapmayı planlıyorsun ? ", style = "width: 450px; height: 35px;", required = true } })
-                        @Html.ValidationMessageFor(model => model.Baslik, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Ilan.Baslik, new { htmlAttributes = new { @class = "form-control", id = "ilan-baslik", placeholder = "Ne yapmayı planlıyorsun ? ", style = "width: 450px; height: 35px;", required = true } })
+                        @Html.ValidationMessageFor(model => model.Ilan.Baslik, "", new { @class = "text-danger" })
                         @*<input type="text" name="ilan-baslik" class="form-control" id="ilan-baslik" placeholder="Ne yapmayı planlıyorsun ? " style="width: 450px; height: 35px;">*@
                     </div><br>
                     <div class="row">
                         <label class="etk-ols-lbl">Gerçekleşeceği şehri seçin: </label>
-                        <select disabled name="il" style="width: 275px; height: 35px;" class="form-control">
+                        <select name="Ilan.il" style="width: 275px; height: 35px;" class="form-control">
                             @*<option value="">Şehir Seçiniz</option>*@
                             <option value="İstanbul">İstanbul</option>
                             @*<option value="Ankara">Ankara</option>
@@ -120,7 +120,7 @@
                     </div><br>
                     <div class="row">
                         <label class="etk-ols-lbl">Gerçekleşeceği ilçeyi seçin: </label>
-                        <select name="ilce" class="form-control" style="width: 275px; height: 35px;" required>
+                        <select name="Ilan.ilce" class="form-control" style="width: 275px; height: 35px;" required>
                             <option value="">İlçe Seçiniz</option>
                             <option value="Üsküdar">Üsküdar</option>
                             <option value="Kadıköy">Kadıköy</option>
@@ -129,7 +129,7 @@
                             <option value="Taksim">Taksim</option>
                             <option value="Bağcılar">Bağcılar</option>
                         </select>
-                        @Html.ValidationMessageFor(model => model.Ilce, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Ilan.Ilce, "", new { @class = "text-danger" })
                         <br>
                     </div><br>
                     <div class="row">
@@ -137,8 +137,8 @@
                     </div><br>
                     <div class="row">
                         <label class="etk-ols-lbl form">Ne zaman gerçekleşeceğini seçin: </label>
-                        @Html.EditorFor(model => model.BaslangicTarihi, new { htmlAttributes = new { @class = "form-control vertical-center", type = "datetime-local", id = "ilan-vakit", style = "width: 275px;", required = true } })
-                        @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Ilan.BaslangicTarihi, new { htmlAttributes = new { @class = "form-control vertical-center", type = "datetime-local", id = "ilan-vakit", style = "width: 275px;", required = true } })
+                        @Html.ValidationMessageFor(model => model.Ilan.BaslangicTarihi, "", new { @class = "text-danger" })
 
                         @*<input type="datetime-local" id="ilan-vakit"
                             name="ilan-vakit" value="2012-12-21T00:00"
@@ -146,14 +146,14 @@
                     </div><br>
                     <div class="row">
                         <label class="etk-ols-lbl">Kaç kişi lazım: </label>
-                        @Html.EditorFor(model => model.Kontenjan, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", name = "ilan-baslik", id = "ilan-baslik", style = "width:50px;height:30px;padding-right:0", value = "1", required = true } })
-                        @Html.ValidationMessageFor(model => model.Kontenjan, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Ilan.Kontenjan, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", name = "ilan-baslik", id = "ilan-baslik", style = "width:50px;height:30px;padding-right:0", value = "1", required = true } })
+                        @Html.ValidationMessageFor(model => model.Ilan.Kontenjan, "", new { @class = "text-danger" })
                         @*<input type="number" min="1" name="ilan-baslik" id="ilan-baslik" class="form-control" style="width:50px;height:30px;padding-right:0" value="1">*@<br>
                     </div><br>
                     <div class="row">
                         <label class="etk-ols-lbl">Etkinliğiniz için bir özet girin: </label>
-                        @Html.TextAreaFor(model => model.Ozet, new { @class = "form-control", name = "ilan-ozet", id = "ilan-ozet", style = "width: 275px;height:100px;", minlength = "10", maxlength = "300", placeholder = "Etkinliğini 300 karakter ile açıkla", required = true })
-                        @Html.ValidationMessageFor(model => model.Ozet, "", new { @class = "text-danger" })
+                        @Html.TextAreaFor(model => model.Ilan.Ozet, new { @class = "form-control", name = "ilan-ozet", id = "ilan-ozet", style = "width: 275px;height:100px;", minlength = "10", maxlength = "300", placeholder = "Etkinliğini 300 karakter ile açıkla", required = true })
+                        @Html.ValidationMessageFor(model => model.Ilan.Ozet, "", new { @class = "text-danger" })
                         @*<textarea name="ilan-ozet" id="ilan-ozet" style="width: 450px;" maxlength="300" placeholder="Etkinliğini 300 karakter ile açıkla" class="form-control" required></textarea>*@<br>
                     </div><br>
                     <div class="row">
@@ -167,8 +167,7 @@
         }
     </div>
     <!--- \\\\\\\Etkinlik Oluşturma Bitiş-->
-    <!--- \\\\\\\Etkinlik İlanı -->
-
+    <!--- \\\\\\\Kullanicinin Etkinlikleri Başlangıç -->
     <div class="card gedf-card" style="margin-bottom:2px;background-color:#f8f9fa;">
         <div class="row text-center">
             <div class="col-md-4"></div>
@@ -186,23 +185,19 @@
         <div class="card" style="background-color:transparent;border:0px;">
             <div id="collapseKullanicininIlanlari" class="collapse show" aria-labelledby="Kullanicinin-Ilanlari" data-parent="#accordionilanlar">
                 <div class="card-body">
-                    @{ 
-                        List<NeYapsak.Entity.Entity.Ilan> KullanicininIlanlari = ViewBag.KullanicininIlanlari;
-                        List<NeYapsak.Entity.Entity.Ilan> ilanlar = ViewBag.ilanlar;
-                    }
-                    @if (KullanicininIlanlari.Count() == 0)
+                    @if (Model.KullanicininIlanlari.Count() == 0)
                     {
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Katıldığın Etkinlik Yok.</th>
+                                    <th>Düzenlediğin Etkinlik Yok.</th>
                                 </tr>
                             </thead>
                         </table>
                     }
-                    else if (KullanicininIlanlari.Count() != 0)
+                    else if (Model.KullanicininIlanlari.Count() != 0)
                     {
-                        foreach (NeYapsak.Entity.Entity.Ilan item in ViewBag.KullanicininIlanlari)
+                        foreach (NeYapsak.Entity.Entity.Ilan ilan in Model.KullanicininIlanlari)
                         {
                             <div class="card gedf-card">
                                 <!--gedf ile alttan margin veriyor-->
@@ -210,12 +205,12 @@
                                     <!--bu sayede başlığın arka planı grimsi ve içeriğe mesafelendirme yapmış. card body ve card header da var-->
                                     <div class="d-flex justify-content-between align-items-center">
                                         <!--dflex ile yan yana getiriyor. bir nevi float-->
-                                        <a class="card-link" href="/Home/MyEventDetail/@item.Id">
-                                            <h5 class="card-title cs-renk">@item.Baslik</h5>
+                                        <a class="card-link" href="/Home/MyEventDetail/@ilan.Id">
+                                            <h5 class="card-title cs-renk">@ilan.Baslik</h5>
                                         </a>
-                                        <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @item.Kontenjan</div>
-                                        <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @item.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</div>
-                                        <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @item.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</div>
+                                        <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @ilan.Kontenjan</div>
+                                        <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @ilan.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</div>
+                                        <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @ilan.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</div>
                                         <div>
 
                                         </div>
@@ -226,17 +221,17 @@
                                         <div class="col-md-9">
                                             <div class="row">
                                                 <p class="card-text">
-                                                    @item.Ozet
+                                                    @ilan.Ozet
                                                 </p>
                                             </div><br>
                                             <div>
                                                 <div class="row">
                                                     <div class="col-md-1">
-                                                        <img class="rounded-circle" width="45" height="45" src="@item.User.ProfilAvatarYolu" alt="">
+                                                        <img class="rounded-circle" width="45" height="45" src="@ilan.User.ProfilAvatarYolu" alt="">
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@item.User.Name</a></div>
-                                                        <div class="h7 text-muted">@item.User.Name @item.User.Surname,@(Convert.ToInt32(DateTime.Now.Year - item.User.DogumTarihi.Year))</div>
+                                                        <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@ilan.User.Name</a></div>
+                                                        <div class="h7 text-muted">@ilan.User.Name @ilan.User.Surname,@(Convert.ToInt32(DateTime.Now.Year - ilan.User.DogumTarihi.Year))</div>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="row">
@@ -252,10 +247,10 @@
                                         <div class="col-md-3">
                                             <!--text muted ile silik tonda grili yazı-->
                                             <div class="row text-muted">
-                                                <p>Oluşturulma tarihi: @item.OlusturmaTarihi</p>
+                                                <p>Oluşturulma tarihi: @ilan.OlusturmaTarihi</p>
                                             </div>
                                             <div class="row text-muted">
-                                                <p>Başlangıç Zamanı: @item.BaslangicTarihi</p>
+                                                <p>Başlangıç Zamanı: @ilan.BaslangicTarihi</p>
                                             </div>
                                         </div>
                                     </div>
@@ -282,63 +277,43 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="KatilmaModalCenter" tabindex="-1" role="dialog" aria-labelledby="KatilmaModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="KatilmaModalLongTitle"></h5>
-                    <button id="modal-cik" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="modal-bodyy" class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button id="modal-tamam" type="button" class="btn btn-secondary" data-dismiss="modal">Tamam</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    <!--- \\\\\\\Kullanicinin Etkinlikleri Bitiş -->
+    <!--- \\\\\\\Diğer Etkinlikler Başlangıç -->
 
     <div class="card gedf-card text-center" style="background-color:#f74c3c;margin-bottom:1px;">
         <h3 class="mb-0 btn btn-lg">
-            Diğer İlanlar
+            Diğer Etkinlikler
         </h3>
     </div>
 
     <div class="card" style="background-color:transparent;border:0px;">
         <div class="card-body">
-            @if (ilanlar.Count() == 0)
+            @if (Model.DigerIlanlar.Count() == 0)
             {
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Katıldığın Etkinlik Yok.</th>
+                            <th>Başka Etkinlik Yok.</th>
                         </tr>
                     </thead>
                 </table>
             }
-            else if (ilanlar.Count() != 0)
+            else if (Model.DigerIlanlar.Count() != 0)
             {
-                foreach (NeYapsak.Entity.Entity.Ilan item in ViewBag.ilanlar)
+                foreach (NeYapsak.Entity.Entity.Ilan Digerİlan in Model.DigerIlanlar)
                 {
-                    <div id='@("etk" + item.Id)' class="card gedf-card">
+                    <div id='@("etk" + Digerİlan.Id)' class="card gedf-card">
                         <!--gedf ile alttan margin veriyor-->
                         <div class="card-header">
                             <!--bu sayede başlığın arka planı grimsi ve içeriğe mesafelendirme yapmış. card body ve card header da var-->
                             <div class="d-flex justify-content-between align-items-center">
                                 <!--dflex ile yan yana getiriyor. bir nevi float-->
-                                <a class="card-link" href="/Home/OtherEventDetail/@item.Id">
-                                    <h5 class="card-title cs-renk">@item.Baslik</h5>
+                                <a class="card-link" href="/Home/GSayacArttir/@Digerİlan.Id">
+                                    <h5 class="card-title cs-renk">@Digerİlan.Baslik</h5>
                                 </a>
-                                <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @item.Kontenjan</div>
-                                <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @item.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</div>
-                                <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @item.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</div>
+                                <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @Digerİlan.Kontenjan</div>
+                                <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @Digerİlan.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</div>
+                                <div class="text-muted h7 mb-2"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @Digerİlan.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</div>
                                 <div>
 
                                 </div>
@@ -349,17 +324,17 @@
                                 <div class="col-md-9">
                                     <div class="row">
                                         <p class="card-text">
-                                            @item.Ozet
+                                            @Digerİlan.Ozet
                                         </p>
                                     </div><br>
                                     <div>
                                         <div class="row">
                                             <div class="col-md-1">
-                                                <img class="rounded-circle" width="45" height="45" src="@item.User.ProfilAvatarYolu" alt="">
+                                                <img class="rounded-circle" width="45" height="45" src="@Digerİlan.User.ProfilAvatarYolu" alt="">
                                             </div>
                                             <div class="col-md-3">
-                                                <div class="h5 m-0"><a href="/Home/OtherProfile/@item.KullaniciId" class="cs-renk">@item.User.Name</a></div>
-                                                <div class="h7 text-muted">@item.User.Name @item.User.Surname,@(Convert.ToInt32(DateTime.Now.Year - item.User.DogumTarihi.Year))</div>
+                                                <div class="h5 m-0"><a href="/Home/OtherProfile/@Digerİlan.KullaniciId" class="cs-renk">@Digerİlan.User.Name</a></div>
+                                                <div class="h7 text-muted">@Digerİlan.User.Name @Digerİlan.User.Surname,@(Convert.ToInt32(DateTime.Now.Year - Digerİlan.User.DogumTarihi.Year))</div>
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="row">
@@ -367,7 +342,12 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-6 col-xs-12"><a href="#" class="card-link cs-renk"><i class="fa fa-question-circle"></i> Etkinlik Sahibine Sor</a></div>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12"><a id="katilmak" href="#" data-id="@item.Id" class="card-link cs-renk katilmaistek"><i class="fa fa-plus"></i> Katılma İsteği Gönder</a></div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <a id="ktl-istegi-gonder"href="#" data-id="@Digerİlan.Id" class="card-link cs-renk KatilmaIstegiGonderModalAc" data-toggle="modal" data-target="#ConfirmModalKatilmaMain">
+                                                            <i class="fa fa-plus"></i>
+                                                            Katılma İsteği Gönder
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -376,10 +356,10 @@
                                 <div class="col-md-3">
                                     <!--text muted ile silik tonda grili yazı-->
                                     <div class="row text-muted">
-                                        <p>Oluşturulma tarihi: @item.OlusturmaTarihi</p>
+                                        <p>Oluşturulma tarihi: @Digerİlan.OlusturmaTarihi</p>
                                     </div>
                                     <div class="row text-muted">
-                                        <p>Başlangıç Zamanı: @item.BaslangicTarihi</p>
+                                        <p>Başlangıç Zamanı: @Digerİlan.BaslangicTarihi</p>
                                     </div>
                                 </div>
                             </div>
@@ -400,54 +380,106 @@
                             </span>
                         </div>
                     </div>
+
+
+                    <!-- Modal Onay -->
+                    <div class="modal fade" id="ConfirmModalKatilmaMain" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalKatilmaMainLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ConfirmModalKatilmaMainLabel">Emin Misin?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div id="confirm-modal-main-katilma-body" class="modal-body">
+                                    Katilmak İstediğine Emin Misin?
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <a id="btnKatilmaIstegi" href="#" data-id="@Digerİlan.Id" class="btn cs-arka-renk KatilmaIstegiGonder">Evet</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="btn cs-arka-renk" data-dismiss="modal">İptal</button>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal Onay Bitiş-->
+
+
+
                 }
             }
         </div>
     </div>
+    <!--- \\\\\\\Diğer Etkinlikler Bitiş -->
+    <!-- Modal Bilgi-->
+    <div class="modal fade" id="KatilmaModalMainCenter" tabindex="-1" role="dialog" aria-labelledby="KatilmaModalMainCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="KatilmaModalMainLongTitle"></h5>
+                    <button id="modal-main-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modal-main-body" class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-main-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Bilgi Bitiş -->
+
 </div>
+
+
 <script type="text/javascript">
     $(document).ready(function () {
-        var ktldurum = "";
-        $(".katilmaistek").click(function () {
-            var ID = $(this).data("id");
-            sontiklananetkId = ID;
+        var KatilmaDurumu = "";
+        var SonTiklananEtkId = 0;
+        $(".KatilmaIstegiGonderModalAc").click(function () {
+            SonTiklananEtkId = $(this).data("id");
+        });
+        $(".KatilmaIstegiGonder").click(function () {
+            $('#ConfirmModalKatilmaMain').modal('hide');
+            var ID = SonTiklananEtkId;
             $.ajax({
                 type: "POST",
-                url: '/Home/KatilmaIstegi',
-                data: { iId: ID },
+                url: '/Home/KatilmaIstegiGonder',
+                data: { EtkID: ID },
                 success: function (result) {
                     if (result === "true") {
-                        $('#KatilmaModalLongTitle').attr("class", "text-success")
-                        $('#KatilmaModalLongTitle').text("İstek Gönderildi");
-                        $('#modal-bodyy').text("Katılma İsteğini etkinlik Sahibine İlettik.");
+                        $('#KatilmaModalMainLongTitle').attr("class", "text-success")
+                        $('#KatilmaModalMainLongTitle').text("İstek Gönderildi");
+                        $('#modal-main-body').text("Katılma İsteğini etkinlik Sahibine İlettik.");
                     }
                     else if (result === "false") {
-                        $('#KatilmaModalLongTitle').attr("class", "text-danger")
-                        $('#KatilmaModalLongTitle').text("İstek Gönderilemedi");
-                        $('#modal-bodyy').text("Katılma İsteğini etkinlik Sahibine İletemedik.");
+                        $('#KatilmaModalMainLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalMainLongTitle').text("İstek Gönderilemedi");
+                        $('#modal-main-body').text("Katılma İsteğini etkinlik Sahibine İletemedik.");
                     }
                     else {
-                        $('#KatilmaModalLongTitle').attr("class", "text-danger")
-                        $('#KatilmaModalLongTitle').text("İstek Gönderilemedi");
-                        $('#modal-bodyy').text(result);
+                        $('#KatilmaModalMainLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalMainLongTitle').text("İstek Gönderilemedi");
+                        $('#modal-main-body').text(result);
                     }
-                    ktldurum = result;
-                    $('#KatilmaModalCenter').modal('show');
+                    KatilmaDurumu = result;
+                    $('#KatilmaModalMainCenter').modal('show');
                 }
             });
         });
-        $("#modal-tamam").click(function () {
-            console.log("tmm clk" + sontiklananetkId);
-            if (ktldurum === "true") {
+        $("#modal-main-tamam").click(function () {
+            if (KatilmaDurumu === "true") {
                 window.location.href = "/Home/Main";
-
             }
         });
-        $("#modal-cik").click(function () {
-            console.log("cik clk" + sontiklananetkId);
-            if (ktldurum === "true") {
+        $("#modal-main-cikis").click(function () {
+            if (KatilmaDurumu === "true") {
                 window.location.href = "/Home/Main";
-
             }
         });
     });

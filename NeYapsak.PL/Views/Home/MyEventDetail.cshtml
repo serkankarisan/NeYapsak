@@ -2,14 +2,14 @@
 @{
     Layout = "~/Views/Shared/_Layout-2-TopMenu-Details.cshtml";
 }
-
+<link href="~/css/Buton-style.css" rel="stylesheet" />
 <div class="col-md-9 gedf-main">
-    <!--- \\\\\\\Etkinlik Oluşturma-->
+    <!--- \\\\\\\Etkinlik-->
     <div class="card gedf-card">
         <div class="card-header justify-content-center text-center">
             <strong>@Model.Baslik</strong>
         </div>
-        @using (Html.BeginForm("EtkDuzenle", "Home", new { id = Model.Id }, FormMethod.Post))
+        @using (Html.BeginForm("EtkinlikDuzenle", "Home", new { id = Model.Id }, FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             <div class="card-body" id="etk-ols">
@@ -64,19 +64,20 @@
                 </div><br>
                 <div class="justify-content-center row">
                     <div class="col-md-3">
-                        <a id="etk-duzenle" href="#etk-ols" class="btn cs-arka-renk" onclick="myetkFunction();">Etkinliği Düzenle</a>
+                        <a id="etk-duzenle" href="#etk-ols" style="width:200px;" class="btn btn-sekillendir-sml" onclick="myetkFunction();">Etkinliği Düzenle</a>
                     </div>
                     <div class="col-md-3">
-                        <!-- Button trigger modal -->
-                        <button id="etk-sil" type="button" class="btn cs-arka-renk" data-toggle="modal" data-target="#etkinlikSilModalCenter">
+                        <!-- Button trigger Modal Onay-->
+                        <button id="etk-sil" type="button" class="btn btn-sekillendir-sml" style="margin-left:0px;" data-toggle="modal" data-target="#etkinlikSilModalCenter">
                             Etkinliği Sil
                         </button>
+                        <!-- Button trigger Modal Onay Bitiş-->
 
-                        <button id="etk-kaydet" type="submit" class="btn cs-arka-renk" style="display:none;">Kaydet</button>
+                        <button id="etk-kaydet" type="submit" class="btn btn-sekillendir-sml" style="margin-left:0px;display:none;">Kaydet</button>
                     </div>
                 </div>
             </div>
-            <!-- Modal -->
+            <!-- Modal Onay-->
             <div class="modal fade" id="etkinlikSilModalCenter" tabindex="-1" role="dialog" aria-labelledby="etkinlikSilModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -90,16 +91,18 @@
                             Merhaba @Model.User.Name etkinliği silmek istediğine emin misin?
                         </div>
                         <div class="modal-footer">
-                            <a href="/Home/EtkSil/@Model.Id" class="btn cs-arka-renk">Etkinliği Sil</a>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                            <a href="/Home/EtkSil/@Model.Id" class="btn cs-arka-renk">Evet</a>
+                            <button type="button" class="btn cs-arka-renk" data-dismiss="modal">İptal</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Modal Onay Bitiş-->
         }
     </div>
-    <!--- \\\\\\\Etkinlik Oluşturma Bitiş-->
+    <!--- \\\\\\\Etkinlik Bitiş-->
 </div>
+
 <script type="text/javascript">
     var etkduzenleBtn = document.getElementById("etk-duzenle");
     var etksilBtn = document.getElementById("etk-sil");

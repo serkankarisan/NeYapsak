@@ -21,15 +21,21 @@ namespace NeYapsak.PL.Controllers
             Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
             Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
 
-            UserViewModel usermodel = new UserViewModel();
-            usermodel.Kullanici = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
-            usermodel.KullaniciIlanlari = repoIlan.GetAll().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).ToList();
-            usermodel.IlgilendigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == false && k.Silindi==false).Select(k => k.Ilan).Distinct().ToList();
-            usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == true && k.Silindi==false).Select(k => k.Ilan).Distinct().ToList();
-            usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi==false).Select(k => k.Ilan).Distinct().Where(i=>i.KullaniciId== HttpContext.User.Identity.GetUserId() && i.Silindi==false).ToList();
-            ViewBag.user = usermodel;
+            LayoutViewModel LayoutModel = new LayoutViewModel();
 
-            ViewBag.Onayladiklarim= repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+            LayoutModel.Kullanici = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
+
+            LayoutModel.KullaniciIlanSayisi = repoIlan.GetAll().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId()).Count();
+
+            LayoutModel.IlgilendigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Count();
+
+            LayoutModel.KatildigiIlanSayisi = repoKat.GetAll().Where(k => k.KullaniciId == HttpContext.User.Identity.GetUserId() && k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Count();
+
+            LayoutModel.OnayimiBekleyenIlanSayisi = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).Count();
+
+            LayoutModel.OnayladigimIlanSayisi = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).Count();
+
+            ViewBag.user = LayoutModel;
 
             base.OnActionExecuting(filterContext);
         }

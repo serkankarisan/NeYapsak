@@ -15,5 +15,6 @@ namespace NeYapsak.PL.Models
         public List<Ilan> IlgilendigiIlanlar { get; set; }
         public List<Ilan> KatildigiIlanlar { get; set; }
         public List<Ilan> OnayimiBekleyenIlanlar { get; set; }
+        public List<Ilan> OnayladigimIlanlar { get; set; }
     }
 }

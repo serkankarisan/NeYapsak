@@ -44,12 +44,69 @@
             </div><br>
             <div class="justify-content-center row">
                 <div class="align-items-center">
-                    <a id="katilmak" href="#" data-id="@Model.Id" class="btn cs-arka-renk katilmaistek"><i class="fa fa-plus"></i> Katılma İsteği Gönder</a>&nbsp; <button id="mesaj" type="submit" class="btn cs-arka-renk">Mesaj Gönder</button>
+
+
+                    <!-- Modal Onay İptal-->
+                    <button id="btn-ktl-iptal" type="button" class="btn cs-arka-renk" data-toggle="modal" data-target="#ConfirmModal">
+                        Katılmaktan Vazgeç
+                    </button>
+                    <button id="btn-ktl-istek-iptal" type="button" class="btn cs-arka-renk" data-toggle="modal" data-target="#ConfirmModal">
+                        Katılma İsteğimi İptal Et
+                    </button>
+                    <div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ConfirmModalLabel">Emin Misin?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div id="confirm-modal-bodyy" class="modal-body">
+                                    İptal İşlemini Onaylıyor Musun?
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <a id="ktl-istek-iptal" href="#" data-id="@Model.Id" class="btn cs-arka-renk ktl-istek-iptal">Evet</a>
+                                        <a id="ktl-iptal" href="#" data-id="@Model.Id" class="btn cs-arka-renk ktl-iptal">Evet</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="btn cs-arka-renk" data-dismiss="modal">İptal</button>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal Onay İptal Bitiş-->
+
+                    <!-- Modal Onay Katıl-->
+                    <a id="katilmak" href="#" class="btn cs-arka-renk" data-toggle="modal" data-target="#ConfirmModalKatilmaİstegiGonder"><i class="fa fa-plus"></i> Katılma İsteği Gönder</a>
+                    <div class="modal fade" id="ConfirmModalKatilmaİstegiGonder" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalKatilmaİstegiGonderLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ConfirmModalKatilmaİstegiGonderLabel">Emin Misin?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div id="confirm-modal-katil-body" class="modal-body">
+                                    Katılmak İstiyor Musun?
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <a id="ktl-istek" href="#" data-id="@Model.Id" class="btn cs-arka-renk KatilmaIstegiGonder">Evet</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="btn cs-arka-renk" data-dismiss="modal">İptal</button>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal Onay Katıl Bitiş-->
+                    &nbsp; <button id="mesaj" type="submit" class="btn cs-arka-renk">Mesaj Gönder</button>
                 </div>
             </div>
         </div>
     </div>
-    <!--- \\\\\\\Etkinlik Oluşturma Bitiş-->
+    <!--- \\\\\\\Etkinlik Bitiş-->
 </div>
 <!-- Modal -->
 <div class="modal fade" id="KatilmaModalCenter" tabindex="-1" role="dialog" aria-labelledby="KatilmaModalCenterTitle" aria-hidden="true">
@@ -65,21 +122,62 @@
 
             </div>
             <div class="modal-footer">
-                <button id="modal-tamam" type="button" class="btn btn-secondary" data-dismiss="modal">Tamam</button>
+                <button id="modal-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
+
+    var btnmsj = document.getElementById("mesaj");
+    var btnktl = document.getElementById("katilmak");
+    var btniptal = document.getElementById("btn-ktl-iptal");
+    var btnIstekiptal = document.getElementById("btn-ktl-istek-iptal");
+    var btnktliptal = document.getElementById("ktl-iptal");
+    var btnktlIstekiptal = document.getElementById("ktl-istek-iptal");
+
+    var silindi = "@Model.Silindi";
+    var yayin = "@Model.Yayindami";
+    var katilmadrmistek = "@ViewBag.ktldurumistek";
+    console.log(katilmadrmistek);
+    var katilmadrmonay = "@ViewBag.ktldurumOnay";
+        if (silindi === "True" || yayin === "False") {
+            btnktl.style.display = "none"
+            btnmsj.style.display = "none"
+            btniptal.style.display = "none"
+        }
+    if (katilmadrmistek === "True") {
+        btnktl.style.display = "none";
+        btniptal.style.display = "none";
+        }
+    else if (katilmadrmonay === "True") {
+        btnIstekiptal.style.display = "none"
+        btnktl.style.display = "none"
+    }
+    else if (katilmadrmonay === "False" && katilmadrmistek === "False") {
+        btniptal.style.display = "none";
+        btnIstekiptal.style.display = "none";
+    }
+
     $(document).ready(function () {
         var ktldurum = "";
-        $(".katilmaistek").click(function () {
+        var sontiklananetkId = @Model.Id;
+        console.log(sontiklananetkId);
+        $("#btn-ktl-iptal").click(function () {
+            btnktlIstekiptal.style.display = "none";
+        });
+        $("#btn-ktl-istek-iptal").click(function () {
+            btnktliptal.style.display = "none";
+        });
+
+
+        $(".KatilmaIstegiGonder").click(function () {
+            $('#ConfirmModalKatilmaİstegiGonder').modal('hide');
             var ID = $(this).data("id");
-            sontiklananetkId = ID;
             $.ajax({
                 type: "POST",
-                url: '/Home/KatilmaIstegi',
-                data: { iId: ID },
+                url: '/Home/KatilmaIstegiGonder',
+                data: { EtkID: ID },
                 success: function (result) {
                     if (result === "true") {
                         $('#KatilmaModalLongTitle').attr("class", "text-success")
@@ -101,27 +199,77 @@
                 }
             });
         });
+
+        $(".ktl-iptal").click(function () {
+            var ID = $(this).data("id");
+            $('#ConfirmModal').modal('hide');
+            console.log("click" + ID);
+            $.ajax({
+                //console.log("ajax");
+                type: "POST",
+                url: '/Home/KatilmaktanVazgec',
+                data: { EtkIDIptal: ID },
+                success: function (result) {
+                    if (result === "true") {
+                        console.log("true" + ID);
+                        $('#KatilmaModalLongTitle').attr("class", "text-success")
+                        $('#KatilmaModalLongTitle').text("İşlem Başarılı");
+                        $('#modal-bodyy').text("Katılmaktan Vazgeçtin.");
+                    }
+                    else {
+                        console.log("false" + ID);
+                        $('#KatilmaModalLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
+                        $('#modal-bodyy').text("Katılmaktan Vazgeçemedin!.");
+                    }
+                    ktldurum = result;
+                    $('#KatilmaModalCenter').modal('show');
+                }
+            });
+        });
+
+        $(".ktl-istek-iptal").click(function () {
+            var ID = $(this).data("id");
+            $('#ConfirmModal').modal('hide');
+            console.log("click" + ID);
+            $.ajax({
+                //console.log("ajax");
+                type: "POST",
+                url: '/Home/KatilmaIstegiIptal',
+                data: { IstekIptalEtkID: ID },
+                success: function (result) {
+                    if (result === "true") {
+                        console.log("true" + ID);
+                        $('#KatilmaModalLongTitle').attr("class", "text-success")
+                        $('#KatilmaModalLongTitle').text("İşlem Başarılı");
+                        $('#modal-bodyy').text("Katılma İsteğini Geri Çektik.");
+                    }
+                    else {
+                        console.log("false" + ID);
+                        $('#KatilmaModalLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
+                        $('#modal-bodyy').text("Katılma İsteğini Geri Alamadık!.");
+                    }
+                    ktldurum = result;
+                    $('#KatilmaModalCenter').modal('show');
+                }
+            });
+        });
+
         $("#modal-tamam").click(function () {
             console.log("tmm clk" + sontiklananetkId);
             if (ktldurum === "true") {
-                window.location.href = "/Home/Main";
+                window.location.href = "/Home/OtherEventDetail/" + sontiklananetkId;
 
             }
         });
         $("#modal-cik").click(function () {
             console.log("cik clk" + sontiklananetkId);
             if (ktldurum === "true") {
-                window.location.href = "/Home/Main";
+                window.location.href = "/Home/OtherEventDetail/" + sontiklananetkId;
 
             }
         });
-        var btnmsj = document.getElementById("mesaj");
-        var btnktl = document.getElementById("katilmak");
-    var silindi = "@Model.Silindi";
-    var yayin = "@Model.Yayindami";
-        if (silindi === "True" || yayin === "False") {
-            btnktl.style.display = "none"
-            btnmsj.style.display = "none"
-    }
+
     });
 </script>
