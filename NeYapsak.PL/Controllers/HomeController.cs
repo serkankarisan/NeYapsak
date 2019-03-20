@@ -29,10 +29,10 @@ namespace NeYapsak.PL.Controllers
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             MainViewModel MainModel = new MainViewModel();
+            MainModel.KullaniciId = HttpContext.User.Identity.GetUserId();
+            MainModel.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != MainModel.KullaniciId  && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
 
-            MainModel.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
-
-            MainModel.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            MainModel.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId == MainModel.KullaniciId && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
 
             return View(MainModel);
         }
