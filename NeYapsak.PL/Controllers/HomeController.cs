@@ -151,7 +151,8 @@ namespace NeYapsak.PL.Controllers
                 return View(etk);
 
             }
-            return Redirect("/Home/Main");
+
+            return Redirect("/Home/OtherEventDetail/" + Id);
         }
 
         [Authorize]
@@ -388,7 +389,10 @@ namespace NeYapsak.PL.Controllers
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             Ilan etk = repoI.Get(i => i.Id == Id);
-
+            if (etk.User.Id==HttpContext.User.Identity.GetUserId())
+            {
+                return Redirect("/Home/MyEventDetail/" + Id);
+            }
             ViewBag.ktldurumOnay = Convert.ToBoolean(etk.Katilanlar.Where(k => k.Silindi == false && (k.Onay == true && k.KullaniciId == HttpContext.User.Identity.GetUserId())).Count());
 
             ViewBag.ktldurumistek = Convert.ToBoolean(etk.Katilanlar.Where(k => k.Silindi == false && (k.Onay == false && k.KullaniciId == HttpContext.User.Identity.GetUserId())).Count());
