@@ -99,6 +99,7 @@ namespace NeYapsak.PL.Controllers
                     if (katilan.Silindi == true)
                     {
                         katilan.Silindi = false;
+                        katilan.Tarih = DateTime.Now;
                         if (repoK.Update(katilan))
                         {
                             //IdentityMessage msg = new IdentityMessage();
@@ -366,6 +367,10 @@ namespace NeYapsak.PL.Controllers
             usermodel.KatildigiIlanlar = repoKat.GetAll().Where(k => k.KullaniciId == Id && k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().ToList();
             usermodel.OnayimiBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == Id && i.Silindi == false).ToList();
             usermodel.OnayladigimIlanlar = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Where(i => i.KullaniciId == Id && i.Silindi == false).ToList();
+            if (Id == HttpContext.User.Identity.GetUserId())
+            {
+                return Redirect("/Home/MyProfile/" + Id);
+            }
             return View(usermodel);
         }
 

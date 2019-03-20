@@ -36,7 +36,7 @@ namespace NeYapsak.PL.Controllers
             LayoutModel.OnayladigimIlanSayisi = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).Count();
 
             ViewBag.user = LayoutModel;
-
+            ViewBag.UserID = LayoutModel.Kullanici.Id;
             base.OnActionExecuting(filterContext);
         }
     }
