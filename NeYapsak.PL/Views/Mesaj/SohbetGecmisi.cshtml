@@ -1,0 +1,87 @@
+﻿@model NeYapsak.PL.Models.MsgHistViewModel
+
+<div class="row text-center">
+    <h4 class="text-center">@Model.Baslik</h4>
+</div>
+<div class="row">
+    @if (Model.Mesajlar != null)
+    {
+        foreach (var mesaj in Model.Mesajlar)
+        {
+            if (mesaj.AliciId == Model.AliciId)
+            {
+                <div class="col-md-3">
+                    &nbsp;
+                </div>
+                <div class="col-md-9 gonderilen-mesaj">
+                    <span><strong>@mesaj.Mesaj</strong></span><br />
+                    <p class="text-right">Gönderilme Tarihi : @mesaj.Tarih</p>
+                </div><br />
+            }
+            else
+            {
+                <div class="col-md-9 alinan-mesaj">
+                    <span><strong>@mesaj.Mesaj</strong></span><br />
+                    <p class="text-right">Alınma Tarihi : @mesaj.Tarih</p>
+                </div>
+                <div class="col-md-3">
+                    &nbsp;
+                </div><br />
+            }
+        }
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+        <div class="col-md-8">
+                <br /><br />
+                <textarea required type="text" name="YeniMesaj" id="yeni-mesaj" style="width:450px" maxlength="300" placeholder="Mesajını gir" class="form-control"></textarea>
+                <button id="msg-gonder" type="submit" style="width:450px" class="btn cs-arka-renk">Gönder</button>
+        </div>
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+
+    }
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#msg-gonder').click(function () {
+            var ArkadasId ='@Model.AliciId';
+            var BenimId = '@Model.GondericiId';
+            var Mesaj = $("#yeni-mesaj").val();
+            $.ajax({
+                url: '/Mesaj/MesajGonder',
+                type: "POST",
+                data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
+                success: function (result) {
+                    //var element = $("button.row.cekcons").find(`[data-id='${result.AliciId}']`);
+                    var element = document.querySelectorAll("[data-id='@Model.AliciId']")[0];
+                    console.log(element);
+                    element.click();
+                    console.log("takılmadı");
+                }
+            })
+        })
+    })
+</script>
+
+
+
+
+@*querystrindeki parametreleri yakalamak için jquery
+        <script>
+        function getUrlVars()
+    {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+    </script>*@
