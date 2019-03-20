@@ -513,18 +513,20 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#msg-gonder").click(function () {
-            var BenimId = "@Model.KullaniciId";
-            var ArkadasId = $(this).data("id");
             var Mesaj = $("#yeni-mesaj").val();
-            $.ajax({
-                url: '/Mesaj/MesajGonder',
-                type: "POST",
-                data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
-                success: function (result) {
-                    alert('Mesajınız gönderildi!');
-                    document.querySelector("#msg-tm").click();
-                }
+            if (Mesaj !== '') {
+                var BenimId = "@Model.KullaniciId";
+                var ArkadasId = $(this).data("id");
+                $.ajax({
+                    url: '/Mesaj/MesajGonder',
+                    type: "POST",
+                    data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
+                    success: function (result) {
+                        alert('Mesajınız gönderildi!');
+                        document.querySelector("#msg-tm").click();
+                    }
             });
+            };
         });
     });
 </script>
