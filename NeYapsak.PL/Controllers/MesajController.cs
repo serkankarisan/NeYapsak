@@ -118,11 +118,7 @@ namespace NeYapsak.PL.Controllers
             msg.Body = "İlanlarda yer alan <a href=\"" + callbackUrl + "\">" + Ilan.Baslik + "</a> için <strong><u>" + Mesaj + "</u></strong>şeklinde bir bildirim geldi.";
             Mailing Mail = new Mailing();
             Mail.SendMail(msg);
-            if (true)
-            {
-                return RedirectToAction("Main","Home");
-            }
-            return PartialView("Error");
+            return RedirectToAction("Main","Home");
         }
     }
 }
