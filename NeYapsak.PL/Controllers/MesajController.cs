@@ -113,9 +113,9 @@ namespace NeYapsak.PL.Controllers
             Ilan Ilan = ent.Ilanlar.Where(i => i.Id == Ilanid).FirstOrDefault();
             IdentityMessage msg = new IdentityMessage();
             msg.Subject = Ilan.Baslik + " ilanı hakkında bildirim";
-            msg.Destination = "m720694@outlook.com";
+            msg.Destination = "neyapsakservis@gmail.com";
             var callbackUrl = Url.Action("OtherEventDetail", "Home", new { Id= IlanId }, protocol: Request.Url.Scheme);
-            msg.Body = "İlanlarda yer alan <a href=\"" + callbackUrl + "\">" + Ilan.Baslik + "</a> için <strong><u>" + Mesaj + "</u></strong>şeklinde bir bildirim geldi.";
+            msg.Body = "İlanlarda yer alan <a href=\"" + callbackUrl + "\">" + Ilan.Baslik + "</a> için <strong><u>" + Mesaj + "</u></strong> şeklinde bir bildirim geldi.";
             Mailing Mail = new Mailing();
             Mail.SendMail(msg);
             return RedirectToAction("Main","Home");
