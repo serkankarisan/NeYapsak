@@ -9,20 +9,25 @@ namespace NeYapsak.PL.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Ad")]
         [StringLength(50)]
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Soyad")]
         [StringLength(50)]
         public string Surname { get; set; }
         [Required]
+        [Display(Name = "Email")]
         [EmailAddress()]
         public string Email { get; set; }
 
         [DataType(DataType.DateTime)]
+        [Display(Name = "Doğum Tarihi")]
         public DateTime DogumTarihi { get; set; }
 
         [Required]
+        [Display(Name = "Şifre")]
         [StringLength(100)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -30,6 +35,7 @@ namespace NeYapsak.PL.Models
         [Required]
         [StringLength(100)]
         [DataType(DataType.Password)]
+        [Display(Name = "Şifre Tekrar")]
         [Compare("Password", ErrorMessage = "Şifreler aynı değil!")]
         public string ConfirmPassword { get; set; }
     }

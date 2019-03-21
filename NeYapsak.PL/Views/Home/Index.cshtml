@@ -164,42 +164,38 @@
 
                             <article class="card-body">
                                 <p class="card-title mb-4 mt-1 text-center font-weight-normal">Aşağıda yer alan bilgileri verip aramıza katılabilirsin. Gireceğin bilgilerin doğruluğundan emin ol, bir daha değiştirme şansın olmayacak. Eğer Twitter veya Facebook hesabını kullanarak kaydolacaksan seni <strong><a href="#Giris" style="text-decoration:none;color:#f74c3c">Giriş Yap</a></strong> bölümüne alalım.</p>
-                                @using (Html.BeginForm("Register", "Account", FormMethod.Post))
-                                {
-                                    @Html.AntiForgeryToken()
+
                                     <div class="form-group col-xs-12 col-md-6 text-center">
-                                        <label>Adın</label> @Html.EditorFor(model => model.RegisterView.Name, new { htmlAttributes = new { @class = "form-control", required = true } })
+                                        <label>Adın</label> @Html.EditorFor(model => model.RegisterView.Name, new { htmlAttributes = new { @class = "form-control", required = true,id="regname" } })
                                         @Html.ValidationMessageFor(model => model.RegisterView.Name, "", new { @class = "text-danger" })
                                     </div> <!-- form-group// -->
                                     <div class="form-group col-xs-12 col-md-6 text-center">
-                                        <label>Soyadın</label>@Html.EditorFor(model => model.RegisterView.Surname, new { htmlAttributes = new { @class = "form-control", required = true } })
+                                        <label>Soyadın</label>@Html.EditorFor(model => model.RegisterView.Surname, new { htmlAttributes = new { @class = "form-control", required = true, id = "regsurname" } })
                                         @Html.ValidationMessageFor(model => model.RegisterView.Surname, "", new { @class = "text-danger" })
                                     </div> <!-- form-group// -->
                                     <div class="form-group col-xs-12 col-md-6 text-center">
                                         <label>E-Posta Adresin</label>
-                                        @Html.EditorFor(model => model.RegisterView.Email, new { htmlAttributes = new { @class = "form-control", required = true, type = "email" } })
+                                        @Html.EditorFor(model => model.RegisterView.Email, new { htmlAttributes = new { @class = "form-control", required = true, type = "email", id = "regemail" } })
                                         @Html.ValidationMessageFor(model => model.RegisterView.Email, "", new { @class = "text-danger" })
                                     </div> <!-- form-group// -->
                                     <div class="form-group col-xs-12 col-md-6 text-center">
                                         <label>Doğum Tarihin</label>
-                                        @Html.EditorFor(model => model.RegisterView.DogumTarihi, new { htmlAttributes = new { @class = "form-control vertical-center", type = "date", required = true } })
+                                        @Html.EditorFor(model => model.RegisterView.DogumTarihi, new { htmlAttributes = new { @class = "form-control vertical-center", type = "date", required = true, id = "regdogumtarihi" } })
                                         @Html.ValidationMessageFor(model => model.RegisterView.DogumTarihi, "", new { @class = "text-danger" })
 
                                     </div> <!-- form-group// -->
                                     <div class="form-group col-xs-12 col-md-6 text-center">
-                                        <label>Şifren</label>@Html.EditorFor(model => model.RegisterView.Password, new { htmlAttributes = new { @class = "form-control", required = true } })
+                                        <label>Şifren</label>@Html.EditorFor(model => model.RegisterView.Password, new { htmlAttributes = new { @class = "form-control", required = true, id = "regsifre" } })
                                         @Html.ValidationMessageFor(model => model.RegisterView.Password, "", new { @class = "text-danger" })
                                     </div> <!-- form-group// -->
                                     <div class="form-group col-xs-12 col-md-6 text-center">
-                                        <label>Şifren(Tekrar)</label>@Html.EditorFor(model => model.RegisterView.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", required = true } })
-                                        @Html.ValidationMessageFor(model => model.RegisterView.ConfirmPassword,"", new { @class = "text-danger" })
+                                        <label>Şifren(Tekrar)</label>@Html.EditorFor(model => model.RegisterView.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", required = true, id = "regsifretekrar" } })
+                                        @Html.ValidationMessageFor(model => model.RegisterView.ConfirmPassword, "", new { @class = "text-danger" })
                                     </div> <!-- form-group// -->
                                     <div class="form-group col-xs-12 col-md-offset-3 col-md-6 text-center">
                                         @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                                         <input class="tutorials-link-logreg" type="submit" id="KayitOl" value="Kayıt Ol" />
                                     </div> <!-- form-group// -->
-                                }
-
                             </article>
                         </div> <!-- card.// -->
                     </div><!-- /.row -->
@@ -225,29 +221,30 @@
                             <div class="col-md-6 text-center"><span class="btn btn-dark sc-login-tw"><a href="#" class="btn"> <i class="fa fa-twitter"></i> Twitter ile giriş yap</a></span></div>
                             <div class="col-md-6 text-center"><span class="btn btn-dark sc-login-fb"><a href="#" class="btn btn-block btn-outline-primary"> <i class="fa fa-facebook"></i>&nbsp;Facebook ile giriş yap</a></span></div>
                         </div>
-                        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
-                        {
-                            @Html.AntiForgeryToken()
-                            <div class="form-group col-xs-12 col-md-6 text-center">
-                                <label>E-Posta Adresin</label>@Html.EditorFor(model => model.loginView.Email, new { htmlAttributes = new { @class = "form-control", required = true, type = "email" } })
-                                @Html.ValidationMessageFor(model => model.loginView.Email, "", new { @class = "text-danger" })
-                            </div> <!-- form-group// -->
-                            <div class="form-group col-xs-12 col-md-6 text-center">
-                                <label>Şifren</label>@Html.EditorFor(model => model.loginView.Password, new { htmlAttributes = new { @class = "form-control", required = true } })
-                                @Html.ValidationMessageFor(model => model.loginView.Password, "", new { @class = "text-danger" })
-                            </div> <!-- form-group// -->
-                            <div class="form-group col-xs-12 col-md-12 text-center">
-                                <div class="checkbox">
-                                    @Html.CheckBoxFor(model => model.loginView.RememberMe)
-                                    @Html.ValidationMessageFor(model => model.loginView.RememberMe, "", new { @class = "text-danger" })
-                                    @Html.Label("Beni Hatırla", htmlAttributes: new { @class = "h5" })
-                                </div>
+
+                        <!-- json deneme-->
+                        <div class="form-group col-xs-12 col-md-6 text-center">
+                            <label>E-Posta Adresin</label>@Html.EditorFor(model => model.loginView.Email, new { htmlAttributes = new { @class = "form-control", required = true, type = "email", id = "logemail" } })
+                            @Html.ValidationMessageFor(model => model.loginView.Email, "", new { @class = "text-danger" })
+                        </div> <!-- form-group// -->
+                        <div class="form-group col-xs-12 col-md-6 text-center">
+                            <label>Şifren</label>@Html.EditorFor(model => model.loginView.Password, new { htmlAttributes = new { @class = "form-control", required = true, id = "logsifre" } })
+                            @Html.ValidationMessageFor(model => model.loginView.Password, "", new { @class = "text-danger" })
+                        </div> <!-- form-group// -->
+                        <div class="form-group col-xs-12 col-md-12 text-center">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(model => model.loginView.RememberMe, new { id = "logbenihatirla" })
+                                @Html.ValidationMessageFor(model => model.loginView.RememberMe, "", new { @class = "text-danger" })
+                                @Html.Label("Beni Hatırla", htmlAttributes: new { @class = "h5" })
                             </div>
-                            <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center">
-                                <input class="tutorials-link-logreg" type="submit" id="GirisYap" value="Giriş Yap" />
-                                @*<a class="tutorials-link" href="#Giris" role="button"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;Giriş Yap</a>*@
-                            </div>
-                        }
+                        </div>
+                        <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center">
+                            <input class="tutorials-link-logreg" type="submit" id="GirisYap" value="Giriş Yap" />
+                            @*<a class="tutorials-link" href="#Giris" role="button"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;Giriş Yap</a>*@
+                        </div>
+                        <!-- json deneme bitiş-->
+
+
                         <div class="row">
                             <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center"><a class="large" href="~/Account/ForgotPassword" style="color:#f74c3c">Şifreni mi unuttun ?</a></div>
                         </div>
@@ -256,6 +253,72 @@
             </div>
         </div><!-- /.container -->
     </section>
+
+
+    <!-- Modal Login Bilgi-->
+    <div class="modal fade" id="LoginModalCenter" tabindex="-1" role="dialog" aria-labelledby="LoginModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog" style="margin-top:15%;" role="document">
+            <div class="modal-content">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-2">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-8" style="margin-top:10px;">
+                            <h3 class="text-center text-warning" id="LoginModalLongTitle">Giriş Başarısız!</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <button id="modal-login-cikis" type="button" class="close" style="width:45px;height:45px;" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="h2">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="height:1px;padding-top:1px;padding-bottom:0">
+                </div>
+                <div id="modal-login-body" class="modal-body h4 text-danger" style="padding-bottom:0;">
+
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Login Bilgi Bitiş -->
+
+    <!-- Modal Register Bilgi-->
+    <div class="modal fade" id="RegisterModalCenter" tabindex="-1" role="dialog" aria-labelledby="RegisterModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog" style="margin-top:15%;" role="document">
+            <div class="modal-content">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-2">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-8" style="margin-top:10px;">
+                            <h3 class="text-center text-warning" id="RegisterModalLongTitle">Kayıt Başarısız!</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <button id="modal-register-cikis" type="button" class="close" style="width:45px;height:45px;" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="h2">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="height:1px;padding-top:1px;padding-bottom:0">
+                </div>
+                <div id="modal-register-body" class="modal-body h4 text-danger" style="padding-bottom:0;">
+
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Register Bilgi Bitiş -->
+
+
+
     <footer>
         <div class="container">
             <div class="row">

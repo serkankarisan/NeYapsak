@@ -137,3 +137,60 @@ $(document).ready(function(){
 		
 	});
 });
+    $(document).ready(function () {
+        $("#GirisYap").click(function () {
+            var loginmodel = {};
+            loginmodel.Email = $('#logemail').val();
+            loginmodel.RememberMe = $('#logbenihatirla').val();
+            loginmodel.Password = $('#logsifre').val();
+            $.ajax({
+                type: "POST",
+                url: '/Account/Login',
+                data: { model: loginmodel },
+                success: function (result) {
+                    if (result === "True") {
+                        window.location.href = "/Home/Main";
+                    }
+                    else {
+                        $('#modal-login-body').text("");
+                        $.each(result, function (i, hata) {
+                            $('#modal-login-body').append(hata + "<br/><br/>");
+                        });
+                        
+                        $('#LoginModalCenter').modal('show');
+                    }
+                }
+            });
+        });
+});
+$(document).ready(function () {
+    $("#KayitOl").click(function () {
+        var registermodel = {};
+        registermodel.Name = $('#regname').val();
+        registermodel.Surname = $('#regsurname').val();
+        registermodel.Email = $('#regemail').val();
+        registermodel.DogumTarihi = $('#regdogumtarihi').val();
+        registermodel.Password = $('#regsifre').val();
+        registermodel.ConfirmPassword = $('#regsifretekrar').val();
+        console.log("rmodel "+registermodel);
+        $.ajax({
+            type: "POST",
+            url: '/Account/Register',
+            data: { model: registermodel },
+            success: function (result) {
+                console.log(result);
+                if (result === "True") {
+                    window.location.href = "/Account/DisplayEmail";
+                }
+                else {
+                    $('#modal-register-body').text("");
+                    $.each(result, function (i, hata) {
+                        $('#modal-register-body').append(hata + "<br/><br/>");
+                    });
+
+                    $('#RegisterModalCenter').modal('show');
+                }
+            }
+        });
+    });
+});

@@ -60,26 +60,30 @@ namespace NeYapsak.PL.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult Register(LoginRegisterViewModel model)
+        public JsonResult Register(RegisterViewModel model)
         {
+            List<string> errors = new List<string>();
             if (!ModelState.IsValid)
-                return RedirectToAction("Index", "Home", model);
+            {
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
+            }
             var usermanager = IdentityTools.NewUserManager();
-            var kullanici = usermanager.FindByEmail(model.RegisterView.Email);
+            var kullanici = usermanager.FindByEmail(model.Email);
             if (kullanici != null)
             {
                 ModelState.AddModelError("", "Bu Email Sistemde Kayıtlı!");
-                return RedirectToAction("Index", "Home", model);
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
             }
             ApplicationUser user = new ApplicationUser();
-            user.Name = model.RegisterView.Name;
-            user.Surname = model.RegisterView.Surname;
-            user.Email = model.RegisterView.Email;
-            user.UserName = model.RegisterView.Email;
-            user.DogumTarihi = model.RegisterView.DogumTarihi;
-            var result = usermanager.Create(user, model.RegisterView.Password);
+            user.Name = model.Name;
+            user.Surname = model.Surname;
+            user.Email = model.Email;
+            user.UserName = model.Email;
+            user.DogumTarihi = model.DogumTarihi;
+            var result = usermanager.Create(user, model.Password);
             if (result.Succeeded)
             {
                 usermanager.AddToRole(user.Id, "User");
@@ -89,7 +93,8 @@ namespace NeYapsak.PL.Controllers
                 msg.Body = "Nerdeyse tamamlandı! NeYapsak ağına katılmak için <a href=\"" + callbackUrl + "\">bu link</a>e tıkla.";
                 msg.Subject = "NeYapsak Hesap Doğrulama Servisi";
                 mail.SendMail(msg);
-                return View("DisplayEmail");
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json("True", JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -98,7 +103,12 @@ namespace NeYapsak.PL.Controllers
                     ModelState.AddModelError(string.Empty, error);
                 }
             }
-            return RedirectToAction("Index", "Home", model);
+            errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+            return Json(errors, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult DisplayEmail()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -253,24 +263,29 @@ namespace NeYapsak.PL.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginRegisterViewModel model)
+        public JsonResult Login(LoginViewModel model)
         {
+            List<string> errors = new List<string>();
             if (!ModelState.IsValid)
-                return Redirect("/Home/Index#Giris");
+            {
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
+            }
             var usermanager = IdentityTools.NewUserManager();
-            var kullanici = usermanager.FindByName(model.loginView.Email);
+            var kullanici = usermanager.FindByName(model.Email);
             if (kullanici == null)
             {
                 ModelState.AddModelError("", "Böyle bir kullanıcı kayıtlı değil!");
-                return Redirect("/Home/Index#Giris");
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                if (!usermanager.CheckPassword(kullanici, model.loginView.Password))
+                if (!usermanager.CheckPassword(kullanici, model.Password))
                 {
                     ModelState.AddModelError("", "Girilen şifre yanlış!");
-                    return Redirect("/Home/Index#Giris");
+                    errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                    return Json(errors, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -280,15 +295,16 @@ namespace NeYapsak.PL.Controllers
                         var identity = usermanager.CreateIdentity(kullanici, "ApplicationCookie");
                         var authProperty = new AuthenticationProperties
                         {
-                            IsPersistent = model.loginView.RememberMe
+                            IsPersistent = model.RememberMe
                         };
                         authManager.SignIn(authProperty, identity);
-                        return RedirectToAction("Main", "Home");
+                        return Json("True",JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
                         ModelState.AddModelError("", "E-Posta doğrulamasını yapman gerekmektedir!");
-                        return Redirect("/Home/Index#Giris");
+                        errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                        return Json(errors, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
