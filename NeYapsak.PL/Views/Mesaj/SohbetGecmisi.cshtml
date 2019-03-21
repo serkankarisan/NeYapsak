@@ -49,7 +49,7 @@
     $(document).ready(function () {
         $('#msg-gonder').click(function () {
             var Mesaj = $("#yeni-mesaj").val();
-            if (Mesaj !== '') {
+            if (Mesaj.trim() !== '') {
                 var ArkadasId = '@Model.AliciId';
                 var BenimId = '@Model.GondericiId';
                 $.ajax({

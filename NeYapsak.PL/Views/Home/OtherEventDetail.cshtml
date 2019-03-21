@@ -305,7 +305,7 @@
     $(document).ready(function () {
         $("#msg-gonder").click(function () {
             var Mesaj = $("#yeni-mesaj").val();
-            if (Mesaj !== '') {
+            if (Mesaj.trim() !== '') {
                 var BenimId = "@ViewBag.user.Kullanici.Id";
                 var ArkadasId = "@Model.KullaniciId"; 
                 $.ajax({
