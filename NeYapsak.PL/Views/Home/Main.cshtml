@@ -376,7 +376,7 @@
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
                                         <div class="h6 dropdown-header">Bu İlanı</div>
-                                        <a class="dropdown-item" href="#">Şikayet Et/Bildir</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#IlanBildirMain">Şikayet Et/Bildir</a>
                                     </div>
                                 </span>
                             </div>
@@ -435,6 +435,35 @@
                             </div>
                         </div>
                         <!--Modal Mesaj Bitiş-->
+                        <!--Modal İlan Bildir-->
+                        <div class="modal fade" id="IlanBildirMain" tabindex="-1" role="dialog" aria-labelledby="IlanBildirMainLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ConfirmModalKatilmaMainLabel">
+                                            @Digerİlan.Baslik ilanını bildir
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div id="confirm-modal-main-katilma-body" class="modal-body">
+                                        &nbsp;&nbsp;&nbsp;<em>Duyarlılığın için teşekkürler. İlandaki sıkıntı nedir ?:</em>
+                                        <div class="col-md-8">
+                                            <br /><br />
+                                            <textarea type="text" name="YeniMesaj" id="yeni-bild" style="width:450px" maxlength="300" placeholder="Bu alana girilecek bilgiler site yönetimine iletilecektir." class="form-control" required="required"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="row">
+                                            <button id="ilan-bildir" type="submit" data-adid="@Digerİlan.Id" data-seid="@Model.KullaniciId" class="btn cs-arka-renk">Gönder</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button type="button" class="btn cs-arka-renk" id="iln-tm" data-dismiss="modal">Vazgeç</button>&nbsp;&nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Modal İlan Bildir Bitiş-->
                     }
                 }
             </div>
@@ -524,6 +553,26 @@
                     success: function (result) {
                         alert('Mesajınız gönderildi!');
                         document.querySelector("#msg-tm").click();
+                    }
+            });
+            };
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ilan-bildir").click(function () {
+            var Mesaj = $("#yeni-bild").val();
+            if (Mesaj.trim() !== '') {
+                var GondericiId = $(this).data("seid");
+                var IlanId = $(this).data("adid");
+                document.querySelector("#iln-tm").click();
+                $.ajax({
+                    url: '/Mesaj/IlanBildir',
+                    type: "POST",
+                    data: { IlanId: IlanId, GondericiId: GondericiId, Mesaj: Mesaj },
+                    success: function (result) {
+                        alert('Bildirimin site yönetimine iletildi!');
                     }
             });
             };
