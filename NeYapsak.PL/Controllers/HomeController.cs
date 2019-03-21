@@ -376,16 +376,16 @@ namespace NeYapsak.PL.Controllers
 
 
         [Authorize]
-        public ActionResult GSayacArttir(int Id)
+        public ActionResult GSayacArttir(int EtkID)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
-            Ilan etk = repoI.Get(i => i.Id == Id);
-            etk.GoruntulenmeSayaci += 1;
-            if (!repoI.Update(etk))
-            {
-                ModelState.AddModelError("", "Sayaç Arttırılamadı.");
-            }
-            return Redirect("/Home/OtherEventDetail/" + Id);
+            Ilan etk = repoI.Get(i => i.Id == EtkID);
+                etk.GoruntulenmeSayaci += 1;
+                if (!repoI.Update(etk))
+                {
+                    return Json("Sayaç Arttırılamadı.", JsonRequestBehavior.AllowGet);
+                }
+                return Json("True", JsonRequestBehavior.AllowGet);
         }
 
 

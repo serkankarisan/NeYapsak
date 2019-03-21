@@ -247,7 +247,7 @@
                                         @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in Model.IlgilendigiIlanlar)
                                         {
                                             <tr>
-                                                <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><a id="@("link-etk-detay"+userviewilan.Id)" data-id="@userviewilan.Id" href="#" class="cs-renk link-etk-detay">@userviewilan.Baslik</a></td>
                                                 <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
                                                 <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
                                                 <td>
@@ -376,7 +376,7 @@
                                         @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in Model.KatildigiIlanlar.Where(i => i.Yayindami == true && i.Silindi == false).ToList())
                                         {
                                             <tr>
-                                                <td><a href="/Home/OtherEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><a id="@("link-etk-detay"+userviewilan.Id)" data-id="@userviewilan.Id" href="#" class="cs-renk link-etk-detay">@userviewilan.Baslik</a></td>
                                                 <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
                                                 <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
                                                 <td>
@@ -455,7 +455,7 @@
                                         @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in Model.KatildigiIlanlar.Where(i => i.Yayindami == false || i.Silindi == true).ToList())
                                         {
                                             <tr>
-                                                <td><a href="/Home/OtherEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><a href="#" class="cs-renk link-etk-detay" id="@("link-etk-detay"+userviewilan.Id)" data-id="@userviewilan.Id">@userviewilan.Baslik</a></td>
                                                 <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
                                                 <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
                                                 <td>
@@ -596,3 +596,25 @@
     });
 </script>
 <!--Jquery Scripti -->
+<script type="text/javascript">
+    $(".link-etk-detay").click(function () {
+        var ID = $(this).data("id");
+        console.log(ID);
+        $.ajax({
+            type: "POST",
+            url: '/Home/GSayacArttir',
+            data: { EtkID: ID },
+            success: function (result) {
+                if (result === "True") {
+                    window.location.href = "/Home/OtherEventDetail/" + ID;
+                }
+                else if (result === "False") {
+                    window.location.href = "/Home/MyEventDetail/" + ID;
+                }
+                else {
+                    alert(result);
+                }
+            }
+        });
+    });
+</script>

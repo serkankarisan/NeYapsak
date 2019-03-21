@@ -532,7 +532,7 @@
                                 <!--bu sayede başlığın arka planı grimsi ve içeriğe mesafelendirme yapmış. card body ve card header da var-->
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!--dflex ile yan yana getiriyor. bir nevi float-->
-                                    <a class="card-link" href="/Home/GSayacArttir/@Digerİlan.Id">
+                                    <a id="@("link-etk-detay"+Digerİlan.Id)" class="card-link link-etk-detay" data-id="@Digerİlan.Id" href="#">
                                         <h5 class="card-title cs-renk">@Digerİlan.Baslik</h5>
                                     </a>
                                     <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @Digerİlan.Kontenjan</div>
@@ -807,5 +807,24 @@
     });
 </script>
 <script type="text/javascript">
-
+    $(".link-etk-detay" ).click(function () {
+        var ID = $(this).data("id");
+        console.log(ID);
+        $.ajax({
+            type: "POST",
+            url: '/Home/GSayacArttir',
+            data: { EtkID: ID },
+            success: function (result) {
+                if (result === "True") {
+                    window.location.href = "/Home/OtherEventDetail/" + ID;
+                }
+                else if (result === "False") {
+                    window.location.href = "/Home/MyEventDetail/" + ID;
+                }
+                else {
+                    alert(result);
+                }
+            }
+        });
+    });
 </script>
