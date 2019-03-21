@@ -113,7 +113,36 @@
                         </div>
                     </div>
                     <!-- Modal Onay Katıl Bitiş-->
-                    &nbsp; <button id="mesaj" type="submit" class="btn cs-arka-renk">Mesaj Gönder</button>
+                    &nbsp; <button id="mesaj" type="submit" data-id="#" data-target="#MesajGonderMain" data-toggle="modal" class="btn cs-arka-renk">Mesaj Gönder</button>
+                    <!--Modal Mesaj-->
+                    <div class="modal fade" id="MesajGonderMain" tabindex="-1" role="dialog" aria-labelledby="MesajGonderMainLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ConfirmModalKatilmaMainLabel">
+                                        @Model.User.Name @Model.User.Surname kişisine mesaj gönder
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div id="confirm-modal-main-katilma-body" class="modal-body">
+                                    &nbsp;&nbsp;&nbsp;<em>Aklına takılanı öğrenmek bir mesaj kadar uzakta:</em>
+                                    <div class="col-md-8">
+                                        <br /><br />
+                                        <textarea type="text" name="YeniMesaj" id="yeni-mesaj" style="width:450px" maxlength="300" placeholder="Mesajını gir" class="form-control" required="required"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <button id="msg-gonder" type="submit" data-id="#" class="btn cs-arka-renk">Gönder</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="btn cs-arka-renk" id="msg-tm" data-dismiss="modal">Vazgeç</button>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Modal Mesaj Bitiş-->
                 </div>
             </div>
         </div>
@@ -399,5 +428,25 @@
             }
         });
 
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#msg-gonder").click(function () {
+            var Mesaj = $("#yeni-mesaj").val();
+            if (Mesaj.trim() !== '') {
+                var BenimId = "@ViewBag.user.Kullanici.Id";
+                var ArkadasId = "@Model.KullaniciId"; 
+                $.ajax({
+                    url: '/Mesaj/MesajGonder',
+                    type: "POST",
+                    data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
+                    success: function (result) {
+                        alert('Mesajınız gönderildi!');
+                        document.querySelector("#msg-tm").click();
+                    }
+                });
+            };
+        });
     });
 </script>

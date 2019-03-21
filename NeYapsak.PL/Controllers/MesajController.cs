@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using NeYapsak.BLL.Identity;
+using NeYapsak.BLL.Repository;
 using NeYapsak.DAL.Context;
 using NeYapsak.Entity.Entity;
 using NeYapsak.Entity.Identity;
@@ -102,6 +103,22 @@ namespace NeYapsak.PL.Controllers
                 return PartialView("SohbetGecmisi",Guncellet);
             }
             return PartialView("Error");
+        }
+        [HttpPost]
+        public ActionResult IlanBildir(string IlanId, string GondericiId, string Mesaj)
+        {
+            var usermanager = IdentityTools.NewUserManager();
+            var Gonderici = usermanager.FindById(GondericiId);
+            int Ilanid = Convert.ToInt32(IlanId);
+            Ilan Ilan = ent.Ilanlar.Where(i => i.Id == Ilanid).FirstOrDefault();
+            IdentityMessage msg = new IdentityMessage();
+            msg.Subject = Ilan.Baslik + " ilanı hakkında bildirim";
+            msg.Destination = "neyapsakservis@gmail.com";
+            var callbackUrl = Url.Action("OtherEventDetail", "Home", new { Id= IlanId }, protocol: Request.Url.Scheme);
+            msg.Body = "İlanlarda yer alan <a href=\"" + callbackUrl + "\">" + Ilan.Baslik + "</a> için <strong><u>" + Mesaj + "</u></strong> şeklinde bir bildirim geldi.";
+            Mailing Mail = new Mailing();
+            Mail.SendMail(msg);
+            return RedirectToAction("Main","Home");
         }
     }
 }

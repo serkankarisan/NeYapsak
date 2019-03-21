@@ -11,5 +11,6 @@ namespace NeYapsak.PL.Models
         public List<Ilan> KullanicininIlanlari { get; set; }
         public List<Ilan> DigerIlanlar { get; set; }
         public Ilan Ilan { get; set; }
+        public string KullaniciId { get; set; }
     }
 }

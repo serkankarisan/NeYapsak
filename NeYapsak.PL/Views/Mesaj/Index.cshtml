@@ -13,7 +13,13 @@
         <div class="col-md-4 bg-light">
             <p class="text-center h6">GEÇMİŞ KONUŞMALARIM</p>
             @Html.HiddenFor(model=>model.UserId, new { @id="bid"})
-            @foreach (var kullanici in Model.Kullanicilar)
+            @if (Model.Kullanicilar.Count == 0)
+            {
+                <div class="h4">Görüntülenecek mesaj kaydın bulunmamaktadır.</div>
+            }
+            else
+            {
+            foreach (var kullanici in Model.Kullanicilar)
             {
                 <button type="submit" class="row cekcons" data-id="@kullanici.Id">
                     <div class="col-2 col-md-3">
@@ -24,6 +30,7 @@
                         <div class="h7 text-muted">@kullanici.Name @kullanici.Surname</div>
                     </div>
                 </button><hr>
+            }
             }
 
 

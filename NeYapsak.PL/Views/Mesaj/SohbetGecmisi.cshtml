@@ -48,22 +48,23 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#msg-gonder').click(function () {
-            var ArkadasId ='@Model.AliciId';
-            var BenimId = '@Model.GondericiId';
             var Mesaj = $("#yeni-mesaj").val();
-            $.ajax({
-                url: '/Mesaj/MesajGonder',
-                type: "POST",
-                data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
-                success: function (result) {
-                    //var element = $("button.row.cekcons").find(`[data-id='${result.AliciId}']`);
-                    var element = document.querySelectorAll("[data-id='@Model.AliciId']")[0];
-                    console.log(element);
-                    element.click();
-                    console.log("takılmadı");
-                }
-            })
-        })
+            if (Mesaj.trim() !== '') {
+                var ArkadasId = '@Model.AliciId';
+                var BenimId = '@Model.GondericiId';
+                $.ajax({
+                    url: '/Mesaj/MesajGonder',
+                    type: "POST",
+                    data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
+                    success: function (result) {
+                        var element = document.querySelectorAll("[data-id='@Model.AliciId']")[0];
+                        console.log(element);
+                        element.click();
+                        console.log("takılmadı");
+                    }
+                });
+            };
+        });
     })
 </script>
 
