@@ -10,10 +10,6 @@
             <div class="card-header justify-content-center text-center">
                 <button id="btn-ols" class="btn"><strong>Etkinlik Oluştur</strong></button>
             </div>
-            @using (Html.BeginForm("Main", "Home", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-
                 <div class="card-body" id="etk-ols" style="display:none;">
                     <div class="col-md-12">
                         <div class="row">
@@ -24,7 +20,7 @@
                         </div><br>
                         <div class="row">
                             <label class="etk-ols-lbl">Gerçekleşeceği şehri seçin: </label>
-                            <select name="Ilan.il" style="width: 275px; height: 35px;" class="form-control">
+                            <select id="il" name="Ilan.il" style="width: 275px; height: 35px;" class="form-control">
                                 @*<option value="">Şehir Seçiniz</option>*@
                                 <option value="İstanbul">İstanbul</option>
                                 @*<option value="Ankara">Ankara</option>
@@ -120,7 +116,7 @@
                         </div><br>
                         <div class="row">
                             <label class="etk-ols-lbl">Gerçekleşeceği ilçeyi seçin: </label>
-                            <select name="Ilan.ilce" class="form-control" style="width: 275px; height: 35px;" required>
+                            <select id="ilce" name="Ilan.ilce" class="form-control" style="width: 275px; height: 35px;" required>
                                 <option value="">İlçe Seçiniz</option>
                                 <option value="Üsküdar">Üsküdar</option>
                                 <option value="Kadıköy">Kadıköy</option>
@@ -146,13 +142,13 @@
                         </div><br>
                         <div class="row">
                             <label class="etk-ols-lbl">Kaç kişi lazım: </label>
-                            @Html.EditorFor(model => model.Ilan.Kontenjan, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", name = "ilan-baslik", id = "ilan-baslik", style = "width:50px;height:30px;padding-right:0", value = "1", required = true } })
+                            @Html.EditorFor(model => model.Ilan.Kontenjan, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", name = "ilan-baslik", id = "ilan-kontenjan", style = "width:50px;height:30px;padding-right:0", value = "1", required = true } })
                             @Html.ValidationMessageFor(model => model.Ilan.Kontenjan, "", new { @class = "text-danger" })
                             @*<input type="number" min="1" name="ilan-baslik" id="ilan-baslik" class="form-control" style="width:50px;height:30px;padding-right:0" value="1">*@<br>
                         </div><br>
                         <div class="row">
                             <label class="etk-ols-lbl">Etkinliğiniz için bir özet girin: </label>
-                            @Html.TextAreaFor(model => model.Ilan.Ozet, new { @class = "form-control", name = "ilan-ozet", id = "ilan-ozet", style = "width: 275px;height:100px;", minlength = "10", maxlength = "300", placeholder = "Etkinliğini 300 karakter ile açıkla", required = true })
+                            @Html.TextAreaFor(model => model.Ilan.Ozet, new { @class = "form-control", name = "ilan-ozet", id = "ilan-ozet", style = "width: 275px;height:100px;", minlength = "10", placeholder = "Etkinliğini kısaca açıkla", required = true })
                             @Html.ValidationMessageFor(model => model.Ilan.Ozet, "", new { @class = "text-danger" })
                             @*<textarea name="ilan-ozet" id="ilan-ozet" style="width: 450px;" maxlength="300" placeholder="Etkinliğini 300 karakter ile açıkla" class="form-control" required></textarea>*@<br>
                         </div><br>
@@ -164,7 +160,6 @@
                         </div>
                     </div>
                 </div>
-            }
         </div>
         <!--- \\\\\\\Etkinlik Oluşturma Bitiş-->
         <!--- \\\\\\\Kullanicinin Etkinlikleri Başlangıç -->
@@ -237,7 +232,7 @@
                                                                     <td><img class="rounded-circle" width="45" height="45" src="@katilan.User.ProfilAvatarYolu" alt=""></td>
                                                                     <td>
                                                                         <div class="row" style="padding-top:10px;">
-                                                                                <div class="col-md-6"><a href="/Home/OtherProfile/@katilan.KullaniciId" class="cs-renk">@katilan.User.Name @katilan.User.Surname</a></div>
+                                                                            <div class="col-md-6"><a href="/Home/OtherProfile/@katilan.KullaniciId" class="cs-renk">@katilan.User.Name @katilan.User.Surname</a></div>
 
                                                                             <div class="col-md-6"><p class="text-muted">@katilan.Tarih</p></div>
                                                                         </div>
@@ -288,7 +283,7 @@
                                                                     <td><img class="rounded-circle" width="45" height="45" src="@ilgilenen.User.ProfilAvatarYolu" alt=""></td>
                                                                     <td>
                                                                         <div class="row" style="padding-top:10px;">
-                                                                                <div class="col-md-6"><a href="/Home/OtherProfile/@ilgilenen.KullaniciId" class="cs-renk">@ilgilenen.User.Name @ilgilenen.User.Surname</a></div>
+                                                                            <div class="col-md-6"><a href="/Home/OtherProfile/@ilgilenen.KullaniciId" class="cs-renk">@ilgilenen.User.Name @ilgilenen.User.Surname</a></div>
                                                                             <div class="col-md-6"><p class="text-muted">@ilgilenen.Tarih</p></div>
                                                                         </div>
                                                                     </td>
@@ -453,7 +448,7 @@
                                                                     else
                                                                     {
                                                                         <div class="col-md-6"><a href="/Home/OtherProfile/@katilan.KullaniciId" class="cs-renk">@katilan.User.Name @katilan.User.Surname</a></div>}
-                                                                    
+
                                                                     <div class="col-md-6"><p class="text-muted">@katilan.Tarih</p></div>
                                                                 </div>
                                                             </td>
@@ -509,7 +504,7 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                    <div class="col-md-6"><a href="/Home/OtherProfile/@ilgilenen.KullaniciId" class="cs-renk">@ilgilenen.User.Name @ilgilenen.User.Surname</a></div>}
+                                                                        <div class="col-md-6"><a href="/Home/OtherProfile/@ilgilenen.KullaniciId" class="cs-renk">@ilgilenen.User.Name @ilgilenen.User.Surname</a></div>}
                                                                     <div class="col-md-6"><p class="text-muted">@ilgilenen.Tarih</p></div>
                                                                 </div>
                                                             </td>
@@ -716,6 +711,28 @@
             </div>
         </div>
         <!-- Modal Bilgi Bitiş -->
+        <!-- Modal İlan Oluştur-->
+        <div class="modal fade" id="IlanOlusturModalCenter" tabindex="-1" role="dialog" aria-labelledby="IlanOlusturModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="card-header text-center">
+                        <button id="modal-ilan-olustur-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="text-center" id="IlanOlusturModalLongTitle"></h5>
+                    </div>
+                    <div id="modal-ilan-olustur-body" style="margin-left:5%;" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modal-ilan-olustur-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal İlan Oluştur Bitiş -->
+
+
     </div>
 
 
@@ -825,6 +842,51 @@
                     alert(result);
                 }
             }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#etkinlik-olustur").click(function () {
+            var etk = {};
+            etk.Baslik = $('#ilan-baslik').val();
+            etk.Il = $('#il').val();
+            etk.Ilce = $('#ilce').val();
+            etk.Kontenjan = $('#ilan-kontenjan').val();
+            etk.Ozet = $('#ilan-ozet').val();
+            etk.BaslangicTarihi = $('#ilan-vakit').val();
+            console.log("model " + etk);
+            var mainmodel = {};
+            mainmodel.Ilan = etk;
+            console.log("model main" + mainmodel);
+            $.ajax({
+                type: "POST",
+                url: '/Home/Main',
+                data: { model: mainmodel },
+                success: function (result) {
+                    console.log(result);
+                    if (result === "True") {
+                        $('#IlanOlusturModalLongTitle').attr("class", "text-success")
+                        $('#IlanOlusturModalLongTitle').text("Etkinlik Oluşturuldu");
+                        $('#modal-ilan-olustur-body').text("İşte Bu kadar Etkinliğiniz Oluşturuldu.");
+                                    $("#modal-ilan-olustur-tamam").click(function () {
+                    window.location.href = "/Home/Main";
+            });
+            $("#modal-ilan-olustur-cikis").click(function () {
+                    window.location.href = "/Home/Main";
+            });
+                    }
+                    else {
+                        $('#IlanOlusturModalLongTitle').attr("class", "text-danger")
+                        $('#IlanOlusturModalLongTitle').text("Etkinlik Oluşturulamadı!");
+                        $('#modal-ilan-olustur-body').text("");
+                        $.each(result, function (i, hata) {
+                            $('#modal-ilan-olustur-body').append('<p class="text-danger" style="width:10px;display:inline-block">*</p>'+hata + "<br/><br/>");
+                        });
+                    }
+                    $('#IlanOlusturModalCenter').modal('show');
+                }
+            });
         });
     });
 </script>

@@ -32,18 +32,18 @@ namespace NeYapsak.Entity.Entity
         [Key]
         public int Id { get => _id; set => _id = value; }
 
-        [Required(ErrorMessage = "Lütfen il ismi giriniz!")]
+        [Required(ErrorMessage = "Lütfen Il ismi giriniz!")]
         [StringLength(30, ErrorMessage = "İçerik {0} karakterden uzun olmamalıdır!")]
         public string Il { get => _il; set => _il = value; }
 
-        [Required(ErrorMessage = "Lütfen ilçe ismi giriniz!")]
+        [Required(ErrorMessage = "Lütfen Ilçe ismi giriniz!")]
         [StringLength(30, ErrorMessage = "İçerik {0} karakterden uzun olmamalıdır!")]
         public string Ilce { get => _ilce; set => _ilce = value; }
 
 
         public string Konum { get => konum; set => konum = value; }
 
-        [Required(ErrorMessage = "Lütfen başlık içeriği giriniz!")]
+        [Required(ErrorMessage = "Lütfen Başlık içeriği giriniz!")]
         [StringLength(50, ErrorMessage = "İçerik {0} karakterden uzun olmamalıdır!")]
         public string Baslik
         {
@@ -86,7 +86,7 @@ namespace NeYapsak.Entity.Entity
             }
         }
 
-        [Required(ErrorMessage = "Lütfen ozet içeriği giriniz!")]
+        [Required(ErrorMessage = "Lütfen Özet içeriği giriniz!")]
         [StringLength(300, ErrorMessage = "İçerik {0} karakterden uzun olmamalıdır!")]
         public string Ozet
         {
@@ -129,7 +129,7 @@ namespace NeYapsak.Entity.Entity
             }
         }
 
-        [Required(ErrorMessage = "Lütfen etiket içeriği giriniz!")]
+        [Required(ErrorMessage = "Lütfen Etiket içeriği giriniz!")]
         public int Kontenjan { get => _kontenjan; set => _kontenjan = value; }
         public string KullaniciId { get => _kullaniciId; set => _kullaniciId = value; }//
 
@@ -137,6 +137,7 @@ namespace NeYapsak.Entity.Entity
         public DateTime OlusturmaTarihi { get => _olusturmaTarihi; set => _olusturmaTarihi = value; }
 
         [DataType(DataType.DateTime)]
+        [Required(ErrorMessage = "Lütfen Başlangıç giriniz!")]
         public DateTime BaslangicTarihi { get => _baslangicTarihi; set => _baslangicTarihi = value; }
 
         public int GoruntulenmeSayaci { get => _goruntulenmeSayaci; set => _goruntulenmeSayaci = value; }

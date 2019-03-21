@@ -30,7 +30,7 @@ namespace NeYapsak.PL.Controllers
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             MainViewModel MainModel = new MainViewModel();
             MainModel.KullaniciId = HttpContext.User.Identity.GetUserId();
-            MainModel.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != MainModel.KullaniciId  && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            MainModel.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != MainModel.KullaniciId && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
 
             MainModel.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId == MainModel.KullaniciId && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
 
@@ -38,17 +38,16 @@ namespace NeYapsak.PL.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize]
         public ActionResult Main(MainViewModel model)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            List<string> errors = new List<string>();
             if (!ModelState.IsValid)
-                return View(model);
-
-            model.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
-
-            model.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            {
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
+            }
 
             Ilan yeni = new Ilan();
             yeni.Baslik = model.Ilan.Baslik;
@@ -56,12 +55,14 @@ namespace NeYapsak.PL.Controllers
             if (model.Ilan.BaslangicTarihi < DateTime.Now)
             {
                 ModelState.AddModelError("", "Başlangıç Tarihi İleri Bir Tarih Olmalı!");
-                return View("Main", model);
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
             }
             if (model.Ilan.Kontenjan <= 0)
             {
                 ModelState.AddModelError("", "Kontenjan 0'dan Büyük Olmalı!");
-                return View("Main", model);
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
             }
             yeni.BaslangicTarihi = model.Ilan.BaslangicTarihi;
             yeni.Il = "İstanbul";
@@ -73,12 +74,13 @@ namespace NeYapsak.PL.Controllers
             yeni.Ozet = model.Ilan.Ozet;
             yeni.Konum = "Girilmedi";
             yeni.KullaniciId = HttpContext.User.Identity.GetUserId();
-            yeni.GoruntulenmeSayaci = 1;
+            yeni.GoruntulenmeSayaci = 0;
             if (repoI.Add(yeni))
             {
-                return RedirectToAction("Main", "Home");
+                return Json("True", JsonRequestBehavior.AllowGet);
             }
-            return View(model);
+            errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+            return Json(errors, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -143,31 +145,49 @@ namespace NeYapsak.PL.Controllers
 
 
         [Authorize]
-        public ActionResult MyEventDetail(int Id)
+        public ActionResult MyEventDetail(int? Id)
         {
-            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
-            Ilan etk = repoI.Get(i => i.Id == Id);
-            if (etk.KullaniciId == HttpContext.User.Identity.GetUserId())
+            if (Id != null)
             {
-                return View(etk);
+                Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+                Ilan etk = repoI.Get(i => i.Id == Id);
+                if (etk.KullaniciId == HttpContext.User.Identity.GetUserId())
+                {
+                    return View(etk);
 
+                }
+
+                return Redirect("/Home/OtherEventDetail/" + Id);
             }
-
-            return Redirect("/Home/OtherEventDetail/" + Id);
+            return Redirect("/Home/Main");
         }
 
         [Authorize]
-        public ActionResult EtkSil(int Id)
+        public JsonResult EtkSil(int EtkID)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
-            Ilan etk = repoI.Get(i => i.Id == Id);
-            etk.Silindi = true;
-            if (repoI.Delete(Id))
+            Repository<Katilan> repoK = new Repository<Katilan>(new NeYapsakContext());
+            Ilan etk = repoI.Get(i => i.Id == EtkID);
+            if (etk.KullaniciId == HttpContext.User.Identity.GetUserId())
             {
-                return Redirect("/Home/Main");
+                etk.Silindi = true;//update ile aynı.
+                if (repoI.Delete(EtkID))
+                {
+                    foreach (Katilan k in repoK.GetAll().Where(k => k.IlanId == etk.Id).ToList())
+                    {
+                        k.Onay = false;
+                        k.Silindi = true;
+                        if (!repoK.Update(k))
+                        {
+                            return Json("Katılanlar silinemedi.", JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    return Json("True", JsonRequestBehavior.AllowGet);
 
+                }
+                return Json("False", JsonRequestBehavior.AllowGet);
             }
-            return View("MyEventDetail", etk);
+            return Json("Bu Etkinlik Başkasının", JsonRequestBehavior.AllowGet);
         }
 
         //[Authorize]
@@ -376,16 +396,16 @@ namespace NeYapsak.PL.Controllers
 
 
         [Authorize]
-        public ActionResult GSayacArttir(int EtkID)
+        public JsonResult GSayacArttir(int EtkID)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             Ilan etk = repoI.Get(i => i.Id == EtkID);
-                etk.GoruntulenmeSayaci += 1;
-                if (!repoI.Update(etk))
-                {
-                    return Json("Sayaç Arttırılamadı.", JsonRequestBehavior.AllowGet);
-                }
-                return Json("True", JsonRequestBehavior.AllowGet);
+            etk.GoruntulenmeSayaci += 1;
+            if (!repoI.Update(etk))
+            {
+                return Json("Sayaç Arttırılamadı.", JsonRequestBehavior.AllowGet);
+            }
+            return Json("True", JsonRequestBehavior.AllowGet);
         }
 
 
@@ -394,7 +414,7 @@ namespace NeYapsak.PL.Controllers
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             Ilan etk = repoI.Get(i => i.Id == Id);
-            if (etk.User.Id==HttpContext.User.Identity.GetUserId())
+            if (etk.User.Id == HttpContext.User.Identity.GetUserId())
             {
                 return Redirect("/Home/MyEventDetail/" + Id);
             }

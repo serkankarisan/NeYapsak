@@ -2,6 +2,7 @@
 @{
     Layout = "~/Views/Shared/_Layout-2-TopMenu-Details.cshtml";
 }
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <link href="~/css/Buton-style.css" rel="stylesheet" />
 <div class="col-md-9 gedf-main">
     <!--- \\\\\\\Etkinlik-->
@@ -106,7 +107,7 @@
                             Merhaba @Model.User.Name etkinliği silmek istediğine emin misin?
                         </div>
                         <div class="modal-footer">
-                            <a href="/Home/EtkSil/@Model.Id" class="btn cs-arka-renk">Evet</a>
+                            <a id="@("link-etk-sil"+Model.Id)" href="#" data-id="@Model.Id" class="btn cs-arka-renk link-etk-sil">Evet</a>
                             <button type="button" class="btn cs-arka-renk" data-dismiss="modal">İptal</button>
                         </div>
                     </div>
@@ -259,4 +260,27 @@
         etkkaydetBtn.style.display = "none"
         etksilBtn.style.display = "none"
     }
+</script>
+<script type="text/javascript">
+    $(".link-etk-sil").click(function () {
+        var ID = $(this).data("id");
+        $('#etkinlikSilModalCenter').modal('hide');
+        console.log(ID);
+        $.ajax({
+            type: "POST",
+            url: '/Home/EtkSil',
+            data: { EtkID: ID },
+            success: function (result) {
+                if (result === "True") {
+                    window.location.href = "/Home/Main/";
+                }
+                else if (result === "False") {
+                    alert("İşlem Başarısız.");
+                }
+                else {
+                    alert(result);
+                }
+            }
+        });
+    });
 </script>
