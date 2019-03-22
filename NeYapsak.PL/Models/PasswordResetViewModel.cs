@@ -15,11 +15,13 @@ namespace NeYapsak.PL.Models
         [Required]
         [StringLength(100)]
         [DataType(DataType.Password)]
+        [Display(Name = "Yeni Şifre")]
         public string Password { get; set; }
 
         [Required]
         [StringLength(100)]
         [DataType(DataType.Password)]
+        [Display(Name = "Yeni Şifre Tekrarı")]
         [Compare("Password", ErrorMessage = "Şifreler aynı değil!")]
         public string ConfirmPassword { get; set; }
         public string Code { get; set; }

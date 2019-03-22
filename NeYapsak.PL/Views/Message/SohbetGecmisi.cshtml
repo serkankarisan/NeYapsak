@@ -53,7 +53,7 @@
                 var ArkadasId = '@Model.AliciId';
                 var BenimId = '@Model.GondericiId';
                 $.ajax({
-                    url: '/Mesaj/MesajGonder',
+                    url: '/Message/MesajGonder',
                     type: "POST",
                     data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
                     success: function (result) {

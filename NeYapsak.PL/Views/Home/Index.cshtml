@@ -95,9 +95,9 @@
                 <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
                     <p>Biliyoruz, artık dışarda bir şey yapmak isteyince birini bulabilmek zor. Malum Netflix, oyunlar, akıllı telefonlar vb. Oturduk, ne yapsak diye düşündük ve bu siteyi ortaya çıkardık. Sen <highlight>sosyalleş</highlight> istedik<i class="fa fa-linux" aria-hidden="true"></i></p>
 
-                    <p><highlight>This example</highlight> demonstrates some rich, additional features including <strong>animated scrolling</strong>, <strong>focus events</strong> as well as how to offset with a fixed navigation bar.</p>
+                    <p>Ne Yapsak bir <highlight>sosyal kaynaşım</highlight> platformudur. Bu sitede canın bir şey yapmak istediğinde bir etkinlik oluşturup eşlik edecek kişi/ler arayabilirsin, veya arayış içerisindeki kişilere etkinlik arkadaşı olabilirsin! Yeni <strong>gerçek</strong> arkadaşlıklar kurabilirsin. Her şey son derece kolay. Unutma, <strong>hayat sokakta</strong>.</p>
 
-                    <p>It also shows how to ensure that the 'last' #target element is able to scroll to the top for a better user experience (UX)</p>
+                    <p>Ne bekliyorsun , hadi <strong><a href="#Kayit" style="text-decoration:none;color:#f74c3c">Kayıt</a></strong> olmaya. </p>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container -->
@@ -232,10 +232,10 @@
                             @Html.ValidationMessageFor(model => model.loginView.Password, "", new { @class = "text-danger" })
                         </div> <!-- form-group// -->
                         <div class="form-group col-xs-12 col-md-12 text-center">
-                            <div class="checkbox">
+                            <div class="row">
                                 @Html.CheckBoxFor(model => model.loginView.RememberMe, new { id = "logbenihatirla" })
                                 @Html.ValidationMessageFor(model => model.loginView.RememberMe, "", new { @class = "text-danger" })
-                                @Html.Label("Beni Hatırla", htmlAttributes: new { @class = "h5" })
+                                @Html.Label("Beni Hatırla", htmlAttributes: new { @class = "h4" })
                             </div>
                         </div>
                         <div class="form-group col-xs-12 col-md-offset-4 col-md-4 text-center">
@@ -320,12 +320,35 @@
 
 
     <footer>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12">
-                    <h4>
-                        This is a footer
-                    </h4>
+                <div class="col-xs-12 col-md-3 align-bottom">
+                    <br /><br /><br />
+                    <p>
+                        Nowhere at Silicon Valley <br />
+                        7011st Avenue CA 94025, USA<br />
+                        &copy;@DateTime.Now.Year.ToString() neyapsak,inc<br />
+                        Sosyal Kaynaşım Platformu
+                    </p>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <u>Ne Yapsak</u><br />
+                    <a href="#">Rehber</a><br/>
+                    <a href="#">Site Haritası</a><br />
+                    <a href="#">Çerezler</a><br />
+                    <a href="#">Koşullar</a><br />
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <u>Şirket</u><br />
+                    <a href="#">Hakkımızda</a><br />
+                    <a href="#">Reklam</a><br />
+                    <a href="#">Gizlilik Politikası</a><br />
+                    <a href="#">İletişim</a>
+                </div>
+                <div class="col-xs-12 col-md-3">
+                    <u>Yardım</u><br />
+                    <a href="#">Nasıl Yapılır</a><br />
+                    <a href="#">Sık Sorulan Sorular</a>
                 </div>
             </div>
         </div>

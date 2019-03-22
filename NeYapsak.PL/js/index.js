@@ -138,10 +138,10 @@ $(document).ready(function(){
 	});
 });
     $(document).ready(function () {
+        var loginmodel = {};
         $("#GirisYap").click(function () {
-            var loginmodel = {};
             loginmodel.Email = $('#logemail').val();
-            loginmodel.RememberMe = $('#logbenihatirla').val();
+            loginmodel.RememberMe = $('#logbenihatirla').is(':checked');
             loginmodel.Password = $('#logsifre').val();
             $.ajax({
                 type: "POST",

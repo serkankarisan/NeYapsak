@@ -790,13 +790,13 @@
             if (Mesaj.trim() !== '') {
                 var BenimId = "@Model.KullaniciId";
                 var ArkadasId = $(this).data("id");
+                document.querySelector("#msg-tm").click();
                 $.ajax({
-                    url: '/Mesaj/MesajGonder',
+                    url: '/Message/MesajGonder',
                     type: "POST",
                     data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
                     success: function (result) {
                         alert('Mesajınız gönderildi!');
-                        document.querySelector("#msg-tm").click();
                     }
             });
             };
@@ -812,7 +812,7 @@
                 var IlanId = $(this).data("adid");
                 document.querySelector("#iln-tm").click();
                 $.ajax({
-                    url: '/Mesaj/IlanBildir',
+                    url: '/Message/IlanBildir',
                     type: "POST",
                     data: { IlanId: IlanId, GondericiId: GondericiId, Mesaj: Mesaj },
                     success: function (result) {

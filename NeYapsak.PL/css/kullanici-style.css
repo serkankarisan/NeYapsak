@@ -157,12 +157,11 @@ button.btn-link:hover{
     color:#f74c3c
 }
 footer {
-    min-height: 240px;
+    padding: 50px 0;
     position: relative;
-    padding: 50px 0 150px;
     font-size: 22px;
     text-align: center;
     letter-spacing: 1px;
     color: #e7e6f1;
     background: #2F3032;
-  }
+}

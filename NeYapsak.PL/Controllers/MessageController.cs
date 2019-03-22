@@ -8,13 +8,14 @@ using NeYapsak.PL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace NeYapsak.PL.Controllers
 {
     [Authorize]
-    public class MesajController : BaseController
+    public class MessageController : BaseController
     {
         NeYapsakContext ent = new NeYapsakContext();
         public ActionResult Index()
@@ -88,13 +89,17 @@ namespace NeYapsak.PL.Controllers
             return PartialView(Gorusme);
         }
         [HttpPost]
-        public ActionResult MesajGonder(string AliciId, string GondericiId,string Mesaj)
+        public async Task<ActionResult> MesajGonder(string AliciId, string GondericiId,string Mesaj)
         {
+            var usermanager = IdentityTools.NewUserManager();
+            var Alici = usermanager.FindById(AliciId);
+            var Gonderici = usermanager.FindById(GondericiId);
             Gorusmeler Gorusme = new Gorusmeler();
             Gorusme.AliciId = AliciId;
             Gorusme.GondericiId = GondericiId;
             Gorusme.Mesaj = Mesaj;
             ent.Gorusmeler.Add(Gorusme);
+            await MesajMailiGonder(Gonderici, Alici, Mesaj).ConfigureAwait(false);
             if (Convert.ToBoolean(ent.SaveChanges()))
             {
                 MsgHistViewModel Guncellet = new MsgHistViewModel();
@@ -104,6 +109,18 @@ namespace NeYapsak.PL.Controllers
             }
             return PartialView("Error");
         }
+
+        async Task MesajMailiGonder(ApplicationUser Gonderici, ApplicationUser Alici,string Mesaj)
+        {
+            IdentityMessage msg = new IdentityMessage();
+            msg.Subject = Gonderici.Name + " sana bir mesaj gönderdi";
+            msg.Destination = Alici.Email;
+            var callbackUrl = Url.Action("Index", "Message", null, protocol: Request.Url.Scheme);
+            msg.Body = Gonderici.Name + " " + Gonderici.Surname + " sana:<hr/> " + Mesaj + "<hr/> şeklinde bir mesaj gönderdi. Cevaplamak için seni <a href=\"" + callbackUrl + "\">siteye</a> alalım.";
+            Mailing Mail = new Mailing();
+            Task.Run(()=> Mail.SendMail(msg));
+        }
+
         [HttpPost]
         public ActionResult IlanBildir(string IlanId, string GondericiId, string Mesaj)
         {

@@ -86,6 +86,7 @@ namespace NeYapsak.PL.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public JsonResult KatilmaIstegiGonder(int EtkID)
         {
             string result = "false";
@@ -404,6 +405,7 @@ namespace NeYapsak.PL.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public JsonResult KatilmaktanVazgec(int EtkIDIptal)
         {
             string result = "false";
@@ -428,6 +430,7 @@ namespace NeYapsak.PL.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public JsonResult KatilmaIstegiIptal(int IstekIptalEtkID)
         {
             string result = "false";
@@ -501,6 +504,7 @@ namespace NeYapsak.PL.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public JsonResult EtkinlikOnayla(int KatilanIDOnayla, string OnayDurumu)
         {
             string result = "false";
@@ -530,6 +534,7 @@ namespace NeYapsak.PL.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
         public JsonResult EtkinlikOnayiIptal(int KatilanIDOnayIptal)
         {
             string result = "false";

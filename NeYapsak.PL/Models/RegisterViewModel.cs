@@ -18,7 +18,7 @@ namespace NeYapsak.PL.Models
         [StringLength(50)]
         public string Surname { get; set; }
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "E-Posta")]
         [EmailAddress()]
         public string Email { get; set; }
 

@@ -49,7 +49,7 @@
             var BenimId = $("#bid").val();
             console.log(BenimId);
             $.ajax({
-                url: '/Mesaj/SohbetGecmisi',
+                url: '/Message/SohbetGecmisi',
                 type: "POST",
                 data: { AliciId: ArkadasId, GondericiId: BenimId },
                 success: function (result) {
