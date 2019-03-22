@@ -14,7 +14,7 @@ using System.Web.Mvc;
 namespace NeYapsak.PL.Controllers
 {
     [Authorize]
-    public class MesajController : BaseController
+    public class MessageController : BaseController
     {
         NeYapsakContext ent = new NeYapsakContext();
         public ActionResult Index()

@@ -438,7 +438,7 @@
                 var BenimId = "@ViewBag.user.Kullanici.Id";
                 var ArkadasId = "@Model.KullaniciId"; 
                 $.ajax({
-                    url: '/Mesaj/MesajGonder',
+                    url: '/Message/MesajGonder',
                     type: "POST",
                     data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
                     success: function (result) {
