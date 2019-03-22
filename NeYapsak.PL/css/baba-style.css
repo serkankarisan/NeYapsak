@@ -328,9 +328,8 @@ span.sc-login-fb > a:hover{
   color:white;
 }
 footer {
-  min-height: 240px;
+  padding:50px 0;
   position: relative;
-  padding: 50px 0 150px;
   font-size: 22px;
   text-align: center;
   letter-spacing: 1px;
