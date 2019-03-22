@@ -226,6 +226,7 @@ namespace NeYapsak.PL.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult ChangePassword(PasswordChangeViewModel model)
         {
             var usermanager = IdentityTools.NewUserManager();
