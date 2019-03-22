@@ -20,7 +20,7 @@ namespace NeYapsak.PL.Controllers
             Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
             Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
             Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
-
+            
             LayoutViewModel LayoutModel = new LayoutViewModel();
 
             LayoutModel.Kullanici = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
@@ -36,7 +36,7 @@ namespace NeYapsak.PL.Controllers
             LayoutModel.OnayladigimIlanSayisi = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).Count();
 
             ViewBag.user = LayoutModel;
-            ViewBag.UserID = HttpContext.User.Identity.GetUserId();
+            ViewBag.UserID = HttpContext.User.Identity.GetUserId();           
             base.OnActionExecuting(filterContext);
         }
     }

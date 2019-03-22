@@ -19,6 +19,7 @@ namespace NeYapsak.DAL.Context
         }
         public virtual DbSet<Etiket> Etiketler{ get; set; }
         public virtual DbSet<Ilan> Ilanlar { get; set; }
+        public virtual DbSet<IlanEtiket> IlanEtiketler { get; set; }
         public virtual DbSet<IlanHareket> IlanHareketler { get; set; }
         public virtual DbSet<Katilan> Katilanlar { get; set; }
         public virtual DbSet<SikayetVeOneri> SikayetVeOneriler { get; set; }

@@ -70,10 +70,6 @@ namespace NeYapsak.DAL.Migrations
             //new IlanHareket { IlanId = 1, IlgilenenId = 1, KatilanId = 0, KullaniciId = "90fd7acd-9a43-488b-80bb-d6084507c441", Tarih = DateTime.Now, Silindi = false }
             //);
 
-            //context.Ilgilenenler.AddOrUpdate(
-            // new Ilgilenen { Id = 1, IlanId = 1, KullaniciId = "90fd7acd-9a43-488b-80bb-d6084507c441", Tarih = DateTime.Now, Silindi = false }
-            //);
-
             //context.Katilanlar.AddOrUpdate(
             //  new Katilan { Id = 1, IlanId = 1, KullaniciId = "90fd7acd-9a43-488b-80bb-d6084507c441", Tarih = DateTime.Now, Silindi = false }
             //);

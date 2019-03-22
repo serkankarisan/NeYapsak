@@ -7,6 +7,7 @@ using NeYapsak.PL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -149,6 +150,8 @@ namespace NeYapsak.PL.Controllers
         {
             if (Id != null)
             {
+                Repository<Etiket> repoE = new Repository<Etiket>(new NeYapsakContext());
+                ViewBag.Etiketler = repoE.GetAll().Where(e => e.Silindi == false).ToList();
                 Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
                 Ilan etk = repoI.Get(i => i.Id == Id);
                 if (etk.KullaniciId == HttpContext.User.Identity.GetUserId())
@@ -202,9 +205,10 @@ namespace NeYapsak.PL.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult EtkinlikDuzenle(Ilan model)
+        public ActionResult EtkinlikDuzenle(Ilan model, List<int> EtiketIDleri)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            Repository<IlanEtiket> repoİE = new Repository<IlanEtiket>(new NeYapsakContext());
             Ilan degisen = repoI.GetAll().Where(i => i.Id == model.Id).FirstOrDefault();
             List<string> errors = new List<string>();
             if (!ModelState.IsValid)
@@ -225,6 +229,68 @@ namespace NeYapsak.PL.Controllers
                 errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
                 return Json(errors, JsonRequestBehavior.AllowGet);
             }
+            if (EtiketIDleri != null)
+            {
+                List<IlanEtiket> ieESkiler = repoİE.GetAll().Where(e => e.IlanId == degisen.Id).ToList();
+                IlanEtiket ie = new IlanEtiket();
+
+                if (ieESkiler.Count() > 0)
+                {
+                    foreach (var ieeski in ieESkiler)
+                    {
+                        ieeski.Silindi = true;
+                        if (!repoİE.Update(ieeski))
+                        {
+                            ModelState.AddModelError("", ieeski.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                        }
+                    }
+
+                    foreach (var id in EtiketIDleri)
+                    {
+                        bool var = false;
+                        foreach (var item in ieESkiler)
+                        {
+                            if (id == item.EtiketId)
+                            {
+                                var = true;
+                            }
+                        }
+                        if (!var)
+                        {
+                            IlanEtiket yeni = new IlanEtiket();
+                            yeni.EtiketId = id;
+                            yeni.IlanId = degisen.Id;
+                            if (!repoİE.Add(yeni))
+                            {
+                                ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                            }
+                        }
+                        else
+                        {
+                            IlanEtiket yeni = new IlanEtiket();
+                            yeni = repoİE.Get(e => e.EtiketId == id);
+                            yeni.Silindi = false;
+                            if (!repoİE.Update(yeni))
+                            {
+                                ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var item in EtiketIDleri)
+                    {
+                        IlanEtiket yeni = new IlanEtiket();
+                        yeni.EtiketId = item;
+                        yeni.IlanId = degisen.Id;
+                        if (!repoİE.Add(yeni))
+                        {
+                            ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                        }
+                    }
+                }
+            }
             degisen.BaslangicTarihi = model.BaslangicTarihi;
             degisen.Baslik = model.Baslik;
             degisen.GoruntulenmeSayaci = model.GoruntulenmeSayaci;
@@ -241,7 +307,6 @@ namespace NeYapsak.PL.Controllers
             errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
             return Json(errors, JsonRequestBehavior.AllowGet);
         }
-
 
         [Authorize]
         public ActionResult MyProfile()
@@ -415,19 +480,23 @@ namespace NeYapsak.PL.Controllers
 
 
         [Authorize]
-        public ActionResult OtherEventDetail(int Id)
+        public ActionResult OtherEventDetail(int? Id)
         {
-            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
-            Ilan etk = repoI.Get(i => i.Id == Id);
-            if (etk.User.Id == HttpContext.User.Identity.GetUserId())
+            if (Id != null)
             {
-                return Redirect("/Home/MyEventDetail/" + Id);
+                Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+                Ilan etk = repoI.Get(i => i.Id == Id);
+                if (etk.User.Id == HttpContext.User.Identity.GetUserId())
+                {
+                    return Redirect("/Home/MyEventDetail/" + Id);
+                }
+                ViewBag.ktldurumOnay = Convert.ToBoolean(etk.Katilanlar.Where(k => k.Silindi == false && (k.Onay == true && k.KullaniciId == HttpContext.User.Identity.GetUserId())).Count());
+
+                ViewBag.ktldurumistek = Convert.ToBoolean(etk.Katilanlar.Where(k => k.Silindi == false && (k.Onay == false && k.KullaniciId == HttpContext.User.Identity.GetUserId())).Count());
+
+                return View(etk);
             }
-            ViewBag.ktldurumOnay = Convert.ToBoolean(etk.Katilanlar.Where(k => k.Silindi == false && (k.Onay == true && k.KullaniciId == HttpContext.User.Identity.GetUserId())).Count());
-
-            ViewBag.ktldurumistek = Convert.ToBoolean(etk.Katilanlar.Where(k => k.Silindi == false && (k.Onay == false && k.KullaniciId == HttpContext.User.Identity.GetUserId())).Count());
-
-            return View(etk);
+            return Redirect("/Home/Main");
         }
 
 

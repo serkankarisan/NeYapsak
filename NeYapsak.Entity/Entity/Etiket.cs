@@ -117,7 +117,6 @@ namespace NeYapsak.Entity.Entity
         public bool Silindi { get => _silindi; set => _silindi = value; }
         #endregion
 
-        public virtual List<Ilan> Ilanlar { get; set; }
-
+        public virtual List<IlanEtiket> IlanEtiketler { get; set; }
     }
 }

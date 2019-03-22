@@ -57,6 +57,7 @@ body {
 .etk-ols-lbl {
     width: 250px;
     height: 15px;
+    padding-left:30px;
 }
 /**Reset Bootstrap*/
 .dropdown-toggle::after {
