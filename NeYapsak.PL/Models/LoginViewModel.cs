@@ -9,7 +9,7 @@ namespace NeYapsak.PL.Models
     public class LoginViewModel
     {
             [Required]
-            [Display(Name = "Email")]
+            [Display(Name = "E-Posta")]
             public string Email { get; set; }
 
             [Required]
