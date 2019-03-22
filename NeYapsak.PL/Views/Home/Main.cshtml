@@ -311,11 +311,11 @@
                                             <a class="card-link" href="/Home/MyEventDetail/@ilan.Id">
                                                 <h5 class="card-title cs-renk">@ilan.Baslik</h5>
                                             </a>
-                                            <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @ilan.Kontenjan</div>
+                                            <div class="text-muted h6 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @ilan.Kontenjan</div>
 
-                                            <a href="#" class="text-muted h7 mb-2" data-toggle="modal" data-target="#@("MyIlgilenenlerListeModalCenter"+ilan.Id)"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @ilan.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</a>
+                                            <a href="#" class="text-muted h6 mb-2" data-toggle="modal" data-target="#@("MyIlgilenenlerListeModalCenter"+ilan.Id)"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @ilan.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</a>
 
-                                            <a href="#" class="text-muted h7 mb-2" data-toggle="modal" data-target="#@("MyKatilanlarListeModalCenter"+ilan.Id)"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @ilan.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</a>
+                                            <a href="#" class="text-muted h6 mb-2" data-toggle="modal" data-target="#@("MyKatilanlarListeModalCenter"+ilan.Id)"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @ilan.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</a>
                                             <div>
 
                                             </div>
@@ -325,7 +325,7 @@
                                         <div class="row">
                                             <div class="col-md-9">
                                                 <div class="row">
-                                                    <p class="card-text">
+                                                    <p class="card-text" style="margin-left:5%;">
                                                         @ilan.Ozet
                                                     </p>
                                                 </div><br>
@@ -530,11 +530,11 @@
                                     <a id="@("link-etk-detay"+Digerİlan.Id)" class="card-link link-etk-detay" data-id="@Digerİlan.Id" href="#">
                                         <h5 class="card-title cs-renk">@Digerİlan.Baslik</h5>
                                     </a>
-                                    <div class="text-muted h7 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @Digerİlan.Kontenjan</div>
+                                    <div class="text-muted h6 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @Digerİlan.Kontenjan</div>
 
-                                    <a href="#" class="text-muted h7 mb-2" data-toggle="modal" data-target="#@("IlgilenenlerListeModalCenter"+Digerİlan.Id)"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @Digerİlan.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</a>
+                                    <a href="#" class="text-muted h6 mb-2" data-toggle="modal" data-target="#@("IlgilenenlerListeModalCenter"+Digerİlan.Id)"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @Digerİlan.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</a>
 
-                                    <a href="#" class="text-muted h7 mb-2" data-toggle="modal" data-target="#@("KatilanlarListeModalCenter"+Digerİlan.Id)"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @Digerİlan.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</a>
+                                    <a href="#" class="text-muted h6 mb-2" data-toggle="modal" data-target="#@("KatilanlarListeModalCenter"+Digerİlan.Id)"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @Digerİlan.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</a>
 
                                     <div>
 
@@ -545,7 +545,7 @@
                                 <div class="row">
                                     <div class="col-md-9">
                                         <div class="row">
-                                            <p class="card-text">
+                                            <p class="card-text" style="margin-left:5%;">
                                                 @Digerİlan.Ozet
                                             </p>
                                         </div><br>

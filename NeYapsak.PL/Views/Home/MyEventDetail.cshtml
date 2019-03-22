@@ -10,113 +10,127 @@
         <div class="card-header justify-content-center text-center">
             <strong>@Model.Baslik</strong>
         </div>
-        @using (Html.BeginForm("EtkinlikDuzenle", "Home", new { id = Model.Id }, FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <div class="card-body" id="etk-ols">
-                <div class="row">
-                    <label class="etk-ols-lbl">Etkinlik Sahibi: </label>
-                    <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@Model.User.Name @Model.User.Surname</a></div>
-                </div><br>
-                <div class="row">
-                    <label class="etk-ols-lbl">Etkinlik başlığı: </label><input type="text" readonly name="Baslik" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Baslik" required>
-                    @Html.ValidationMessageFor(model => model.Baslik, "", new { @class = "text-danger" })
-                </div><br>
-                <div class="row">
-                    <label class="etk-ols-lbl">Gerçekleşeceği şehir </label><input type="text" readonly name="il" class="form-control" id="etk-il" style="width: 450px; height: 35px;" value="@Model.Il" required><br>
-                    @Html.ValidationMessageFor(model => model.Il, "", new { @class = "text-danger" })
-                </div><br>
-                <div class="row">
-                    <label class="etk-ols-lbl">Gerçekleşeceği ilçe </label>
-                    <select id="etk-ilce-sec" class="form-control" name="ilce" readonly style="display:none;width: 450px; height: 35px;" required>
-                        <option value="">İlçe Seçiniz</option>
-                        <option value="Üsküdar">Üsküdar</option>
-                        <option value="Kadıköy">Kadıköy</option>
-                        <option value="Beşiktaş">Beşiktaş</option>
-                        <option value="Karaköy">Karaköy</option>
-                        <option value="Taksim">Taksim</option>
-                        <option value="Bağcılar">Bağcılar</option>
-                    </select>
-                    @Html.ValidationMessageFor(model => model.Ilce, "", new { @class = "text-danger" })
-                    <input type="text" readonly name="ilce" class="form-control" id="etk-ilce" style="width: 450px; height: 35px;" value="@Model.Ilce" required><br>
-                </div><br>
-                <div class="row">
-                    <label class="etk-ols-lbl">Konum:</label><input type="text" readonly name="konum" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="Girilmemiş" required><br>
-                    @Html.ValidationMessageFor(model => model.Konum, "", new { @class = "text-danger" })
-                </div><br>
-                <div class="row">
-                    <label class="etk-ols-lbl form">Oluşturulma tarihi: </label><input type="datetime-local" id="etk-OlusturmaTarihi" name="OlusturmaTarihi" value="@Model.OlusturmaTarihi.ToString("s")" required readonly class="form-control" style="width: 450px;"><br>
-                    @Html.ValidationMessageFor(model => model.OlusturmaTarihi, "", new { @class = "text-danger" })
-                </div><br>
-                <div class="row">
-                    <label class="etk-ols-lbl form">Gerçekleşeceği vakit: </label><input type="datetime-local" id="ilan-vakit" name="BaslangicTarihi" value="@Model.BaslangicTarihi.ToString("s")" required readonly class="form-control" style="width: 450px;"><br>
-                    @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
-                </div><br>
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="row">
-                            <label class="etk-ols-lbl col-md-8">Kalan kontenjan: </label><input type="number" readonly name="Kontenjan" id="ilan-baslik" class="form-control col-md-4" style="width:50px;height:30px;padding-right:0" value="@Model.Kontenjan" required><br>
-                            @Html.ValidationMessageFor(model => model.Kontenjan, "", new { @class = "text-danger" })
-                        </div>
+        <div class="card-body" id="etk-ols">
+            <div class="row">
+                <label class="etk-ols-lbl">Etkinlik Sahibi: </label>
+                <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@Model.User.Name @Model.User.Surname</a></div>
+            </div><br>
+            <div class="row">
+                <label class="etk-ols-lbl">Etkinlik başlığı: </label><input type="text" readonly name="Baslik" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Baslik" required>
+                @Html.ValidationMessageFor(model => model.Baslik, "", new { @class = "text-danger" })
+            </div><br>
+            <div class="row">
+                <label class="etk-ols-lbl">Gerçekleşeceği şehir </label><input type="text" readonly name="il" class="form-control" id="etk-il" style="width: 450px; height: 35px;" value="@Model.Il" required><br>
+                @Html.ValidationMessageFor(model => model.Il, "", new { @class = "text-danger" })
+            </div><br>
+            <div class="row">
+                <label class="etk-ols-lbl">Gerçekleşeceği ilçe </label>
+                <select id="etk-ilce-sec" class="form-control" name="ilce" readonly style="display:none;width: 450px; height: 35px;" required>
+                    <option value="">İlçe Seçiniz</option>
+                    <option value="Üsküdar">Üsküdar</option>
+                    <option value="Kadıköy">Kadıköy</option>
+                    <option value="Beşiktaş">Beşiktaş</option>
+                    <option value="Karaköy">Karaköy</option>
+                    <option value="Taksim">Taksim</option>
+                    <option value="Bağcılar">Bağcılar</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.Ilce, "", new { @class = "text-danger" })
+                <input type="text" readonly name="ilce" class="form-control" id="etk-ilce" style="width: 450px; height: 35px;" value="@Model.Ilce" required><br>
+            </div><br>
+            <div class="row">
+                <label class="etk-ols-lbl">Konum:</label><input type="text" readonly name="konum" class="form-control" id="ilan-konum" style="width: 450px; height: 35px;" value="Girilmemiş" required><br>
+                @Html.ValidationMessageFor(model => model.Konum, "", new { @class = "text-danger" })
+            </div><br>
+            <div class="row">
+                <label class="etk-ols-lbl form">Oluşturulma tarihi: </label><input type="datetime-local" id="etk-OlusturmaTarihi" name="OlusturmaTarihi" value="@Model.OlusturmaTarihi.ToString("s")" required readonly class="form-control" style="width: 450px;"><br>
+                @Html.ValidationMessageFor(model => model.OlusturmaTarihi, "", new { @class = "text-danger" })
+            </div><br>
+            <div class="row">
+                <label class="etk-ols-lbl form">Gerçekleşeceği vakit: </label><input type="datetime-local" id="ilan-vakit" name="BaslangicTarihi" value="@Model.BaslangicTarihi.ToString("s")" required readonly class="form-control" style="width: 450px;"><br>
+                @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+            </div><br>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="row">
+                        <label class="etk-ols-lbl col-md-8">Kalan kontenjan: </label><input type="number" readonly name="Kontenjan" id="ilan-kontenjan" class="form-control col-md-4" style="width:50px;height:30px;padding-right:0" value="@Model.Kontenjan" required><br>
+                        @Html.ValidationMessageFor(model => model.Kontenjan, "", new { @class = "text-danger" })
                     </div>
-                    <div class="justify-content-between align-items-center col-md-7">
+                </div>
+                <div class="justify-content-between align-items-center col-md-7">
 
-                        <a href="#" class="text-muted h7 mb-2" style="margin-right:15px;" data-toggle="modal" data-target="#@("MyIlgilenenlerListeModalCenter"+Model.Id)"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @Model.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</a>
+                    <a href="#" class="text-muted h7 mb-2" style="margin-right:15px;" data-toggle="modal" data-target="#@("MyIlgilenenlerListeModalCenter"+Model.Id)"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @Model.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</a>
 
-                        <a href="#" class="text-muted h7 mb-2" data-toggle="modal" data-target="#@("MyKatilanlarListeModalCenter"+Model.Id)"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @Model.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</a>
-                        <div>
-
-                        </div>
+                    <a href="#" class="text-muted h7 mb-2" data-toggle="modal" data-target="#@("MyKatilanlarListeModalCenter"+Model.Id)"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @Model.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</a>
+                    <div>
 
                     </div>
 
-                </div><br>
-                <div class="row">
-                    <label class="etk-ols-lbl">Etkinlik özeti: </label><textarea required type="text" readonly name="Ozet" id="ilan-baslik" style="width: 450px;" maxlength="300" placeholder="Etkinliğini 300 karakter ile açıklamanın beklenmiş olduğu kısım" class="form-control">@Model.Ozet</textarea><br>
-                    @Html.ValidationMessageFor(model => model.Ozet, "", new { @class = "text-danger" })
-                </div><br>
-                <div class="row">
-                    <label class="etk-ols-lbl">Etiketler: </label>Tıklanabilir etiketler <br>
-                </div><br>
-                <div class="justify-content-center row">
-                    <div class="col-md-3">
-                        <a id="etk-duzenle" href="#etk-ols" style="width:200px;" class="btn btn-sekillendir-sml" onclick="myetkFunction();">Etkinliği Düzenle</a>
-                    </div>
-                    <div class="col-md-3">
-                        <!-- Button trigger Modal Onay-->
-                        <button id="etk-sil" type="button" class="btn btn-sekillendir-sml" style="margin-left:0px;" data-toggle="modal" data-target="#etkinlikSilModalCenter">
-                            Etkinliği Sil
+                </div>
+
+            </div><br>
+            <div class="row">
+                <label class="etk-ols-lbl">Etkinlik özeti: </label><textarea required type="text" readonly name="Ozet" id="ilan-ozet" style="width: 450px;" maxlength="300" placeholder="Etkinliğini 300 karakter ile açıklamanın beklenmiş olduğu kısım" class="form-control">@Model.Ozet</textarea><br>
+                @Html.ValidationMessageFor(model => model.Ozet, "", new { @class = "text-danger" })
+            </div><br>
+            <div class="row">
+                <label class="etk-ols-lbl">Etiketler: </label>Tıklanabilir etiketler <br>
+            </div><br>
+            <div class="justify-content-center row">
+                <div class="col-md-3">
+                    <a id="etk-duzenle" href="#etk-ols" style="width:200px;" class="btn btn-sekillendir-sml" onclick="myetkFunction();">Etkinliği Düzenle</a>
+                </div>
+                <div class="col-md-3">
+                    <!-- Button trigger Modal Onay-->
+                    <button id="etk-sil" type="button" class="btn btn-sekillendir-sml" style="margin-left:0px;" data-toggle="modal" data-target="#etkinlikSilModalCenter">
+                        Etkinliği Sil
+                    </button>
+                    <!-- Button trigger Modal Onay Bitiş-->
+
+                    <button id="etk-kaydet" type="submit" class="btn btn-sekillendir-sml" style="margin-left:0px;display:none;">Kaydet</button>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Onay-->
+        <div class="modal fade" id="etkinlikSilModalCenter" tabindex="-1" role="dialog" aria-labelledby="etkinlikSilModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="etkinlikSilModalLongTitle">Etkinlik Silinsin Mi?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                        <!-- Button trigger Modal Onay Bitiş-->
-
-                        <button id="etk-kaydet" type="submit" class="btn btn-sekillendir-sml" style="margin-left:0px;display:none;">Kaydet</button>
+                    </div>
+                    <div class="modal-body">
+                        Merhaba @Model.User.Name etkinliği silmek istediğine emin misin?
+                    </div>
+                    <div class="modal-footer">
+                        <a id="@("link-etk-sil"+Model.Id)" href="#" data-id="@Model.Id" class="btn cs-arka-renk link-etk-sil">Evet</a>
+                        <button type="button" class="btn cs-arka-renk" data-dismiss="modal">İptal</button>
                     </div>
                 </div>
             </div>
-            <!-- Modal Onay-->
-            <div class="modal fade" id="etkinlikSilModalCenter" tabindex="-1" role="dialog" aria-labelledby="etkinlikSilModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="etkinlikSilModalLongTitle">Etkinlik Silinsin Mi?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Merhaba @Model.User.Name etkinliği silmek istediğine emin misin?
-                        </div>
-                        <div class="modal-footer">
-                            <a id="@("link-etk-sil"+Model.Id)" href="#" data-id="@Model.Id" class="btn cs-arka-renk link-etk-sil">Evet</a>
-                            <button type="button" class="btn cs-arka-renk" data-dismiss="modal">İptal</button>
-                        </div>
+        </div>
+        <!-- Modal Onay Bitiş-->
+        <!-- Modal İlan Düzenle-->
+        <div class="modal fade" id="IlanDuzenleModalCenter" tabindex="-1" role="dialog" aria-labelledby="IlanDuzenleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="card-header text-center">
+                        <button id="modal-ilan-duzenle-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="text-center" id="IlanDuzenleModalLongTitle"></h5>
+                    </div>
+                    <div id="modal-ilan-duzenle-body" style="margin-left:5%;" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modal-ilan-duzenle-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
                     </div>
                 </div>
             </div>
-            <!-- Modal Onay Bitiş-->
-        }
-
-
+        </div>
+        <!-- Modal İlan Düzenle Bitiş -->
         <!-- Modal Katılanlar-->
         <div class="modal fade" id="@("MyKatilanlarListeModalCenter"+Model.Id)" tabindex="-1" role="dialog" aria-labelledby="MyKatilanlarListeModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -281,6 +295,49 @@
                     alert(result);
                 }
             }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#etk-kaydet").click(function () {
+            var etk = {};
+            etk.Id = @Model.Id;
+            etk.Baslik = $('#ilan-baslik').val();
+            etk.Il = $('#etk-il').val();
+            etk.Ilce = $('#etk-ilce-sec').val();
+            etk.Kontenjan = $('#ilan-kontenjan').val();
+            etk.Ozet = $('#ilan-ozet').val();
+            etk.BaslangicTarihi = $('#ilan-vakit').val();
+            console.log("model " + etk);
+            $.ajax({
+                type: "POST",
+                url: '/Home/EtkinlikDuzenle',
+                data: { model: etk },
+                success: function (result) {
+                    console.log(result);
+                    if (result === "True") {
+                        $('#IlanDuzenleModalLongTitle').attr("class", "text-success")
+                        $('#IlanDuzenleModalLongTitle').text("Etkinlik Güncellendi");
+                        $('#modal-ilan-duzenle-body').text("İşte Bu kadar Etkinliğiniz Artık Güncel.");
+                        $("#modal-ilan-duzenle-tamam").click(function () {
+                            window.location.href = "/Home/MyEventDetail/"+@Model.Id;
+                        });
+                        $("#modal-ilan-duzenle-cikis").click(function () {
+                            window.location.href = "/Home/MyEventDetail/"+@Model.Id;
+                        });
+                    }
+                    else {
+                        $('#IlanDuzenleModalLongTitle').attr("class", "text-danger")
+                        $('#IlanDuzenleModalLongTitle').text("Etkinlik Güncellenemedi!");
+                        $('#modal-ilan-duzenle-body').text("");
+                        $.each(result, function (i, hata) {
+                            $('#modal-ilan-duzenle-body').append('<p class="text-danger" style="width:10px;display:inline-block">*</p>' + hata + "<br/><br/>");
+                        });
+                    }
+                    $('#IlanDuzenleModalCenter').modal('show');
+                }
+            });
         });
     });
 </script>

@@ -201,25 +201,29 @@ namespace NeYapsak.PL.Controllers
         //Burada MyEventDetail postu kullanılmıyor MyEventDetail syafasından EtkinlikDuzenle Action'ına post oluyor.
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize]
         public ActionResult EtkinlikDuzenle(Ilan model)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             Ilan degisen = repoI.GetAll().Where(i => i.Id == model.Id).FirstOrDefault();
-
+            List<string> errors = new List<string>();
             if (!ModelState.IsValid)
-                return View(degisen);
+            {
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
+            }
 
             if (model.BaslangicTarihi < DateTime.Now)
             {
                 ModelState.AddModelError("", "Başlangıç Tarihi İleri Bir Tarih Olmalı!");
-                return View("MyEventDetail", degisen);
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
             }
             if (model.Kontenjan <= 0)
             {
                 ModelState.AddModelError("", "Kontenjan 0'dan Büyük Olmalı!");
-                return View("MyEventDetail", degisen);
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
             }
             degisen.BaslangicTarihi = model.BaslangicTarihi;
             degisen.Baslik = model.Baslik;
@@ -231,10 +235,11 @@ namespace NeYapsak.PL.Controllers
             degisen.Ozet = model.Ozet;
             if (repoI.Update(degisen))
             {
-                return Redirect("/Home/MyEventDetail/" + degisen.Id);
+                return Json("True", JsonRequestBehavior.AllowGet);
 
             }
-            return View("MyEventDetail", degisen);
+            errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+            return Json(errors, JsonRequestBehavior.AllowGet);
         }
 
 
