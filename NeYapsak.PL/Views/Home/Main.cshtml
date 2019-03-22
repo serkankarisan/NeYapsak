@@ -773,13 +773,13 @@
             if (Mesaj.trim() !== '') {
                 var BenimId = "@Model.KullaniciId";
                 var ArkadasId = $(this).data("id");
+                document.querySelector("#msg-tm").click();
                 $.ajax({
                     url: '/Message/MesajGonder',
                     type: "POST",
                     data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
                     success: function (result) {
                         alert('Mesajınız gönderildi!');
-                        document.querySelector("#msg-tm").click();
                     }
             });
             };
