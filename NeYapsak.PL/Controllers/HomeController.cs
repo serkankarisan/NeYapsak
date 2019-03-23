@@ -40,7 +40,7 @@ namespace NeYapsak.PL.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Main(MainViewModel model)
+        public ActionResult Main(MainViewModel model, List<int> EtiketIDleri)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             List<string> errors = new List<string>();
@@ -78,6 +78,70 @@ namespace NeYapsak.PL.Controllers
             yeni.GoruntulenmeSayaci = 0;
             if (repoI.Add(yeni))
             {
+                if (EtiketIDleri != null)
+                {
+                    Repository<IlanEtiket> repoİE = new Repository<IlanEtiket>(new NeYapsakContext());
+                    List<IlanEtiket> ieESkiler = repoİE.GetAll().Where(e => e.IlanId == yeni.Id).ToList();
+                    IlanEtiket ie = new IlanEtiket();
+
+                    if (ieESkiler.Count() > 0)
+                    {
+                        foreach (var ieeski in ieESkiler)
+                        {
+                            ieeski.Silindi = true;
+                            if (!repoİE.Update(ieeski))
+                            {
+                                ModelState.AddModelError("", ieeski.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
+                            }
+                        }
+
+                        foreach (var id in EtiketIDleri)
+                        {
+                            bool var = false;
+                            foreach (var item in ieESkiler)
+                            {
+                                if (id == item.EtiketId)
+                                {
+                                    var = true;
+                                }
+                            }
+                            if (!var)
+                            {
+                                IlanEtiket y = new IlanEtiket();
+                                y.EtiketId = id;
+                                y.IlanId = yeni.Id;
+                                if (!repoİE.Add(y))
+                                {
+                                    ModelState.AddModelError("", y.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
+                                }
+                            }
+                            else
+                            {
+                                IlanEtiket y = new IlanEtiket();
+                                y = repoİE.Get(e => e.EtiketId == id);
+                                y.Silindi = false;
+                                if (!repoİE.Update(y))
+                                {
+                                    ModelState.AddModelError("", y.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in EtiketIDleri)
+                        {
+                            IlanEtiket y = new IlanEtiket();
+                            y.EtiketId = item;
+                            y.IlanId = yeni.Id;
+                            if (!repoİE.Add(y))
+                            {
+                                ModelState.AddModelError("", y.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
+                            }
+                        }
+                    }
+                }
+
                 return Json("True", JsonRequestBehavior.AllowGet);
             }
             errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
@@ -151,8 +215,6 @@ namespace NeYapsak.PL.Controllers
         {
             if (Id != null)
             {
-                Repository<Etiket> repoE = new Repository<Etiket>(new NeYapsakContext());
-                ViewBag.Etiketler = repoE.GetAll().Where(e => e.Silindi == false).ToList();
                 Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
                 Ilan etk = repoI.Get(i => i.Id == Id);
                 if (etk.KullaniciId == HttpContext.User.Identity.GetUserId())
@@ -242,7 +304,7 @@ namespace NeYapsak.PL.Controllers
                         ieeski.Silindi = true;
                         if (!repoİE.Update(ieeski))
                         {
-                            ModelState.AddModelError("", ieeski.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                            ModelState.AddModelError("", ieeski.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
                         }
                     }
 
@@ -263,7 +325,7 @@ namespace NeYapsak.PL.Controllers
                             yeni.IlanId = degisen.Id;
                             if (!repoİE.Add(yeni))
                             {
-                                ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                                ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
                             }
                         }
                         else
@@ -273,7 +335,7 @@ namespace NeYapsak.PL.Controllers
                             yeni.Silindi = false;
                             if (!repoİE.Update(yeni))
                             {
-                                ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                                ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
                             }
                         }
                     }
@@ -287,7 +349,7 @@ namespace NeYapsak.PL.Controllers
                         yeni.IlanId = degisen.Id;
                         if (!repoİE.Add(yeni))
                         {
-                            ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                            ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
                         }
                     }
                 }
