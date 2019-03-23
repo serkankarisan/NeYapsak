@@ -153,10 +153,9 @@ $(document).ready(function(){
                     }
                     else {
                         $('#modal-login-body').text("");
-                        $.each(result, function (i, hata) {
-                            $('#modal-login-body').append(hata + "<br/><br/>");
-                        });
-                        
+                        console.log(result);
+                        $('#modal-login-body').append(result[0] + "<br/>");
+                        $('#modal-login-body').append(result[1] + "<a id = 'ConfAgain' href=/Account/ConfirmReqAgain?Id=" + result[2] + "> bu link</a >e " + result[3]);
                         $('#LoginModalCenter').modal('show');
                     }
                 }

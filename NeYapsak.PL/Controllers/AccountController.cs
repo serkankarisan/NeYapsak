@@ -117,6 +117,18 @@ namespace NeYapsak.PL.Controllers
             return View();
         }
 
+        public ActionResult ConfirmReqAgain(string Id)
+        {
+            var user = UserManager.FindById(Id);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = "" }, protocol: Request.Url.Scheme);
+            IdentityMessage msg = new IdentityMessage();
+            msg.Destination = user.Email;
+            msg.Body = "Nerdeyse tamamlandı! NeYapsak ağına katılmak için <a href=\"" + callbackUrl + "\">bu link</a>e tıkla.";
+            msg.Subject = "NeYapsak Hesap Doğrulama Servisi";
+            mail.SendMail(msg);
+            return View("DisplayEmail");
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult ConfirmEmail(string userId)
@@ -309,9 +321,12 @@ namespace NeYapsak.PL.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "E-Posta doğrulamasını yapman gerekmektedir!");
-                        errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
-                        return Json(errors, JsonRequestBehavior.AllowGet);
+                        List<string> errores = new List<string>();
+                        errores.Add("E-Posta doğrulamasını yapman gerekmektedir!");
+                        errores.Add("Doğrulama linkim gelmedi diyorsan ");
+                        errores.Add(kullanici.Id);
+                        errores.Add("tıklayabilirsin.");
+                        return Json(errores, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
