@@ -138,12 +138,13 @@
                                         <tbody>
                                             @foreach (NeYapsak.Entity.Entity.Ilan userviewilan in Model.KullaniciIlanlari.Where(i => i.Silindi == false && i.Yayindami == true).ToList())
                                             {
-                                                <tr>
-                                                    <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
-                                                    <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
-                                                    <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
-                                                    <td> <a id="etk-duzenle" href="/Home/MyEventDetail/@userviewilan.Id" class="btn btn-sekillendir-sml">İncele</a></td>
-                                                </tr>
+                                            <tr>
+                                                <td><a href="/Home/MyEventDetail/@userviewilan.Id" class="cs-renk">@userviewilan.Baslik</a></td>
+                                                <td><p class="text-muted">@userviewilan.OlusturmaTarihi</p></td>
+                                                <td><p class="text-muted">@userviewilan.BaslangicTarihi</p></td>
+                                                <td style="padding-left:1px;padding-right:1px;"> <a style="width:80px;" id="etk-duzenle" href="/Home/MyEventDetail/@userviewilan.Id" class="btn btn-sekillendir-sml">İncele</a></td>
+                                                <td style="padding-left:1px;padding-right:1px;"> <a id="etk-yonet" href="/Home/EventConfirmPage/@userviewilan.Id" style="width:80px;" class="btn btn-sekillendir-sml">Yönet</a></td>
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>

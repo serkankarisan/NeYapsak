@@ -88,7 +88,7 @@ namespace NeYapsak.BLL.Repository
             try
             {
 
-                //_neYapsakContext.Entry(entity).State = EntityState.Modified;
+                _neYapsakContext.Entry(entity).State = EntityState.Modified;
                 Sonuc = Convert.ToBoolean(_neYapsakContext.SaveChanges());
                 //Sonuc = true;
             }

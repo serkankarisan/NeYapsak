@@ -3,163 +3,170 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     Layout = "~/Views/Shared/_Layout-1-TopMenu-Main.cshtml";
 }
-
+    <link href="~/css/Buton-style.css" rel="stylesheet" />
     <div class="col-md-9 gedf-main">
         <!--- \\\\\\\Etkinlik Oluşturma-->
         <div class="card gedf-card" style="margin-bottom:1px;">
             <div class="card-header justify-content-center text-center">
                 <button id="btn-ols" class="btn"><strong>Etkinlik Oluştur</strong></button>
             </div>
-                <div class="card-body" id="etk-ols" style="display:none;">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <label class="etk-ols-lbl">Etkinliğiniz için başlık girin: </label>
-                            @Html.EditorFor(model => model.Ilan.Baslik, new { htmlAttributes = new { @class = "form-control", id = "ilan-baslik", placeholder = "Ne yapmayı planlıyorsun ? ", style = "width: 450px; height: 35px;", required = true } })
-                            @Html.ValidationMessageFor(model => model.Ilan.Baslik, "", new { @class = "text-danger" })
-                            @*<input type="text" name="ilan-baslik" class="form-control" id="ilan-baslik" placeholder="Ne yapmayı planlıyorsun ? " style="width: 450px; height: 35px;">*@
-                        </div><br>
-                        <div class="row">
-                            <label class="etk-ols-lbl">Gerçekleşeceği şehri seçin: </label>
-                            <select id="il" name="Ilan.il" style="width: 275px; height: 35px;" class="form-control">
-                                @*<option value="">Şehir Seçiniz</option>*@
-                                <option value="İstanbul">İstanbul</option>
-                                @*<option value="Ankara">Ankara</option>
-                                <option value="İzmir">İzmir</option>
-                                <option value="Trabzon">Trabzon</option>
-                                <option value="Adana">Adana</option>*@
+            <div class="card-body" id="etk-ols" style="display:none;">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="etk-ols-lbl">Etkinliğiniz için başlık girin: </label>
+                        @Html.EditorFor(model => model.Ilan.Baslik, new { htmlAttributes = new { @class = "form-control", id = "ilan-baslik", placeholder = "Ne yapmayı planlıyorsun ? ", style = "width: 450px; height: 35px;", required = true } })
+                        @Html.ValidationMessageFor(model => model.Ilan.Baslik, "", new { @class = "text-danger" })
+                        @*<input type="text" name="ilan-baslik" class="form-control" id="ilan-baslik" placeholder="Ne yapmayı planlıyorsun ? " style="width: 450px; height: 35px;">*@
+                    </div><br>
+                    <div class="row">
+                        <label class="etk-ols-lbl">Gerçekleşeceği şehri seçin: </label>
+                        <select id="il" name="Ilan.il" style="width: 275px; height: 35px;" class="form-control">
+                            @*<option value="">Şehir Seçiniz</option>*@
+                            <option value="İstanbul">İstanbul</option>
+                            @*<option value="Ankara">Ankara</option>
+                <option value="İzmir">İzmir</option>
+                <option value="Trabzon">Trabzon</option>
+                <option value="Adana">Adana</option>*@
 
-                                @*<option value="">Şehir Seçiniz</option>
-                                <option value="34">İstanbul</option>
-                                <option value="6">Ankara</option>
-                                <option value="35">İzmir</option>
-                                <option value="61">Trabzon</option>
-                                <option value="1">Adana</option>
-                                <option value="2">Adıyaman</option>
-                                <option value="3">Afyonkarahisar</option>
-                                <option value="4">Ağrı</option>
-                                <option value="68">Aksaray</option>
-                                <option value="5">Amasya</option>
-                                <option value="7">Antalya</option>
-                                <option value="75">Ardahan</option>
-                                <option value="8">Artvin</option>
-                                <option value="9">Aydın</option>
-                                <option value="10">Balıkesir</option>
-                                <option value="74">Bartın</option>
-                                <option value="72">Batman</option>
-                                <option value="69">Bayburt</option>
-                                <option value="11">Bilecik</option>
-                                <option value="12">Bingöl</option>
-                                <option value="13">Bitlis</option>
-                                <option value="14">Bolu</option>
-                                <option value="15">Burdur</option>
-                                <option value="16">Bursa</option>
-                                <option value="17">Çanakkale</option>
-                                <option value="18">Çankırı</option>
-                                <option value="19">Çorum</option>
-                                <option value="20">Denizli</option>
-                                <option value="21">Diyarbakır</option>
-                                <option value="81">Düzce</option>
-                                <option value="22">Edirne</option>
-                                <option value="23">Elazığ</option>
-                                <option value="24">Erzincan</option>
-                                <option value="25">Erzurum</option>
-                                <option value="26">Eskişehir</option>
-                                <option value="27">Gaziantep</option>
-                                <option value="28">Giresun</option>
-                                <option value="29">Gümüşhane</option>
-                                <option value="30">Hakkâri</option>
-                                <option value="31">Hatay</option>
-                                <option value="76">Iğdır</option>
-                                <option value="32">Isparta</option>
-                                <option value="46">Kahramanmaraş</option>
-                                <option value="78">Karabük</option>
-                                <option value="70">Karaman</option>
-                                <option value="36">Kars</option>
-                                <option value="37">Kastamonu</option>
-                                <option value="38">Kayseri</option>
-                                <option value="71">Kırıkkale</option>
-                                <option value="39">Kırklareli</option>
-                                <option value="40">Kırşehir</option>
-                                <option value="79">Kilis</option>
-                                <option value="41">Kocaeli</option>
-                                <option value="42">Konya</option>
-                                <option value="43">Kütahya</option>
-                                <option value="44">Malatya</option>
-                                <option value="45">Manisa</option>
-                                <option value="47">Mardin</option>
-                                <option value="33">Mersin</option>
-                                <option value="48">Muğla</option>
-                                <option value="49">Muş</option>
-                                <option value="50">Nevşehir</option>
-                                <option value="51">Niğde</option>
-                                <option value="52">Ordu</option>
-                                <option value="80">Osmaniye</option>
-                                <option value="53">Rize</option>
-                                <option value="54">Sakarya</option>
-                                <option value="55">Samsun</option>
-                                <option value="56">Siirt</option>
-                                <option value="57">Sinop</option>
-                                <option value="58">Sivas</option>
-                                <option value="73">Şırnak</option>
-                                <option value="59">Tekirdağ</option>
-                                <option value="60">Tokat</option>
-                                <option value="62">Tunceli</option>
-                                <option value="63">Şanlıurfa</option>
-                                <option value="64">Uşak</option>
-                                <option value="65">Van</option>
-                                <option value="77">Yalova</option>
-                                <option value="66">Yozgat</option>
-                                <option value="67">Zonguldak</option>*@
-                            </select>
-                            @*@Html.ValidationMessageFor(model => model.Il,"", new { @class = "text-danger" })*@
-                            <br>
-                        </div><br>
-                        <div class="row">
-                            <label class="etk-ols-lbl">Gerçekleşeceği ilçeyi seçin: </label>
-                            <select id="ilce" name="Ilan.ilce" class="form-control" style="width: 275px; height: 35px;" required>
-                                <option value="">İlçe Seçiniz</option>
-                                <option value="Üsküdar">Üsküdar</option>
-                                <option value="Kadıköy">Kadıköy</option>
-                                <option value="Beşiktaş">Beşiktaş</option>
-                                <option value="Karaköy">Karaköy</option>
-                                <option value="Taksim">Taksim</option>
-                                <option value="Bağcılar">Bağcılar</option>
-                            </select>
-                            @Html.ValidationMessageFor(model => model.Ilan.Ilce, "", new { @class = "text-danger" })
-                            <br>
-                        </div><br>
-                        <div class="row">
-                            <label class="etk-ols-lbl">Tam konumunu seçin(Opsiyonel):</label>googlemapstenseçmeyaptırmak<br>
-                        </div><br>
-                        <div class="row">
-                            <label class="etk-ols-lbl form">Ne zaman gerçekleşeceğini seçin: </label>
-                            @Html.EditorFor(model => model.Ilan.BaslangicTarihi, new { htmlAttributes = new { @class = "form-control vertical-center", type = "datetime-local", id = "ilan-vakit", style = "width: 275px;", required = true } })
-                            @Html.ValidationMessageFor(model => model.Ilan.BaslangicTarihi, "", new { @class = "text-danger" })
+                            @*<option value="">Şehir Seçiniz</option>
+                <option value="34">İstanbul</option>
+                <option value="6">Ankara</option>
+                <option value="35">İzmir</option>
+                <option value="61">Trabzon</option>
+                <option value="1">Adana</option>
+                <option value="2">Adıyaman</option>
+                <option value="3">Afyonkarahisar</option>
+                <option value="4">Ağrı</option>
+                <option value="68">Aksaray</option>
+                <option value="5">Amasya</option>
+                <option value="7">Antalya</option>
+                <option value="75">Ardahan</option>
+                <option value="8">Artvin</option>
+                <option value="9">Aydın</option>
+                <option value="10">Balıkesir</option>
+                <option value="74">Bartın</option>
+                <option value="72">Batman</option>
+                <option value="69">Bayburt</option>
+                <option value="11">Bilecik</option>
+                <option value="12">Bingöl</option>
+                <option value="13">Bitlis</option>
+                <option value="14">Bolu</option>
+                <option value="15">Burdur</option>
+                <option value="16">Bursa</option>
+                <option value="17">Çanakkale</option>
+                <option value="18">Çankırı</option>
+                <option value="19">Çorum</option>
+                <option value="20">Denizli</option>
+                <option value="21">Diyarbakır</option>
+                <option value="81">Düzce</option>
+                <option value="22">Edirne</option>
+                <option value="23">Elazığ</option>
+                <option value="24">Erzincan</option>
+                <option value="25">Erzurum</option>
+                <option value="26">Eskişehir</option>
+                <option value="27">Gaziantep</option>
+                <option value="28">Giresun</option>
+                <option value="29">Gümüşhane</option>
+                <option value="30">Hakkâri</option>
+                <option value="31">Hatay</option>
+                <option value="76">Iğdır</option>
+                <option value="32">Isparta</option>
+                <option value="46">Kahramanmaraş</option>
+                <option value="78">Karabük</option>
+                <option value="70">Karaman</option>
+                <option value="36">Kars</option>
+                <option value="37">Kastamonu</option>
+                <option value="38">Kayseri</option>
+                <option value="71">Kırıkkale</option>
+                <option value="39">Kırklareli</option>
+                <option value="40">Kırşehir</option>
+                <option value="79">Kilis</option>
+                <option value="41">Kocaeli</option>
+                <option value="42">Konya</option>
+                <option value="43">Kütahya</option>
+                <option value="44">Malatya</option>
+                <option value="45">Manisa</option>
+                <option value="47">Mardin</option>
+                <option value="33">Mersin</option>
+                <option value="48">Muğla</option>
+                <option value="49">Muş</option>
+                <option value="50">Nevşehir</option>
+                <option value="51">Niğde</option>
+                <option value="52">Ordu</option>
+                <option value="80">Osmaniye</option>
+                <option value="53">Rize</option>
+                <option value="54">Sakarya</option>
+                <option value="55">Samsun</option>
+                <option value="56">Siirt</option>
+                <option value="57">Sinop</option>
+                <option value="58">Sivas</option>
+                <option value="73">Şırnak</option>
+                <option value="59">Tekirdağ</option>
+                <option value="60">Tokat</option>
+                <option value="62">Tunceli</option>
+                <option value="63">Şanlıurfa</option>
+                <option value="64">Uşak</option>
+                <option value="65">Van</option>
+                <option value="77">Yalova</option>
+                <option value="66">Yozgat</option>
+                <option value="67">Zonguldak</option>*@
+                        </select>
+                        @*@Html.ValidationMessageFor(model => model.Il,"", new { @class = "text-danger" })*@
+                        <br>
+                    </div><br>
+                    <div class="row">
+                        <label class="etk-ols-lbl">Gerçekleşeceği ilçeyi seçin: </label>
+                        <select id="ilce" name="Ilan.ilce" class="form-control" style="width: 275px; height: 35px;" required>
+                            <option value="">İlçe Seçiniz</option>
+                            <option value="Üsküdar">Üsküdar</option>
+                            <option value="Kadıköy">Kadıköy</option>
+                            <option value="Beşiktaş">Beşiktaş</option>
+                            <option value="Karaköy">Karaköy</option>
+                            <option value="Taksim">Taksim</option>
+                            <option value="Bağcılar">Bağcılar</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Ilan.Ilce, "", new { @class = "text-danger" })
+                        <br>
+                    </div><br>
+                    <div class="row">
+                        <label class="etk-ols-lbl">Tam konumunu seçin(Opsiyonel):</label>googlemapstenseçmeyaptırmak<br>
+                    </div><br>
+                    <div class="row">
+                        <label class="etk-ols-lbl form">Ne zaman gerçekleşeceğini seçin: </label>
+                        @Html.EditorFor(model => model.Ilan.BaslangicTarihi, new { htmlAttributes = new { @class = "form-control vertical-center", type = "datetime-local", id = "ilan-vakit", style = "width: 275px;", required = true } })
+                        @Html.ValidationMessageFor(model => model.Ilan.BaslangicTarihi, "", new { @class = "text-danger" })
 
-                            @*<input type="datetime-local" id="ilan-vakit"
-                            name="ilan-vakit" value="2012-12-21T00:00"
-                            min="2019-02-16T00:00" max="2020-02-16T00:00" class="form-control" style="width: 450px;">*@<br>
-                        </div><br>
-                        <div class="row">
-                            <label class="etk-ols-lbl">Kaç kişi lazım: </label>
-                            @Html.EditorFor(model => model.Ilan.Kontenjan, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", name = "ilan-baslik", id = "ilan-kontenjan", style = "width:50px;height:30px;padding-right:0", value = "1", required = true } })
-                            @Html.ValidationMessageFor(model => model.Ilan.Kontenjan, "", new { @class = "text-danger" })
-                            @*<input type="number" min="1" name="ilan-baslik" id="ilan-baslik" class="form-control" style="width:50px;height:30px;padding-right:0" value="1">*@<br>
-                        </div><br>
-                        <div class="row">
-                            <label class="etk-ols-lbl">Etkinliğiniz için bir özet girin: </label>
-                            @Html.TextAreaFor(model => model.Ilan.Ozet, new { @class = "form-control", name = "ilan-ozet", id = "ilan-ozet", style = "width: 275px;height:100px;", minlength = "10", placeholder = "Etkinliğini kısaca açıkla", required = true })
-                            @Html.ValidationMessageFor(model => model.Ilan.Ozet, "", new { @class = "text-danger" })
-                            @*<textarea name="ilan-ozet" id="ilan-ozet" style="width: 450px;" maxlength="300" placeholder="Etkinliğini 300 karakter ile açıkla" class="form-control" required></textarea>*@<br>
-                        </div><br>
-                        <div class="row">
-                            <label class="etk-ols-lbl">Etkinliğiniz için etiketleri seçin: </label>checkboxlar açılacak şekilde bir js <br>
-                        </div><br>
-                        <div class="justify-content-center row">
-                            <div class="align-items-center"><button id="etkinlik-olustur" type="submit" class="etkinlik-olustur">Oluştur!</button></div>
+                        @*<input type="datetime-local" id="ilan-vakit"
+            name="ilan-vakit" value="2012-12-21T00:00"
+            min="2019-02-16T00:00" max="2020-02-16T00:00" class="form-control" style="width: 450px;">*@<br>
+                    </div><br>
+                    <div class="row">
+                        <label class="etk-ols-lbl">Kaç kişi lazım: </label>
+                        @Html.EditorFor(model => model.Ilan.Kontenjan, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", name = "ilan-baslik", id = "ilan-kontenjan", style = "width:50px;height:30px;padding-right:0", value = "1", required = true } })
+                        @Html.ValidationMessageFor(model => model.Ilan.Kontenjan, "", new { @class = "text-danger" })
+                        @*<input type="number" min="1" name="ilan-baslik" id="ilan-baslik" class="form-control" style="width:50px;height:30px;padding-right:0" value="1">*@<br>
+                    </div><br>
+                    <div class="row">
+                        <label class="etk-ols-lbl">Etkinliğiniz için bir özet girin: </label>
+                        @Html.TextAreaFor(model => model.Ilan.Ozet, new { @class = "form-control", name = "ilan-ozet", id = "ilan-ozet", style = "width: 275px;height:100px;", minlength = "10", placeholder = "Etkinliğini kısaca açıkla", required = true })
+                        @Html.ValidationMessageFor(model => model.Ilan.Ozet, "", new { @class = "text-danger" })
+                        @*<textarea name="ilan-ozet" id="ilan-ozet" style="width: 450px;" maxlength="300" placeholder="Etkinliğini 300 karakter ile açıkla" class="form-control" required></textarea>*@<br>
+                    </div><br>
+                    <div class="row">
+                        <label class="etk-ols-lbl">Etkinliğiniz için etiketleri seçin: </label><div id="etiketler-body" class="justify-content-between align-items-center col-md-3">
+
                         </div>
+                        <button id="etk-etiket-sec" type="button" class="btn" style="margin-left:0px;height:45px;" data-toggle="modal" data-target="#EtiketlerModalCenter">Etiket Seç</button><br>
+                    </div><br>
+
+                    <div class="modal-footer" style="height:1px;padding-top:1px;padding-bottom:25px;"></div>
+                    <div class="justify-content-center row">
+                    </div><br>
+                    <div class="justify-content-center row">
+                        <div class="align-items-center"><button id="etkinlik-olustur" type="submit" class="etkinlik-olustur">Oluştur!</button></div>
                     </div>
                 </div>
+            </div>
         </div>
         <!--- \\\\\\\Etkinlik Oluşturma Bitiş-->
         <!--- \\\\\\\Kullanicinin Etkinlikleri Başlangıç -->
@@ -731,7 +738,32 @@
             </div>
         </div>
         <!-- Modal İlan Oluştur Bitiş -->
-
+        <!-- Modal Etiketler-->
+        <div class="modal fade" id="EtiketlerModalCenter" tabindex="-1" role="dialog" aria-labelledby="EtiketlerModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="card-header">
+                        <button id="modal-etiketler-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="text-center" id="EtiketlerModalLongTitle">Etiketler</h5>
+                    </div>
+                    <div id="modal-etiketler-body" class="modal-body">
+                        @foreach (NeYapsak.Entity.Entity.Etiket etiket in ViewBag.Etiketler)
+                        {
+                            <div class="custom-control custom-switch" style="margin:3px;display: inline-block;background-color:lightgrey;border: 0.2px solid #f74c3c;">
+                                <input type="checkbox" class="custom-control-input etiket" id="etiket-@etiket.Id" data-name="@etiket.EtiketAdi" data-id="@etiket.Id">
+                                <label class="custom-control-label" for="etiket-@etiket.Id" style="margin:4px;">@etiket.EtiketAdi</label>
+                            </div>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button id="etiket-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Etiketler Bitiş -->
 
     </div>
 
@@ -847,6 +879,18 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
+        var EtiketIdListe = new Array();
+        $("#etiket-tamam").click(function () {
+            EtiketIdListe = new Array();
+            $('#etiketler-body').empty();
+            $("#modal-etiketler-body input:checked").each(
+                function (i) {
+                    var ID = $(this).data("id");
+                    var name = $(this).data("name");
+                    EtiketIdListe.push(ID);
+                    $('#etiketler-body').append('<div style="margin:5px;margin-left:5px;padding:10px;display:inline-block;border: 1px solid #f74c3c;background-color:lightgrey;border-radius:5px">' + name + '</div>');
+                });
+        });
         $("#etkinlik-olustur").click(function () {
             var etk = {};
             etk.Baslik = $('#ilan-baslik').val();
@@ -862,7 +906,7 @@
             $.ajax({
                 type: "POST",
                 url: '/Home/Main',
-                data: { model: mainmodel },
+                data: { model: mainmodel, EtiketIDleri: EtiketIdListe },
                 success: function (result) {
                     console.log(result);
                     if (result === "True") {

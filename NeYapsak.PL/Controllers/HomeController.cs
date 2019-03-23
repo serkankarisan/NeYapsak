@@ -40,7 +40,7 @@ namespace NeYapsak.PL.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Main(MainViewModel model)
+        public ActionResult Main(MainViewModel model, List<int> EtiketIDleri)
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             List<string> errors = new List<string>();
@@ -78,6 +78,70 @@ namespace NeYapsak.PL.Controllers
             yeni.GoruntulenmeSayaci = 0;
             if (repoI.Add(yeni))
             {
+                if (EtiketIDleri != null)
+                {
+                    Repository<IlanEtiket> repoİE = new Repository<IlanEtiket>(new NeYapsakContext());
+                    List<IlanEtiket> ieESkiler = repoİE.GetAll().Where(e => e.IlanId == yeni.Id).ToList();
+                    IlanEtiket ie = new IlanEtiket();
+
+                    if (ieESkiler.Count() > 0)
+                    {
+                        foreach (var ieeski in ieESkiler)
+                        {
+                            ieeski.Silindi = true;
+                            if (!repoİE.Update(ieeski))
+                            {
+                                ModelState.AddModelError("", ieeski.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
+                            }
+                        }
+
+                        foreach (var id in EtiketIDleri)
+                        {
+                            bool var = false;
+                            foreach (var item in ieESkiler)
+                            {
+                                if (id == item.EtiketId)
+                                {
+                                    var = true;
+                                }
+                            }
+                            if (!var)
+                            {
+                                IlanEtiket y = new IlanEtiket();
+                                y.EtiketId = id;
+                                y.IlanId = yeni.Id;
+                                if (!repoİE.Add(y))
+                                {
+                                    ModelState.AddModelError("", y.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
+                                }
+                            }
+                            else
+                            {
+                                IlanEtiket y = new IlanEtiket();
+                                y = repoİE.Get(e => e.EtiketId == id);
+                                y.Silindi = false;
+                                if (!repoİE.Update(y))
+                                {
+                                    ModelState.AddModelError("", y.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in EtiketIDleri)
+                        {
+                            IlanEtiket y = new IlanEtiket();
+                            y.EtiketId = item;
+                            y.IlanId = yeni.Id;
+                            if (!repoİE.Add(y))
+                            {
+                                ModelState.AddModelError("", y.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
+                            }
+                        }
+                    }
+                }
+
                 return Json("True", JsonRequestBehavior.AllowGet);
             }
             errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
@@ -106,11 +170,11 @@ namespace NeYapsak.PL.Controllers
                         katilan.Tarih = DateTime.Now;
                         if (repoK.Update(katilan))
                         {
-                            //IdentityMessage msg = new IdentityMessage();
-                            //msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
-                            //msg.Destination = katilan.Ilan.User.Email;
-                            //msg.Body = "Merhaba " + katilan.Ilan.User.Name + ", " + katilan.User.Name + " " + katilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağın " + katilan.Ilan.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
-                            //mail.SendMail(msg);
+                            IdentityMessage msg = new IdentityMessage();
+                            msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
+                            msg.Destination = katilan.Ilan.User.Email;
+                            msg.Body = "Merhaba " + katilan.Ilan.User.Name + ", " + katilan.User.Name + " " + katilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağın " + katilan.Ilan.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
+                            mail.SendMail(msg);
                             result = "true";
                             return Json(result, JsonRequestBehavior.AllowGet);
                         }
@@ -132,11 +196,11 @@ namespace NeYapsak.PL.Controllers
             kat.Onay = false;
             if (repoK.Add(kat))
             {
-                //IdentityMessage msg = new IdentityMessage();
-                //msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
-                //msg.Destination = i.User.Email;
-                //msg.Body = "Merhaba " + i.User.Name + ", " + User.Name + " " + User.Surname + " " + i.BaslangicTarihi + " tarihinde yapacağın " + i.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
-                //mail.SendMail(msg);
+                IdentityMessage msg = new IdentityMessage();
+                msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
+                msg.Destination = i.User.Email;
+                msg.Body = "Merhaba " + i.User.Name + ", " + User.Name + " " + User.Surname + " " + i.BaslangicTarihi + " tarihinde yapacağın " + i.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
+                mail.SendMail(msg);
                 result = "true";
                 return Json(result, JsonRequestBehavior.AllowGet);
 
@@ -151,8 +215,6 @@ namespace NeYapsak.PL.Controllers
         {
             if (Id != null)
             {
-                Repository<Etiket> repoE = new Repository<Etiket>(new NeYapsakContext());
-                ViewBag.Etiketler = repoE.GetAll().Where(e => e.Silindi == false).ToList();
                 Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
                 Ilan etk = repoI.Get(i => i.Id == Id);
                 if (etk.KullaniciId == HttpContext.User.Identity.GetUserId())
@@ -242,7 +304,7 @@ namespace NeYapsak.PL.Controllers
                         ieeski.Silindi = true;
                         if (!repoİE.Update(ieeski))
                         {
-                            ModelState.AddModelError("", ieeski.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                            ModelState.AddModelError("", ieeski.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
                         }
                     }
 
@@ -263,7 +325,7 @@ namespace NeYapsak.PL.Controllers
                             yeni.IlanId = degisen.Id;
                             if (!repoİE.Add(yeni))
                             {
-                                ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                                ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
                             }
                         }
                         else
@@ -273,7 +335,7 @@ namespace NeYapsak.PL.Controllers
                             yeni.Silindi = false;
                             if (!repoİE.Update(yeni))
                             {
-                                ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                                ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
                             }
                         }
                     }
@@ -287,7 +349,7 @@ namespace NeYapsak.PL.Controllers
                         yeni.IlanId = degisen.Id;
                         if (!repoİE.Add(yeni))
                         {
-                            ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Ekelenemedi!");
+                            ModelState.AddModelError("", yeni.Etiket.EtiketAdi + " Etiketi Eklenemedi!");
                         }
                     }
                 }
@@ -422,6 +484,11 @@ namespace NeYapsak.PL.Controllers
             }
             if (repoK.Delete(katilan.Id))
             {
+                IdentityMessage msg = new IdentityMessage();
+                msg.Subject = "Etkinliğe Katılmaktan Vazgeçenler Var!";
+                msg.Destination = katilan.Ilan.User.Email;
+                msg.Body = "Merhaba " + katilan.Ilan.User.Name + ", " + katilan.User.Name + " " + katilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağın " + katilan.Ilan.Baslik + " etkinliğine katılmaktan vazgeçti. zaman kaybetmeden başkalarını bulmak için neyapsak.com seni bekliyor.";
+                mail.SendMail(msg);
                 result = "true";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
@@ -440,6 +507,11 @@ namespace NeYapsak.PL.Controllers
             katilan.Onay = false;
             if (repoK.Delete(katilan.Id))
             {
+               IdentityMessage msg = new IdentityMessage(); 
+                msg.Subject = "Etkinliğe Katılmaktan Vazgeçenler Var!";
+                msg.Destination = katilan.Ilan.User.Email;
+                msg.Body = "Merhaba " + katilan.Ilan.User.Name + ", " + katilan.User.Name + " " + katilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağın " + katilan.Ilan.Baslik + " etkinliğine katılmaktan vazgeçti. zaman kaybetmeden başkalarını bulmak için neyapsak.com seni bekliyor.";
+                mail.SendMail(msg);
                 result = "true";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
@@ -520,11 +592,21 @@ namespace NeYapsak.PL.Controllers
                 {
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
+                IdentityMessage msg = new IdentityMessage();
+                msg.Subject = "Etkinliğe Katılma İsteğin Onaylandı.";
+                msg.Destination = katilan.User.Email;
+                msg.Body = "Merhaba " + katilan.User.Name + ", " + katilan.Ilan.User.Name + " " + katilan.Ilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağı " + katilan.Ilan.Baslik + " etkinliğine katılma isteğini Onayladı. İyi eğlenceler.";
+                mail.SendMail(msg);
             }
             else if (OnayDurumu == "Reddet")
             {
                 katilan.Silindi = true;
                 katilan.Onay = false;
+                IdentityMessage msg = new IdentityMessage();
+                msg.Subject = "Etkinliğe Katılma İsteğin Reddedildi.";
+                msg.Destination = katilan.User.Email;
+                msg.Body = "Merhaba " + katilan.User.Name + ", " + katilan.Ilan.User.Name + " " + katilan.Ilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağı " + katilan.Ilan.Baslik + " etkinliğine katılma isteğini Reddetti. Üzülme başka etkinliklere katılmak için neyapsak.com seni bekliyor.";
+                mail.SendMail(msg);
             }
             if (repoK.Update(katilan))
             {
@@ -554,6 +636,11 @@ namespace NeYapsak.PL.Controllers
             {
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
+            IdentityMessage msg = new IdentityMessage();
+            msg.Subject = "Etkinliğe Katılman İptal Edildi.";
+            msg.Destination = katilan.User.Email;
+            msg.Body = "Merhaba " + katilan.User.Name + ", " + katilan.Ilan.User.Name + " " + katilan.Ilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağı " + katilan.Ilan.Baslik + " etkinliğine katılmanı iptal etti. Üzülme başka etkinliklere katılmak için neyapsak.com seni bekliyor.";
+            mail.SendMail(msg);
             result = "true";
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -566,16 +653,20 @@ namespace NeYapsak.PL.Controllers
             EventConfirmViewModel EventModel = new EventConfirmViewModel();
 
             EventModel.Ilan = repoIlan.GetAll().Where(i => i.Id == Id).FirstOrDefault();
-
-            EventModel.OnayBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
-
-            EventModel.OnaylanmisIlanlar = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
-
-
-            if (EventModel != null)
+            if (EventModel.Ilan.KullaniciId==HttpContext.User.Identity.GetUserId())
             {
-                return View(EventModel);
+                EventModel.OnayBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+                EventModel.OnaylanmisIlanlar = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+
+                if (EventModel != null)
+                {
+                    return View(EventModel);
+                }
+                return Redirect("/Home/MyProfile#collapseTwo");
             }
+            
             return Redirect("/Home/MyProfile#collapseTwo");
         }
     }
