@@ -170,11 +170,11 @@ namespace NeYapsak.PL.Controllers
                         katilan.Tarih = DateTime.Now;
                         if (repoK.Update(katilan))
                         {
-                            //IdentityMessage msg = new IdentityMessage();
-                            //msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
-                            //msg.Destination = katilan.Ilan.User.Email;
-                            //msg.Body = "Merhaba " + katilan.Ilan.User.Name + ", " + katilan.User.Name + " " + katilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağın " + katilan.Ilan.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
-                            //mail.SendMail(msg);
+                            IdentityMessage msg = new IdentityMessage();
+                            msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
+                            msg.Destination = katilan.Ilan.User.Email;
+                            msg.Body = "Merhaba " + katilan.Ilan.User.Name + ", " + katilan.User.Name + " " + katilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağın " + katilan.Ilan.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
+                            mail.SendMail(msg);
                             result = "true";
                             return Json(result, JsonRequestBehavior.AllowGet);
                         }
@@ -196,11 +196,11 @@ namespace NeYapsak.PL.Controllers
             kat.Onay = false;
             if (repoK.Add(kat))
             {
-                //IdentityMessage msg = new IdentityMessage();
-                //msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
-                //msg.Destination = i.User.Email;
-                //msg.Body = "Merhaba " + i.User.Name + ", " + User.Name + " " + User.Surname + " " + i.BaslangicTarihi + " tarihinde yapacağın " + i.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
-                //mail.SendMail(msg);
+                IdentityMessage msg = new IdentityMessage();
+                msg.Subject = "Etkinliğine Katılmak İsteyenler Var.";
+                msg.Destination = i.User.Email;
+                msg.Body = "Merhaba " + i.User.Name + ", " + User.Name + " " + User.Surname + " " + i.BaslangicTarihi + " tarihinde yapacağın " + i.Baslik + " etkinliğine katılmak istiyor. Onaylamak veya Reddetmek için profil sayfana gidebilirsin.";
+                mail.SendMail(msg);
                 result = "true";
                 return Json(result, JsonRequestBehavior.AllowGet);
 
@@ -484,6 +484,11 @@ namespace NeYapsak.PL.Controllers
             }
             if (repoK.Delete(katilan.Id))
             {
+                IdentityMessage msg = new IdentityMessage();
+                msg.Subject = "Etkinliğe Katılmaktan Vazgeçenler Var!";
+                msg.Destination = katilan.Ilan.User.Email;
+                msg.Body = "Merhaba " + katilan.Ilan.User.Name + ", " + katilan.User.Name + " " + katilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağın " + katilan.Ilan.Baslik + " etkinliğine katılmaktan vazgeçti. zaman kaybetmeden başkalarını bulmak için neyapsak.com seni bekliyor.";
+                mail.SendMail(msg);
                 result = "true";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
@@ -502,6 +507,11 @@ namespace NeYapsak.PL.Controllers
             katilan.Onay = false;
             if (repoK.Delete(katilan.Id))
             {
+               IdentityMessage msg = new IdentityMessage(); 
+                msg.Subject = "Etkinliğe Katılmaktan Vazgeçenler Var!";
+                msg.Destination = katilan.Ilan.User.Email;
+                msg.Body = "Merhaba " + katilan.Ilan.User.Name + ", " + katilan.User.Name + " " + katilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağın " + katilan.Ilan.Baslik + " etkinliğine katılmaktan vazgeçti. zaman kaybetmeden başkalarını bulmak için neyapsak.com seni bekliyor.";
+                mail.SendMail(msg);
                 result = "true";
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
@@ -582,11 +592,21 @@ namespace NeYapsak.PL.Controllers
                 {
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
+                IdentityMessage msg = new IdentityMessage();
+                msg.Subject = "Etkinliğe Katılma İsteğin Onaylandı.";
+                msg.Destination = katilan.User.Email;
+                msg.Body = "Merhaba " + katilan.User.Name + ", " + katilan.Ilan.User.Name + " " + katilan.Ilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağı " + katilan.Ilan.Baslik + " etkinliğine katılma isteğini Onayladı. İyi eğlenceler.";
+                mail.SendMail(msg);
             }
             else if (OnayDurumu == "Reddet")
             {
                 katilan.Silindi = true;
                 katilan.Onay = false;
+                IdentityMessage msg = new IdentityMessage();
+                msg.Subject = "Etkinliğe Katılma İsteğin Reddedildi.";
+                msg.Destination = katilan.User.Email;
+                msg.Body = "Merhaba " + katilan.User.Name + ", " + katilan.Ilan.User.Name + " " + katilan.Ilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağı " + katilan.Ilan.Baslik + " etkinliğine katılma isteğini Reddetti. Üzülme başka etkinliklere katılmak için neyapsak.com seni bekliyor.";
+                mail.SendMail(msg);
             }
             if (repoK.Update(katilan))
             {
@@ -616,6 +636,11 @@ namespace NeYapsak.PL.Controllers
             {
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
+            IdentityMessage msg = new IdentityMessage();
+            msg.Subject = "Etkinliğe Katılman İptal Edildi.";
+            msg.Destination = katilan.User.Email;
+            msg.Body = "Merhaba " + katilan.User.Name + ", " + katilan.Ilan.User.Name + " " + katilan.Ilan.User.Surname + " " + katilan.Ilan.BaslangicTarihi + " tarihinde yapacağı " + katilan.Ilan.Baslik + " etkinliğine katılmanı iptal etti. Üzülme başka etkinliklere katılmak için neyapsak.com seni bekliyor.";
+            mail.SendMail(msg);
             result = "true";
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -628,16 +653,20 @@ namespace NeYapsak.PL.Controllers
             EventConfirmViewModel EventModel = new EventConfirmViewModel();
 
             EventModel.Ilan = repoIlan.GetAll().Where(i => i.Id == Id).FirstOrDefault();
-
-            EventModel.OnayBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
-
-            EventModel.OnaylanmisIlanlar = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
-
-
-            if (EventModel != null)
+            if (EventModel.Ilan.KullaniciId==HttpContext.User.Identity.GetUserId())
             {
-                return View(EventModel);
+                EventModel.OnayBekleyenIlanlar = repoKat.GetAll().Where(k => k.Onay == false && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+                EventModel.OnaylanmisIlanlar = repoKat.GetAll().Where(k => k.Onay == true && k.Silindi == false).Select(k => k.Ilan).Distinct().Where(i => i.KullaniciId == HttpContext.User.Identity.GetUserId() && i.Silindi == false).ToList();
+
+
+                if (EventModel != null)
+                {
+                    return View(EventModel);
+                }
+                return Redirect("/Home/MyProfile#collapseTwo");
             }
+            
             return Redirect("/Home/MyProfile#collapseTwo");
         }
     }

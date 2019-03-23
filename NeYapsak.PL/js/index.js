@@ -194,3 +194,11 @@ $(document).ready(function () {
         });
     });
 });
+    $(document).ready(function () {
+        $(document).keypress(function (e) {
+            if (e.keyCode === 13) {
+                $("#GirisYap").click();
+                return false;
+            }
+        });
+    });
