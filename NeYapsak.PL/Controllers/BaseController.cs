@@ -20,7 +20,11 @@ namespace NeYapsak.PL.Controllers
             Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
             Repository<Ilan> repoIlan = new Repository<Ilan>(new NeYapsakContext());
             Repository<Katilan> repoKat = new Repository<Katilan>(new NeYapsakContext());
-            
+            Repository<Etiket> repoE = new Repository<Etiket>(new NeYapsakContext());
+            Repository<IlanEtiket> repoIE = new Repository<IlanEtiket>(new NeYapsakContext());
+            ViewBag.Etiketler = repoE.GetAll().Where(e => e.Silindi == false).ToList();
+            ViewBag.IlanEtiketler = repoIE.GetAll().Where(e => e.Silindi == false).ToList();
+
             LayoutViewModel LayoutModel = new LayoutViewModel();
 
             LayoutModel.Kullanici = repoU.GetAll().Where(u => u.Id == HttpContext.User.Identity.GetUserId()).FirstOrDefault();
