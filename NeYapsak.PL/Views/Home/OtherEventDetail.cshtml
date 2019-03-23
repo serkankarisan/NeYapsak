@@ -34,19 +34,11 @@
                 <label class="etk-ols-lbl form">Gerçekleşeceği vakit: </label><input type="text" id="ilan-vakit" name="ilan-vakit" value="@Model.BaslangicTarihi" readonly class="form-control" style="width: 450px;"><br>
             </div><br>
             <div class="row">
-                <div class="col-md-5">
-                    <div class="row">
-                        <label class="etk-ols-lbl col-md-8">Kalan kontenjan: </label><input type="number" readonly name="Kontenjan" id="ilan-baslik" class="form-control col-md-4" style="width:50px;height:30px;padding-right:0" value="@Model.Kontenjan" required><br>
-                        @Html.ValidationMessageFor(model => model.Kontenjan, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                <label class="etk-ols-lbl">Kalan kontenjan: </label><input type="number" readonly name="Kontenjan" id="ilan-baslik" class="form-control" style="width:50px;height:30px;padding-right:0" value="@Model.Kontenjan" required><br>
+                @Html.ValidationMessageFor(model => model.Kontenjan, "", new { @class = "text-danger" })
                 <div class="justify-content-between align-items-center col-md-7">
-
-                    <a href="#" class="text-muted h7 mb-2" style="margin-right:15px;" data-toggle="modal" data-target="#@("IlgilenenlerListeModalCenter"+Model.Id)"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @Model.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</a>
-
-                    <a href="#" class="text-muted h7 mb-2" data-toggle="modal" data-target="#@("KatilanlarListeModalCenter"+Model.Id)"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @Model.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</a>
-                    <div>
-                    </div>
+                    <a href="#" class="text-muted h6 mb-2" style="margin-right:15px;" data-toggle="modal" data-target="#@("IlgilenenlerListeModalCenter"+Model.Id)"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @Model.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</a>
+                    <a href="#" class="text-muted h6 mb-2" data-toggle="modal" data-target="#@("KatilanlarListeModalCenter"+Model.Id)"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @Model.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</a>
                 </div>
             </div><br>
             <div class="row">
@@ -436,7 +428,7 @@
             var Mesaj = $("#yeni-mesaj").val();
             if (Mesaj.trim() !== '') {
                 var BenimId = "@ViewBag.user.Kullanici.Id";
-                var ArkadasId = "@Model.KullaniciId"; 
+                var ArkadasId = "@Model.KullaniciId";
                 document.querySelector("#msg-tm").click();
                 $.ajax({
                     url: '/Message/MesajGonder',
