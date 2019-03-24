@@ -1,6 +1,6 @@
 ﻿@model NeYapsak.PL.Models.UserViewModel
 @{
-    ViewBag.Title = "OtherProfileAdmin";
+    ViewBag.Title = "Profil";
     Layout = "~/Views/Shared/_Layout-3-TopMenu-User.cshtml";
 }
 
@@ -57,7 +57,7 @@
                         </div>
                         <div class="col-md-8">
                             <p id="p-eposta">@Model.Kullanici.Email</p>
-                            @Html.EditorFor(model => model.Kullanici.Email, new { htmlAttributes = new { @class = "form-control", required = true, id = "txt-eposta", style = "display:none;" } })
+                            @Html.EditorFor(model => model.Kullanici.Email, new { htmlAttributes = new { @class = "form-control", required = true, id = "txt-eposta",type="email", style = "display:none;" } })
                             @Html.ValidationMessageFor(model => model.Kullanici.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-md-8">
                             <p  id="p-dtarihi">@(Convert.ToInt32(DateTime.Now.Year - Model.Kullanici.DogumTarihi.Year))</p>
-                            @Html.EditorFor(model => model.Kullanici.DogumTarihi, new { htmlAttributes = new { @class = "form-control", required = true, id = "txt-dogtarihi", style="display:none;" } })
+                            @Html.EditorFor(model => model.Kullanici.DogumTarihi, new { htmlAttributes = new { @class = "form-control", required = true, id = "txt-dogtarihi",type="date", style="display:none;" } })
                             @Html.ValidationMessageFor(model => model.Kullanici.DogumTarihi, "", new { @class = "text-danger" })
                         </div>
                     </div>

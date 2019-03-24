@@ -1,5 +1,6 @@
 ﻿@model NeYapsak.Entity.Entity.Ilan
 @{
+    ViewBag.Title = "Etkinlik Detaylarım";
     Layout = "~/Views/Shared/_Layout-2-TopMenu-Details.cshtml";
 }
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
@@ -81,18 +82,20 @@
             </div><br>
             
             <div class="modal-footer" style="height:1px;padding-top:1px;padding-bottom:25px;"></div>
-            <div class="justify-content-center row">
+            <div class="row">
+                <div class="col-md-2"></div>
                 <div class="col-md-3">
                     <a id="etk-duzenle" href="#etk-ols" style="width:200px;" class="btn btn-sekillendir-sml" onclick="myetkFunction();">Etkinliği Düzenle</a>
                 </div>
+                <div class="col-md-1"></div>
                 <div class="col-md-3">
                     <!-- Button trigger Modal Onay-->
-                    <button id="etk-sil" type="button" class="btn btn-sekillendir-sml" style="margin-left:0px;" data-toggle="modal" data-target="#etkinlikSilModalCenter">
+                    <button id="etk-sil" type="button" class="btn btn-sekillendir-sml" style="margin-left:37%;" data-toggle="modal" data-target="#etkinlikSilModalCenter">
                         Etkinliği Sil
                     </button>
                     <!-- Button trigger Modal Onay Bitiş-->
 
-                    <button id="etk-kaydet" type="submit" class="btn btn-sekillendir-sml" style="margin-left:0px;display:none;">Kaydet</button>
+                    <button id="etk-kaydet" type="submit" class="btn btn-sekillendir-sml" style="margin-left:37%;display:none;">Kaydet</button>
                 </div>
             </div>
         </div>

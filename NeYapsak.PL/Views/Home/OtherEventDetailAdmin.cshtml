@@ -1,6 +1,6 @@
 ﻿@model NeYapsak.Entity.Entity.Ilan
 @{
-    ViewBag.Title = "OtherEventDetailAdmin";
+    ViewBag.Title = "Etkinlik Detayları";
     Layout = "~/Views/Shared/_Layout-2-TopMenu-Details.cshtml";
 }
 
@@ -16,7 +16,7 @@
         <div class="card-body" id="etk-ols">
             <div class="row">
                 <label class="etk-ols-lbl">Etkinlik Sahibi: </label>
-                <div class="h5 m-0"><a href="/Home/MyProfile" class="cs-renk">@Model.User.Name @Model.User.Surname</a></div>
+                <div class="h5 m-0"><a href="/Home/OtherProfileAdmin/@Model.KullaniciId" class="cs-renk">@Model.User.Name @Model.User.Surname</a></div>
             </div><br>
             <div class="row">
                 <label class="etk-ols-lbl">Etkinlik Başlığı: </label><input type="text" readonly name="Baslik" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Baslik" required>
@@ -174,18 +174,20 @@
                     </div>
                     <!--Modal Mesaj Bitiş-->
                 </div>
-                <div class="justify-content-center row">
-                    <div class="col-md-6">
-                        <a id="etk-duzenle" href="#etk-ols" style="margin-left:20px;width:80px;" class="btn btn-sekillendir-sml" onclick="myetkFunction();">Düzenle</a>
-                    </div>
-                    <div class="col-md-6" style="padding-left:0;">
-                        <!-- Button trigger Modal Onay-->
-                        <button id="etk-sil" type="button" style="width:60px;" class="btn btn-sekillendir-sml" data-toggle="modal" data-target="#etkinlikSilModalCenter">
-                            Sil
-                        </button>
-                        <!-- Button trigger Modal Onay Bitiş-->
+                <div class="justify-content-center">
+                    <div class="row" style="padding-top:5px;">
+                        <div class="col-md-6" style="padding-left:0;">
+                            <a id="etk-duzenle" href="#etk-ols" style="margin-left:50%;width:80px;" class="btn btn-sekillendir-sml" onclick="myetkFunction();">Düzenle</a>
+                        </div>
+                        <div class="col-md-6" style="padding-left:0;">
+                            <!-- Button trigger Modal Onay-->
+                            <button id="etk-sil" type="button" style="margin-left:57%;width:60px;" class="btn btn-sekillendir-sml" data-toggle="modal" data-target="#etkinlikSilModalCenter">
+                                Sil
+                            </button>
+                            <!-- Button trigger Modal Onay Bitiş-->
 
-                        <button id="etk-kaydet" type="submit" class="btn btn-sekillendir-sml" style="padding-left:0;display:none;width:80px;">Kaydet</button>
+                            <button id="etk-kaydet" type="submit" class="btn btn-sekillendir-sml" style="margin-left:50%;padding-left:0;display:none;width:80px;">Kaydet</button>
+                        </div>
                     </div>
                 </div>
             </div>
