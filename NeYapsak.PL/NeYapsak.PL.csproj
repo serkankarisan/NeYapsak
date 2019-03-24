@@ -201,6 +201,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\giris_sayfa.jpg" />
     <Content Include="js\anasayfa-app.js" />
+    <Content Include="js\arama.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\index.js" />
     <Content Include="Scripts\bootbox.js" />
@@ -248,6 +249,7 @@
     <Content Include="Views\Home\EventConfirmPage.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Message\SohbetGecmisi.cshtml" />
+    <Content Include="Views\Home\MainBySearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

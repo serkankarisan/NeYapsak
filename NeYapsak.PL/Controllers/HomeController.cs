@@ -34,10 +34,18 @@ namespace NeYapsak.PL.Controllers
             MainModel.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != MainModel.KullaniciId && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
 
             MainModel.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId == MainModel.KullaniciId && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
-
             return View(MainModel);
         }
-
+        [Authorize]
+        public ActionResult MainBySearch(string kelime)
+        {
+            Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
+            MainViewModel MainModel = new MainViewModel();
+            MainModel.KullaniciId = HttpContext.User.Identity.GetUserId();
+            MainModel.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != MainModel.KullaniciId && i.Yayindami == true && i.Baslik.ToLower().Contains(kelime.ToLower()) == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            MainModel.KullanicininIlanlari = new List<Ilan>();
+            return View(MainModel);
+        }
         [HttpPost]
         [Authorize]
         public ActionResult Main(MainViewModel model, List<int> EtiketIDleri)

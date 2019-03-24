@@ -1,0 +1,554 @@
+﻿@model NeYapsak.PL.Models.MainViewModel
+@{
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    Layout = "~/Views/Shared/_Layout-1-TopMenu-Main.cshtml";
+}
+    <link href="~/css/Buton-style.css" rel="stylesheet" />
+    <div class="col-md-9 gedf-main">
+        @{
+            string UserID = "";
+        }
+        <!--- \\\\\\\Diğer Etkinlikler Başlangıç -->
+
+        <div class="card gedf-card text-center" style="background-color:#f74c3c;margin-bottom:1px;">
+            <h3 class="mb-0 btn btn-lg">
+                Aramana Uyan Etkinlikler
+            </h3>
+        </div>
+
+        <div class="card" style="background-color:transparent;border:0px;">
+            <div class="card-body">
+                @if (Model.DigerIlanlar.Count() == 0)
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Bu aramaya uyan bir etkinlik yok.</th>
+                            </tr>
+                        </thead>
+                    </table>
+                }
+                else if (Model.DigerIlanlar.Count() != 0)
+                {
+                    foreach (NeYapsak.Entity.Entity.Ilan Digerİlan in Model.DigerIlanlar)
+                    {
+
+                        <!-- Modal Katılanlar-->
+                        <div class="modal fade" id="@("KatilanlarListeModalCenter"+Digerİlan.Id)" tabindex="-1" role="dialog" aria-labelledby="KatilanlarListeModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="card-header">
+                                        <button id="modal-main-ilgilenenler-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h5 class="text-center" id="KatilanlarListeModalLongTitle">Etkinliğe Katılacaklar</h5>
+                                    </div>
+                                    <div id="modal-main-katilanlar-body" class="modal-body">
+                                        @if (Digerİlan.Katilanlar.Where(i => i.Onay == true && i.Silindi == false).Count() == 0)
+                                        {
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>Etkinliğe Katılan Yok</tr>
+                                                </thead>
+                                                <tbody>
+                                            </table>
+                                        }
+                                        else if (Digerİlan.Katilanlar.Where(i => i.Onay == true && i.Silindi == false).Count() != 0)
+                                        {
+                                            <table class="table">
+                                                <thead>
+                                                    <tr></tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (NeYapsak.Entity.Entity.Katilan katilan in Digerİlan.Katilanlar.Where(i => i.Onay == true && i.Silindi == false))
+                                                    {
+                                                        <tr>
+                                                            <td><img class="rounded-circle" width="45" height="45" src="@katilan.User.ProfilAvatarYolu" alt=""></td>
+                                                            <td>
+                                                                <div class="row" style="padding-top:10px;">
+                                                                    @if (UserID == katilan.KullaniciId)
+                                                                    {
+                                                                        <div class="col-md-6"><a href="/Home/MyProfile/@katilan.KullaniciId" class="cs-renk">@katilan.User.Name @katilan.User.Surname</a></div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="col-md-6"><a href="/Home/OtherProfile/@katilan.KullaniciId" class="cs-renk">@katilan.User.Name @katilan.User.Surname</a></div>}
+
+                                                                    <div class="col-md-6"><p class="text-muted">@katilan.Tarih</p></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        }
+                                    </div>
+                                    <div class="modal-footer">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Katılanlar Bitiş -->
+
+                        <!-- Modal İlgilenenler-->
+                        <div class="modal fade" id="@("IlgilenenlerListeModalCenter"+Digerİlan.Id)" tabindex="-1" role="dialog" aria-labelledby="IlgilenenlerListeModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="card-header">
+                                        <button id="modal-main-ilgilenenler-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h5 class="modal-title text-center" id="IlgilenenlerListeModalLongTitle">Etkinlikle İlgilenenler</h5>
+                                    </div>
+                                    <div id="modal-main-ilgilenenler-body" class="modal-body">
+                                        @if (Digerİlan.Katilanlar.Where(i => i.Onay == false && i.Silindi == false).Count() == 0)
+                                        {
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>Etkinliğin İlgileneni Yok</tr>
+                                                </thead>
+                                                <tbody>
+                                            </table>
+                                        }
+                                        else if (Digerİlan.Katilanlar.Where(i => i.Onay == false && i.Silindi == false).Count() != 0)
+                                        {
+                                            <table class="table">
+                                                <thead>
+                                                    <tr></tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (NeYapsak.Entity.Entity.Katilan ilgilenen in Digerİlan.Katilanlar.Where(i => i.Onay == false && i.Silindi == false))
+                                                    {
+                                                        <tr>
+                                                            <td><img class="rounded-circle" width="45" height="45" src="@ilgilenen.User.ProfilAvatarYolu" alt=""></td>
+                                                            <td>
+                                                                <div class="row" style="padding-top:10px;">
+                                                                    @if (UserID == ilgilenen.KullaniciId)
+                                                                    {
+                                                                        <div class="col-md-6"><a href="/Home/MyProfile/@ilgilenen.KullaniciId" class="cs-renk">@ilgilenen.User.Name @ilgilenen.User.Surname</a></div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="col-md-6"><a href="/Home/OtherProfile/@ilgilenen.KullaniciId" class="cs-renk">@ilgilenen.User.Name @ilgilenen.User.Surname</a></div>}
+                                                                    <div class="col-md-6"><p class="text-muted">@ilgilenen.Tarih</p></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        }
+                                    </div>
+                                    <div class="modal-footer">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal İlgilenenler Bitiş -->
+
+                        <div id='@("etk" + Digerİlan.Id)' class="card gedf-card">
+                            <!--gedf ile alttan margin veriyor-->
+                            <div class="card-header">
+                                <!--bu sayede başlığın arka planı grimsi ve içeriğe mesafelendirme yapmış. card body ve card header da var-->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!--dflex ile yan yana getiriyor. bir nevi float-->
+                                    <a id="@("link-etk-detay"+Digerİlan.Id)" class="card-link link-etk-detay" data-id="@Digerİlan.Id" href="#">
+                                        <h5 class="card-title cs-renk">@Digerİlan.Baslik</h5>
+                                    </a>
+                                    <div class="text-muted h6 mb-2"> <i class="fa fa-user-o"></i>&nbsp;Kontenjan @Digerİlan.Kontenjan</div>
+
+                                    <a href="#" class="text-muted h6 mb-2" data-toggle="modal" data-target="#@("IlgilenenlerListeModalCenter"+Digerİlan.Id)"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @Digerİlan.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</a>
+
+                                    <a href="#" class="text-muted h6 mb-2" data-toggle="modal" data-target="#@("KatilanlarListeModalCenter"+Digerİlan.Id)"> <i class="fa fa-user-circle-o"></i>&nbsp;Katılacaklar @Digerİlan.Katilanlar.Where(i => i.Silindi == false && i.Onay == true).Count()</a>
+
+                                    <div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <p class="card-text" style="margin-left:5%;">
+                                                @Digerİlan.Ozet
+                                            </p>
+                                        </div><br>
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <img class="rounded-circle" width="45" height="45" src="@Digerİlan.User.ProfilAvatarYolu" alt="">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="h5 m-0"><a href="/Home/OtherProfile/@Digerİlan.KullaniciId" class="cs-renk">@Digerİlan.User.Name</a></div>
+                                                    <div class="h7 text-muted">@Digerİlan.User.Name @Digerİlan.User.Surname,@(Convert.ToInt32(DateTime.Now.Year - Digerİlan.User.DogumTarihi.Year))</div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="row">
+                                                        &nbsp;
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12"><a href="#" class="card-link cs-renk" data-toggle="modal" data-target="#MesajGonderMain" data-id="@Digerİlan.Id"><i class="fa fa-question-circle"></i> Etkinlik Sahibine Sor</a></div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <a id="ktl-istegi-gonder" href="#" data-id="@Digerİlan.Id" class="card-link cs-renk KatilmaIstegiGonderModalAc" data-toggle="modal" data-target="#ConfirmModalKatilmaMain">
+                                                                <i class="fa fa-plus"></i>
+                                                                Katılma İsteği Gönder
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!--text muted ile silik tonda grili yazı-->
+                                        <div class="row text-muted">
+                                            <p>Oluşturulma tarihi: @Digerİlan.OlusturmaTarihi</p>
+                                        </div>
+                                        <div class="row text-muted">
+                                            <p>Başlangıç Zamanı: @Digerİlan.BaslangicTarihi</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <h7>Bu etkinliği paylaş!</h7>&nbsp;
+                                <a href="#" class="card-link cs-renk-siy sc-share-fb"><i class="fa fa-facebook"></i> Facebook</a>
+                                <a href="#" class="card-link cs-renk-siy sc-share-tw"><i class="fa fa-twitter"></i> Twitter</a>
+                                <a href="#" class="card-link cs-renk-siy sc-share-wa"><i class="fa fa-whatsapp"></i> Whatsapp</a>
+                                <span class="dropdown pull-right">
+                                    <button class="btn btn-link dropdown-toggle cs-renk" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                        <div class="h6 dropdown-header">Bu İlanı</div>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#IlanBildirMain">Şikayet Et/Bildir</a>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal Onay -->
+                        <div class="modal fade" id="ConfirmModalKatilmaMain" tabindex="-1" role="dialog" aria-labelledby="ConfirmModalKatilmaMainLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ConfirmModalKatilmaMainLabel">Emin Misin?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div id="confirm-modal-main-katilma-body" class="modal-body">
+                                        Katilmak İstediğine Emin Misin?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="row">
+                                            <a id="btnKatilmaIstegi" href="#" data-id="@Digerİlan.Id" class="btn cs-arka-renk KatilmaIstegiGonder">Evet</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button type="button" class="btn cs-arka-renk" data-dismiss="modal">İptal</button>&nbsp;&nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Onay Bitiş-->
+                        <!--Modal Mesaj-->
+                        <div class="modal fade" id="MesajGonderMain" tabindex="-1" role="dialog" aria-labelledby="MesajGonderMainLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ConfirmModalKatilmaMainLabel">
+                                            @Digerİlan.User.Name @Digerİlan.User.Surname kişisine mesaj gönder
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div id="confirm-modal-main-katilma-body" class="modal-body">
+                                        &nbsp;&nbsp;&nbsp;<em>Aklına takılanı öğrenmek bir mesaj kadar uzakta:</em>
+                                        <div class="col-md-8">
+                                            <br /><br />
+                                            <textarea type="text" name="YeniMesaj" id="yeni-mesaj" style="width:450px" maxlength="300" placeholder="Mesajını gir" class="form-control" required="required"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="row">
+                                            <button id="msg-gonder" type="submit" data-id="@Digerİlan.User.Id" class="btn cs-arka-renk">Gönder</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button type="button" class="btn cs-arka-renk" id="msg-tm" data-dismiss="modal">Vazgeç</button>&nbsp;&nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Modal Mesaj Bitiş-->
+                        <!--Modal İlan Bildir-->
+                        <div class="modal fade" id="IlanBildirMain" tabindex="-1" role="dialog" aria-labelledby="IlanBildirMainLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ConfirmModalKatilmaMainLabel">
+                                            @Digerİlan.Baslik ilanını bildir
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div id="confirm-modal-main-katilma-body" class="modal-body">
+                                        &nbsp;&nbsp;&nbsp;<em>Duyarlılığın için teşekkürler. İlandaki sıkıntı nedir ?:</em>
+                                        <div class="col-md-8">
+                                            <br /><br />
+                                            <textarea type="text" name="YeniMesaj" id="yeni-bild" style="width:450px" maxlength="300" placeholder="Bu alana girilecek bilgiler site yönetimine iletilecektir." class="form-control" required="required"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="row">
+                                            <button id="ilan-bildir" type="submit" data-adid="@Digerİlan.Id" data-seid="@Model.KullaniciId" class="btn cs-arka-renk">Gönder</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button type="button" class="btn cs-arka-renk" id="iln-tm" data-dismiss="modal">Vazgeç</button>&nbsp;&nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Modal İlan Bildir Bitiş-->
+                    }
+                }
+            </div>
+        </div>
+        <!--- \\\\\\\Diğer Etkinlikler Bitiş -->
+        <!-- Modal Bilgi-->
+        <div class="modal fade" id="KatilmaModalMainCenter" tabindex="-1" role="dialog" aria-labelledby="KatilmaModalMainCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="KatilmaModalMainLongTitle"></h5>
+                        <button id="modal-main-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modal-main-body" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modal-main-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Bilgi Bitiş -->
+        <!-- Modal İlan Oluştur-->
+        <div class="modal fade" id="IlanOlusturModalCenter" tabindex="-1" role="dialog" aria-labelledby="IlanOlusturModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="card-header text-center">
+                        <button id="modal-ilan-olustur-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="text-center" id="IlanOlusturModalLongTitle"></h5>
+                    </div>
+                    <div id="modal-ilan-olustur-body" style="margin-left:5%;" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modal-ilan-olustur-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal İlan Oluştur Bitiş -->
+        <!-- Modal Etiketler-->
+        <div class="modal fade" id="EtiketlerModalCenter" tabindex="-1" role="dialog" aria-labelledby="EtiketlerModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="card-header">
+                        <button id="modal-etiketler-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="text-center" id="EtiketlerModalLongTitle">Etiketler</h5>
+                    </div>
+                    <div id="modal-etiketler-body" class="modal-body">
+                        @foreach (NeYapsak.Entity.Entity.Etiket etiket in ViewBag.Etiketler)
+                        {
+                            <div class="custom-control custom-switch" style="margin:3px;display: inline-block;background-color:lightgrey;border: 0.2px solid #f74c3c;">
+                                <input type="checkbox" class="custom-control-input etiket" id="etiket-@etiket.Id" data-name="@etiket.EtiketAdi" data-id="@etiket.Id">
+                                <label class="custom-control-label" for="etiket-@etiket.Id" style="margin:4px;">@etiket.EtiketAdi</label>
+                            </div>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button id="etiket-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Etiketler Bitiş -->
+
+    </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var KatilmaDurumu = "";
+        var SonTiklananEtkId = 0;
+        $(".KatilmaIstegiGonderModalAc").click(function () {
+            SonTiklananEtkId = $(this).data("id");
+        });
+        $(".KatilmaIstegiGonder").click(function () {
+            $('#ConfirmModalKatilmaMain').modal('hide');
+            var ID = SonTiklananEtkId;
+            $.ajax({
+                type: "POST",
+                url: '/Home/KatilmaIstegiGonder',
+                data: { EtkID: ID },
+                success: function (result) {
+                    if (result === "true") {
+                        $('#KatilmaModalMainLongTitle').attr("class", "text-success")
+                        $('#KatilmaModalMainLongTitle').text("İstek Gönderildi");
+                        $('#modal-main-body').text("Katılma İsteğini etkinlik Sahibine İlettik.");
+                    }
+                    else if (result === "false") {
+                        $('#KatilmaModalMainLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalMainLongTitle').text("İstek Gönderilemedi");
+                        $('#modal-main-body').text("Katılma İsteğini etkinlik Sahibine İletemedik.");
+                    }
+                    else {
+                        $('#KatilmaModalMainLongTitle').attr("class", "text-danger")
+                        $('#KatilmaModalMainLongTitle').text("İstek Gönderilemedi");
+                        $('#modal-main-body').text(result);
+                    }
+                    KatilmaDurumu = result;
+                    $('#KatilmaModalMainCenter').modal('show');
+                }
+            });
+        });
+        $("#modal-main-tamam").click(function () {
+            if (KatilmaDurumu === "true") {
+                window.location.href = "/Home/Main";
+            }
+        });
+        $("#modal-main-cikis").click(function () {
+            if (KatilmaDurumu === "true") {
+                window.location.href = "/Home/Main";
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#msg-gonder").click(function () {
+            var Mesaj = $("#yeni-mesaj").val();
+            if (Mesaj.trim() !== '') {
+                var BenimId = "@Model.KullaniciId";
+                var ArkadasId = $(this).data("id");
+                document.querySelector("#msg-tm").click();
+                $.ajax({
+                    url: '/Message/MesajGonder',
+                    type: "POST",
+                    data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
+                    success: function (result) {
+                        alert('Mesajınız gönderildi!');
+                    }
+            });
+            };
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ilan-bildir").click(function () {
+            var Mesaj = $("#yeni-bild").val();
+            if (Mesaj.trim() !== '') {
+                var GondericiId = $(this).data("seid");
+                var IlanId = $(this).data("adid");
+                document.querySelector("#iln-tm").click();
+                $.ajax({
+                    url: '/Message/IlanBildir',
+                    type: "POST",
+                    data: { IlanId: IlanId, GondericiId: GondericiId, Mesaj: Mesaj },
+                    success: function (result) {
+                        alert('Bildirimin site yönetimine iletildi!');
+                    }
+            });
+            };
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(".link-etk-detay" ).click(function () {
+        var ID = $(this).data("id");
+        console.log(ID);
+        $.ajax({
+            type: "POST",
+            url: '/Home/GSayacArttir',
+            data: { EtkID: ID },
+            success: function (result) {
+                if (result === "True") {
+                    window.location.href = "/Home/OtherEventDetail/" + ID;
+                }
+                else if (result === "False") {
+                    window.location.href = "/Home/MyEventDetail/" + ID;
+                }
+                else {
+                    alert(result);
+                }
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var EtiketIdListe = new Array();
+        $("#etiket-tamam").click(function () {
+            EtiketIdListe = new Array();
+            $('#etiketler-body').empty();
+            $("#modal-etiketler-body input:checked").each(
+                function (i) {
+                    var ID = $(this).data("id");
+                    var name = $(this).data("name");
+                    EtiketIdListe.push(ID);
+                    $('#etiketler-body').append('<div style="margin:5px;margin-left:5px;padding:10px;display:inline-block;border: 1px solid #f74c3c;background-color:lightgrey;border-radius:5px">' + name + '</div>');
+                });
+        });
+        $("#etkinlik-olustur").click(function () {
+            var etk = {};
+            etk.Baslik = $('#ilan-baslik').val();
+            etk.Il = $('#il').val();
+            etk.Ilce = $('#ilce').val();
+            etk.Kontenjan = $('#ilan-kontenjan').val();
+            etk.Ozet = $('#ilan-ozet').val();
+            etk.BaslangicTarihi = $('#ilan-vakit').val();
+            console.log("model " + etk);
+            var mainmodel = {};
+            mainmodel.Ilan = etk;
+            console.log("model main" + mainmodel);
+            $.ajax({
+                type: "POST",
+                url: '/Home/Main',
+                data: { model: mainmodel, EtiketIDleri: EtiketIdListe },
+                success: function (result) {
+                    console.log(result);
+                    if (result === "True") {
+                        $('#IlanOlusturModalLongTitle').attr("class", "text-success")
+                        $('#IlanOlusturModalLongTitle').text("Etkinlik Oluşturuldu");
+                        $('#modal-ilan-olustur-body').text("İşte Bu kadar Etkinliğiniz Oluşturuldu.");
+                                    $("#modal-ilan-olustur-tamam").click(function () {
+                    window.location.href = "/Home/Main";
+            });
+            $("#modal-ilan-olustur-cikis").click(function () {
+                    window.location.href = "/Home/Main";
+            });
+                    }
+                    else {
+                        $('#IlanOlusturModalLongTitle').attr("class", "text-danger")
+                        $('#IlanOlusturModalLongTitle').text("Etkinlik Oluşturulamadı!");
+                        $('#modal-ilan-olustur-body').text("");
+                        $.each(result, function (i, hata) {
+                            $('#modal-ilan-olustur-body').append('<p class="text-danger" style="width:10px;display:inline-block">*</p>'+hata + "<br/><br/>");
+                        });
+                    }
+                    $('#IlanOlusturModalCenter').modal('show');
+                }
+            });
+        });
+    });
+</script>
