@@ -138,9 +138,10 @@
                     @Html.ValidationMessageFor(model => model.Ilan.Ilce, "", new { @class = "text-danger" })
                     <br>
                 </div><br>
-                <div class="row">
-                    <label class="etk-ols-lbl">Adres Belirt: </label>googlemapstenseçmeyaptırmak<br>
-                </div><br>
+                      <div class="row">
+                          <label class="etk-ols-lbl">Adres Belirt: </label>
+                @Html.EditorFor(model => model.Ilan.Konum, new { htmlAttributes = new { @class = "form-control vertical-center", id = "ilan-konum", style = "width: 275px;", placeholder = "Adres Belirt ", required = true } })
+                      </div><br>
                 <div class="row">
                     <label class="etk-ols-lbl form">Ne Zaman?: </label>
                     @Html.EditorFor(model => model.Ilan.BaslangicTarihi, new { htmlAttributes = new { @class = "form-control vertical-center", type = "datetime-local", id = "ilan-vakit", style = "width: 275px;", required = true } })
@@ -906,6 +907,7 @@
             etk.Baslik = $('#ilan-baslik').val();
             etk.Il = $('#il').val();
             etk.Ilce = $('#ilce').val();
+            etk.Konum = $('#ilan-konum').val();
             etk.Kontenjan = $('#ilan-kontenjan').val();
             etk.Ozet = $('#ilan-ozet').val();
             etk.BaslangicTarihi = $('#ilan-vakit').val();

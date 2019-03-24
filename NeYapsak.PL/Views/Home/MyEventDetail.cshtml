@@ -38,7 +38,7 @@
                 <input type="text" readonly name="ilce" class="form-control" id="etk-ilce" style="width: 450px; height: 35px;" value="@Model.Ilce" required><br>
             </div><br>
             <div class="row">
-                <label class="etk-ols-lbl">Konum:</label><input type="text" readonly name="konum" class="form-control" id="ilan-konum" style="width: 450px; height: 35px;" value="Girilmemiş" required><br>
+                <label class="etk-ols-lbl">Konum:</label><input type="text" readonly name="konum" class="form-control" id="ilan-konum" style="width: 450px; height: 35px;" value="@Model.Konum" required><br>
                 @Html.ValidationMessageFor(model => model.Konum, "", new { @class = "text-danger" })
             </div><br>
             <div class="row">
@@ -352,6 +352,7 @@
             etk.Baslik = $('#ilan-baslik').val();
             etk.Il = $('#etk-il').val();
             etk.Ilce = $('#etk-ilce-sec').val();
+            etk.Konum = $('#ilan-konum').val();
             etk.Kontenjan = $('#ilan-kontenjan').val();
             etk.Ozet = $('#ilan-ozet').val();
             etk.BaslangicTarihi = $('#ilan-vakit').val();

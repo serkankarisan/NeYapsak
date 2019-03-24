@@ -41,7 +41,45 @@ namespace NeYapsak.Entity.Entity
         public string Ilce { get => _ilce; set => _ilce = value; }
 
 
-        public string Konum { get => konum; set => konum = value; }
+        public string Konum {
+            get
+            {
+                return konum;
+            }
+            set
+            {
+                string Bkonum = "";
+                if (!string.IsNullOrEmpty(value))
+                {
+                    string[] konumum = value.Split(' ');
+                    foreach (string item in konumum)
+                    {
+                        string k;
+                        if (!string.IsNullOrEmpty(item))
+                        {
+                            k = item.Substring(0, 1).ToUpper() + item.Substring(1).ToLower();
+                        }
+                        else
+                        {
+                            k = item;
+                        }
+                        if (Bkonum == "")
+                        {
+                            Bkonum += k;
+                        }
+                        else
+                        {
+                            Bkonum += " " + k;
+                        }
+                    }
+                }
+                else
+                {
+                    Bkonum = value;
+                }
+                konum = Bkonum;
+            }
+        }
 
         [Required(ErrorMessage = "Lütfen Başlık içeriği giriniz!")]
         [StringLength(50, ErrorMessage = "İçerik {0} karakterden uzun olmamalıdır!")]

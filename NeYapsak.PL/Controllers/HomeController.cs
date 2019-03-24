@@ -138,7 +138,7 @@ namespace NeYapsak.PL.Controllers
             yeni.Silindi = false;
             yeni.Yayindami = true;//Değişecek.
             yeni.Ozet = model.Ilan.Ozet;
-            yeni.Konum = "Girilmedi";
+            yeni.Konum = model.Ilan.Konum;
             yeni.KullaniciId = HttpContext.User.Identity.GetUserId();
             yeni.GoruntulenmeSayaci = 0;
             if (repoI.Add(yeni))
