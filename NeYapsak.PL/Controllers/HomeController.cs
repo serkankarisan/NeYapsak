@@ -18,6 +18,10 @@ namespace NeYapsak.PL.Controllers
         Mailing mail = new Mailing();
         public ActionResult Index(string ReturnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Home/Main");
+            }
             if (!string.IsNullOrEmpty(ReturnUrl))
             {
                 return Redirect("/Home/Index#Giris");
@@ -668,6 +672,11 @@ namespace NeYapsak.PL.Controllers
             }
             
             return Redirect("/Home/MyProfile#collapseTwo");
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
     }
 }
