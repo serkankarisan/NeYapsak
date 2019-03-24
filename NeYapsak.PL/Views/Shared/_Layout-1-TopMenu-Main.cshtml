@@ -10,8 +10,16 @@
             </button>
         </div>
     </div>
-    <div class="col-xs-12 col-md-6 mb-2">
-        <a class="tutorials-link" href="#Kayit" role="button">Sıralama Ölçütünü Seç</a>
+    <div class="col-xs-12 col-md-3 mb-2 dropdown">
+        <a class="tutorials-link dropdown" href="https://wxample.com" role="button" id="dLabel" data-target="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sıralama Ölçütü</a>
+        <div class="dropdown-menu col-xs-12 col-md-12 text-center" aria-labelledby="dLabel">
+            <a class="btn cs-arka-renk col-md-12" href="/Home/Main?sort=0">Tarihe Göre (Önce en yeni eklenen)</a><br />
+            <a class="btn btn-dark cs-renk col-md-12" href="/Home/Main?sort=1">Tarihe Göre (Önce en eski eklenen)</a><br />
+            <a class="btn cs-arka-renk col-md-12" href="/Home/Main?sort=2">Tarihe Göre (Önce en yakın)</a><br />
+            <a class="btn btn-dark cs-renk col-md-12" href="/Home/Main?sort=3">Tarihe Göre (Önce en uzak)</a><br />
+            <a class="btn cs-arka-renk col-md-12" href="/Home/Main?sort=4">Popülerliğe Göre (Önce en yüksek)</a><br />
+            <a class="btn btn-dark cs-renk col-md-12" href="/Home/Main?sort=5">Popülerliğe Göre (Önce en düşük)</a>
+        </div>
     </div>
 </nav>
 <div class="container-fluid gedf-wrapper">

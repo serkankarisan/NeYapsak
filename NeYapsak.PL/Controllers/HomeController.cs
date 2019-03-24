@@ -30,14 +30,43 @@ namespace NeYapsak.PL.Controllers
         }
 
         [Authorize]
-        public ActionResult Main()
+        public ActionResult Main(string sort="0")
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             MainViewModel MainModel = new MainViewModel();
             MainModel.KullaniciId = HttpContext.User.Identity.GetUserId();
-            MainModel.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != MainModel.KullaniciId && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
-
-            MainModel.KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId == MainModel.KullaniciId && i.Yayindami == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            var KullanicininIlanlari = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId == MainModel.KullaniciId && i.Yayindami == true);
+            var DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != MainModel.KullaniciId && i.Yayindami == true);
+            if (sort=="0")
+            {
+                MainModel.KullanicininIlanlari=KullanicininIlanlari.OrderByDescending(i => i.OlusturmaTarihi).ToList();
+                MainModel.DigerIlanlar = DigerIlanlar.OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            }
+            else if (sort == "1")
+            {
+                MainModel.KullanicininIlanlari = KullanicininIlanlari.OrderBy(i => i.OlusturmaTarihi).ToList();
+                MainModel.DigerIlanlar = DigerIlanlar.OrderBy(i => i.OlusturmaTarihi).ToList();
+            }
+            else if (sort == "2")
+            {
+                MainModel.KullanicininIlanlari = KullanicininIlanlari.OrderByDescending(i => i.BaslangicTarihi).ToList();
+                MainModel.DigerIlanlar = DigerIlanlar.OrderByDescending(i => i.BaslangicTarihi).ToList();
+            }
+            else if (sort == "3")
+            {
+                MainModel.KullanicininIlanlari = KullanicininIlanlari.OrderBy(i => i.BaslangicTarihi).ToList();
+                MainModel.DigerIlanlar = DigerIlanlar.OrderBy(i => i.BaslangicTarihi).ToList();
+            }
+            else if (sort == "4")
+            {
+                MainModel.KullanicininIlanlari = KullanicininIlanlari.OrderByDescending(i => i.GoruntulenmeSayaci).ToList();
+                MainModel.DigerIlanlar = DigerIlanlar.OrderByDescending(i => i.GoruntulenmeSayaci).ToList();
+            }
+            else if (sort == "5")
+            {
+                MainModel.KullanicininIlanlari = KullanicininIlanlari.OrderBy(i => i.GoruntulenmeSayaci).ToList();
+                MainModel.DigerIlanlar = DigerIlanlar.OrderBy(i => i.GoruntulenmeSayaci).ToList();
+            }
             return View(MainModel);
         }
         [Authorize]
