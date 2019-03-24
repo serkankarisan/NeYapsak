@@ -24,9 +24,9 @@
             <div class="row">
                 <label class="etk-ols-lbl">Gerçekleşeceği İlçe: </label><input type="text" readonly name="ilce" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Ilce"><br>
             </div><br>
-            <div class="row">
-                <label class="etk-ols-lbl">Konum:</label><input type="text" readonly name="konum" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="Girilmemiş"><br>
-            </div><br>
+                  <div class="row">
+                      <label class="etk-ols-lbl">Konum:</label><input type="text" readonly name="konum" class="form-control" id="ilan-konum" style="width: 450px; height: 35px;" value="@Model.Konum" required><br>
+                  </div><br>
             <div class="row">
                 <label class="etk-ols-lbl form">Oluşturulma Tarihi: </label><input type="text" id="ilan-vakit" name="ilan-vakit" value="@Model.OlusturmaTarihi" readonly class="form-control" style="width: 450px;"><br>
             </div><br>

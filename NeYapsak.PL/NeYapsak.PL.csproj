@@ -256,6 +256,8 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Message\Error.cshtml" />
     <Content Include="Views\Home\MainBySearch.cshtml" />
+    <Content Include="Views\Home\OtherEventDetailAdmin.cshtml" />
+    <Content Include="Views\Home\OtherProfileAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
