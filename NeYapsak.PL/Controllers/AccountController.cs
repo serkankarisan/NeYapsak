@@ -96,7 +96,7 @@ namespace NeYapsak.PL.Controllers
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = "" }, protocol: Request.Url.Scheme);
                 IdentityMessage msg = new IdentityMessage();
                 msg.Destination = user.Email;
-                msg.Body = "Nerdeyse tamamlandı! NeYapsak ağına katılmak için <a href=\"" + callbackUrl + "\">bu link</a>e tıkla.";
+                msg.Body = "Nerdeyse tamamlandı! NeYapsak ağına katılmak için <a href=\"" + callbackUrl + "\">neyapsak</a> linkine tıkla.";
                 msg.Subject = "NeYapsak Hesap Doğrulama Servisi";
                 mail.SendMail(msg);
                 errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
@@ -166,7 +166,7 @@ namespace NeYapsak.PL.Controllers
             var kullanici = await UserManager.FindByEmailAsync(model.Email);
             if (kullanici == null)
             {
-                ModelState.AddModelError("", "Bu Email Sistemde Kayıtlı Değildir!");
+                ModelState.AddModelError("", "Bu Email Sistemde Kayıtlı Değil!");
                 return View(model);
             }
             else
@@ -175,7 +175,7 @@ namespace NeYapsak.PL.Controllers
                 var callbackUrl = Url.Action("PasswordReset", "Account", new { email = kullanici.Email, userId = kullanici.Id, code = code }, protocol: Request.Url.Scheme);
                 IdentityMessage msg = new IdentityMessage();
                 msg.Destination = kullanici.Email;
-                msg.Body = "Şifreni sıfırlama isteğini aldık, değerlendirdik ve uygun bulduk. İnsanlık hali, olur öyle. Sıfırlama işlemi için <a href=\"" + callbackUrl + "\">bu link</a>e tıkla.";
+                msg.Body = "Şifreni sıfırlama isteğini aldık, değerlendirdik ve uygun bulduk. İnsanlık hali, olur öyle. Sıfırlama işlemi için <a href=\"" + callbackUrl + "\">şifremi sıfırla</a> linkine tıkla.";
                 msg.Subject = "NeYapsak Şifre Sıfırlama Servisi";
                 mail.SendMail(msg);
                 return View("DisplayPasswordReset");
@@ -234,6 +234,10 @@ namespace NeYapsak.PL.Controllers
             {
                 return View("Error");
             }
+        }
+        public ActionResult DisplayPasswordReset()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -338,6 +342,11 @@ namespace NeYapsak.PL.Controllers
         {
             HttpContext.GetOwinContext().Authentication.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
     }
 }
