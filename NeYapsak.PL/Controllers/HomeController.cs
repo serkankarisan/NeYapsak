@@ -70,13 +70,37 @@ namespace NeYapsak.PL.Controllers
             return View(MainModel);
         }
         [Authorize]
-        public ActionResult MainBySearch(string kelime)
+        public ActionResult MainBySearch(string search,string sort="0")
         {
             Repository<Ilan> repoI = new Repository<Ilan>(new NeYapsakContext());
             MainViewModel MainModel = new MainViewModel();
             MainModel.KullaniciId = HttpContext.User.Identity.GetUserId();
-            MainModel.DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != MainModel.KullaniciId && i.Yayindami == true && i.Baslik.ToLower().Contains(kelime.ToLower()) == true).OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            var DigerIlanlar = repoI.GetAll().Where(i => i.Silindi == false && i.KullaniciId != MainModel.KullaniciId && i.Yayindami == true && i.Baslik.ToLower().Contains(search.ToLower()) == true);
             MainModel.KullanicininIlanlari = new List<Ilan>();
+            if (sort=="0")
+            {
+                MainModel.DigerIlanlar = DigerIlanlar.OrderByDescending(i => i.OlusturmaTarihi).ToList();
+            }
+            else if (sort=="1")
+            {
+                MainModel.DigerIlanlar = DigerIlanlar.OrderBy(i => i.OlusturmaTarihi).ToList();
+            }
+            else if (sort == "2")
+            {
+                MainModel.DigerIlanlar = DigerIlanlar.OrderByDescending(i => i.BaslangicTarihi).ToList();
+            }
+            else if (sort == "3")
+            {
+                MainModel.DigerIlanlar = DigerIlanlar.OrderBy(i => i.BaslangicTarihi).ToList();
+            }
+            else if (sort == "4")
+            {
+                MainModel.DigerIlanlar = DigerIlanlar.OrderByDescending(i => i.GoruntulenmeSayaci).ToList();
+            }
+            else if (sort == "5")
+            {
+                MainModel.DigerIlanlar = DigerIlanlar.OrderBy(i => i.GoruntulenmeSayaci).ToList();
+            }
             return View(MainModel);
         }
         [HttpPost]

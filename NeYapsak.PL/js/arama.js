@@ -4,9 +4,9 @@
         if (kelime.trim() != '') {
             $.ajax({
                 url: '/Home/MainBySearch?kelime=' + kelime,
-                data: { kelime: kelime },
+                data: { search: kelime },
                 success: function (result) {
-                    window.location.href = '/Home/MainBySearch?kelime=' + kelime;
+                    window.location.href = '/Home/MainBySearch?search=' + kelime;
                 }
             });
         }
