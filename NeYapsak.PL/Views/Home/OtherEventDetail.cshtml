@@ -16,25 +16,25 @@
                 <div class="h5 m-0"><a href="/Home/OtherProfile/@Model.KullaniciId" class="cs-renk">@Model.User.Name @Model.User.Surname</a></div>
             </div><br>
             <div class="row">
-                <label class="etk-ols-lbl">Etkinlik başlığı: </label><input type="text" readonly name="ilan-baslik" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Baslik">
+                <label class="etk-ols-lbl">Etkinlik Başlığı: </label><input type="text" readonly name="ilan-baslik" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Baslik">
             </div><br>
             <div class="row">
-                <label class="etk-ols-lbl">Gerçekleşeceği şehir </label><input type="text" readonly name="il" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Il"><br>
+                <label class="etk-ols-lbl">Gerçekleşeceği Şehir: </label><input type="text" readonly name="il" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Il"><br>
             </div><br>
             <div class="row">
-                <label class="etk-ols-lbl">Gerçekleşeceği ilçe </label><input type="text" readonly name="ilce" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Ilce"><br>
+                <label class="etk-ols-lbl">Gerçekleşeceği İlçe: </label><input type="text" readonly name="ilce" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="@Model.Ilce"><br>
             </div><br>
             <div class="row">
                 <label class="etk-ols-lbl">Konum:</label><input type="text" readonly name="konum" class="form-control" id="ilan-baslik" style="width: 450px; height: 35px;" value="Girilmemiş"><br>
             </div><br>
             <div class="row">
-                <label class="etk-ols-lbl form">Oluşturulma tarihi: </label><input type="text" id="ilan-vakit" name="ilan-vakit" value="@Model.OlusturmaTarihi" readonly class="form-control" style="width: 450px;"><br>
+                <label class="etk-ols-lbl form">Oluşturulma Tarihi: </label><input type="text" id="ilan-vakit" name="ilan-vakit" value="@Model.OlusturmaTarihi" readonly class="form-control" style="width: 450px;"><br>
             </div><br>
             <div class="row">
-                <label class="etk-ols-lbl form">Gerçekleşeceği vakit: </label><input type="text" id="ilan-vakit" name="ilan-vakit" value="@Model.BaslangicTarihi" readonly class="form-control" style="width: 450px;"><br>
+                <label class="etk-ols-lbl form">Gerçekleşeceği Vakit: </label><input type="text" id="ilan-vakit" name="ilan-vakit" value="@Model.BaslangicTarihi" readonly class="form-control" style="width: 450px;"><br>
             </div><br>
             <div class="row">
-                <label class="etk-ols-lbl">Kalan kontenjan: </label><input type="number" readonly name="Kontenjan" id="ilan-baslik" class="form-control" style="width:50px;height:30px;padding-right:0" value="@Model.Kontenjan" required><br>
+                <label class="etk-ols-lbl">Kalan Kontenjan: </label><input type="number" readonly name="Kontenjan" id="ilan-baslik" class="form-control" style="width:50px;height:30px;padding-right:0" value="@Model.Kontenjan" required><br>
                 @Html.ValidationMessageFor(model => model.Kontenjan, "", new { @class = "text-danger" })
                 <div class="justify-content-between align-items-center col-md-7">
                     <a href="#" class="text-muted h6 mb-2" style="margin-right:15px;" data-toggle="modal" data-target="#@("IlgilenenlerListeModalCenter"+Model.Id)"> <i class="fa fa-user-circle"></i>&nbsp;İlgilenenler @Model.Katilanlar.Where(i => i.Silindi == false && i.Onay == false).Count()</a>
@@ -42,11 +42,22 @@
                 </div>
             </div><br>
             <div class="row">
-                <label class="etk-ols-lbl">Etkinlik özeti: </label><textarea type="text" readonly name="ilan-baslik" id="ilan-baslik" style="width: 450px;" maxlength="300" placeholder="Etkinliğini 300 karakter ile açıklamanın beklenmiş olduğu kısım" class="form-control">@Model.Ozet</textarea><br>
+                <label class="etk-ols-lbl">Etkinlik Özeti: </label><textarea type="text" readonly name="ilan-baslik" id="ilan-baslik" style="width: 450px;" maxlength="300" placeholder="Etkinliğini 300 karakter ile açıklamanın beklenmiş olduğu kısım" class="form-control">@Model.Ozet</textarea><br>
             </div><br>
+            @{
+                List<NeYapsak.Entity.Entity.IlanEtiket> ilanetiketler = new List<NeYapsak.Entity.Entity.IlanEtiket>();
+                ilanetiketler = ViewBag.IlanEtiketler;
+            }
             <div class="row">
-                <label class="etk-ols-lbl">Etiketler: </label>Tıklanabilir etiketler <br>
-            </div><br>
+                <label class="etk-ols-lbl">Etiketler: </label>
+                <div id="etiketler-body" class="justify-content-between align-items-center col-md-6">
+                    @foreach (NeYapsak.Entity.Entity.Etiket item in ilanetiketler.Where(ie => ie.IlanId == Model.Id).Select(ie => ie.Etiket))
+                    {
+                        <div style="margin:5px;margin-left:5px;padding:10px;display:inline-block;border: 1px solid #f74c3c;background-color:lightgrey;border-radius:5px">@item.EtiketAdi</div>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer" style="height:1px;padding-top:1px;padding-bottom:25px;"></div>
             <div class="justify-content-center row">
                 <div class="align-items-center">
 
@@ -138,145 +149,144 @@
                 </div>
             </div>
         </div>
+        <!--- \\\\\\\Etkinlik Bitiş-->
     </div>
-    <!--- \\\\\\\Etkinlik Bitiş-->
-</div>
-<!-- Modal -->
-<div class="modal fade" id="KatilmaModalCenter" tabindex="-1" role="dialog" aria-labelledby="KatilmaModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="KatilmaModalLongTitle"></h5>
-                <button id="modal-cik" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="modal-bodyy" class="modal-body">
+    <!-- Modal -->
+    <div class="modal fade" id="KatilmaModalCenter" tabindex="-1" role="dialog" aria-labelledby="KatilmaModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="KatilmaModalLongTitle"></h5>
+                    <button id="modal-cik" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modal-bodyy" class="modal-body">
 
-            </div>
-            <div class="modal-footer">
-                <button id="modal-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<!-- Modal Katılanlar-->
-<div class="modal fade" id="@("KatilanlarListeModalCenter"+Model.Id)" tabindex="-1" role="dialog" aria-labelledby="KatilanlarListeModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="card-header">
-                <button id="modal-main-ilgilenenler-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="text-center" id="KatilanlarListeModalLongTitle">Etkinliğe Katılacaklar</h5>
-            </div>
-            <div id="modal-main-katilanlar-body" class="modal-body">
-                @if (Model.Katilanlar.Where(i => i.Onay == true && i.Silindi == false).Count() == 0)
-                {
-                    <table class="table">
-                        <thead>
-                            <tr>Etkinliğe Katılan Yok</tr>
-                        </thead>
-                        <tbody>
-                    </table>
-                }
-                else if (Model.Katilanlar.Where(i => i.Onay == true && i.Silindi == false).Count() != 0)
-                {
-                    <table class="table">
-                        <thead>
-                            <tr></tr>
-                        </thead>
-                        <tbody>
-                            @foreach (NeYapsak.Entity.Entity.Katilan katilan in Model.Katilanlar.Where(i => i.Onay == true && i.Silindi == false))
-                            {
-                                <tr>
-                                    <td><img class="rounded-circle" width="45" height="45" src="@katilan.User.ProfilAvatarYolu" alt=""></td>
-                                    <td>
-                                        <div class="row" style="padding-top:10px;">
+    <!-- Modal Katılanlar-->
+    <div class="modal fade" id="@("KatilanlarListeModalCenter"+Model.Id)" tabindex="-1" role="dialog" aria-labelledby="KatilanlarListeModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="card-header">
+                    <button id="modal-main-ilgilenenler-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="text-center" id="KatilanlarListeModalLongTitle">Etkinliğe Katılacaklar</h5>
+                </div>
+                <div id="modal-main-katilanlar-body" class="modal-body">
+                    @if (Model.Katilanlar.Where(i => i.Onay == true && i.Silindi == false).Count() == 0)
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>Etkinliğe Katılan Yok</tr>
+                            </thead>
+                            <tbody>
+                        </table>
+                    }
+                    else if (Model.Katilanlar.Where(i => i.Onay == true && i.Silindi == false).Count() != 0)
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody>
+                                @foreach (NeYapsak.Entity.Entity.Katilan katilan in Model.Katilanlar.Where(i => i.Onay == true && i.Silindi == false))
+                                {
+                                    <tr>
+                                        <td><img class="rounded-circle" width="45" height="45" src="@katilan.User.ProfilAvatarYolu" alt=""></td>
+                                        <td>
+                                            <div class="row" style="padding-top:10px;">
 
-                                            @if (ViewBag.UserID == katilan.KullaniciId)
-                                            {
-                                                <div class="col-md-6"><a href="/Home/MyProfile/@katilan.KullaniciId" class="cs-renk">@katilan.User.Name @katilan.User.Surname</a></div>
-                                            }
-                                            else
-                                            {
-                                                <div class="col-md-6"><a href="/Home/OtherProfile/@katilan.KullaniciId" class="cs-renk">@katilan.User.Name @katilan.User.Surname</a></div>}
+                                                @if (ViewBag.UserID == katilan.KullaniciId)
+                                                {
+                                                    <div class="col-md-6"><a href="/Home/MyProfile/@katilan.KullaniciId" class="cs-renk">@katilan.User.Name @katilan.User.Surname</a></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-6"><a href="/Home/OtherProfile/@katilan.KullaniciId" class="cs-renk">@katilan.User.Name @katilan.User.Surname</a></div>}
 
-                                            <div class="col-md-6"><p class="text-muted">@katilan.Tarih</p></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Katılanlar Bitiş -->
-<!-- Modal İlgilenenler-->
-<div class="modal fade" id="@("IlgilenenlerListeModalCenter"+Model.Id)" tabindex="-1" role="dialog" aria-labelledby="IlgilenenlerListeModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="card-header">
-                <button id="modal-main-ilgilenenler-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title text-center" id="IlgilenenlerListeModalLongTitle">Etkinlikle İlgilenenler</h5>
-            </div>
-            <div id="modal-main-ilgilenenler-body" class="modal-body">
-                @if (Model.Katilanlar.Where(i => i.Onay == false && i.Silindi == false).Count() == 0)
-                {
-                    <table class="table">
-                        <thead>
-                            <tr>Etkinliğin İlgileneni Yok</tr>
-                        </thead>
-                        <tbody>
-                    </table>
-                }
-                else if (Model.Katilanlar.Where(i => i.Onay == false && i.Silindi == false).Count() != 0)
-                {
-                    <table class="table">
-                        <thead>
-                            <tr></tr>
-                        </thead>
-                        <tbody>
-                            @foreach (NeYapsak.Entity.Entity.Katilan ilgilenen in Model.Katilanlar.Where(i => i.Onay == false && i.Silindi == false))
-                            {
-                                <tr>
-                                    <td><img class="rounded-circle" width="45" height="45" src="@ilgilenen.User.ProfilAvatarYolu" alt=""></td>
-                                    <td>
-                                        <div class="row" style="padding-top:10px;">
-                                            @if (ViewBag.UserID == ilgilenen.KullaniciId)
-                                            {
-                                                <div class="col-md-6"><a href="/Home/MyProfile/@ilgilenen.KullaniciId" class="cs-renk">@ilgilenen.User.Name @ilgilenen.User.Surname</a></div>
-                                            }
-                                            else
-                                            {
-                                                <div class="col-md-6"><a href="/Home/OtherProfile/@ilgilenen.KullaniciId" class="cs-renk">@ilgilenen.User.Name @ilgilenen.User.Surname</a></div>}
-                                            <div class="col-md-6"><p class="text-muted">@ilgilenen.Tarih</p></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-            </div>
-            <div class="modal-footer">
+                                                <div class="col-md-6"><p class="text-muted">@katilan.Tarih</p></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+                <div class="modal-footer">
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Modal İlgilenenler Bitiş -->
+    <!-- Modal Katılanlar Bitiş -->
+    <!-- Modal İlgilenenler-->
+    <div class="modal fade" id="@("IlgilenenlerListeModalCenter"+Model.Id)" tabindex="-1" role="dialog" aria-labelledby="IlgilenenlerListeModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="card-header">
+                    <button id="modal-main-ilgilenenler-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title text-center" id="IlgilenenlerListeModalLongTitle">Etkinlikle İlgilenenler</h5>
+                </div>
+                <div id="modal-main-ilgilenenler-body" class="modal-body">
+                    @if (Model.Katilanlar.Where(i => i.Onay == false && i.Silindi == false).Count() == 0)
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>Etkinliğin İlgileneni Yok</tr>
+                            </thead>
+                            <tbody>
+                        </table>
+                    }
+                    else if (Model.Katilanlar.Where(i => i.Onay == false && i.Silindi == false).Count() != 0)
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                            <tbody>
+                                @foreach (NeYapsak.Entity.Entity.Katilan ilgilenen in Model.Katilanlar.Where(i => i.Onay == false && i.Silindi == false))
+                                {
+                                    <tr>
+                                        <td><img class="rounded-circle" width="45" height="45" src="@ilgilenen.User.ProfilAvatarYolu" alt=""></td>
+                                        <td>
+                                            <div class="row" style="padding-top:10px;">
+                                                @if (ViewBag.UserID == ilgilenen.KullaniciId)
+                                                {
+                                                    <div class="col-md-6"><a href="/Home/MyProfile/@ilgilenen.KullaniciId" class="cs-renk">@ilgilenen.User.Name @ilgilenen.User.Surname</a></div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-6"><a href="/Home/OtherProfile/@ilgilenen.KullaniciId" class="cs-renk">@ilgilenen.User.Name @ilgilenen.User.Surname</a></div>}
+                                                <div class="col-md-6"><p class="text-muted">@ilgilenen.Tarih</p></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal İlgilenenler Bitiş -->
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
     var btnmsj = document.getElementById("mesaj");
     var btnktl = document.getElementById("katilmak");
@@ -421,8 +431,8 @@
         });
 
     });
-</script>
-<script type="text/javascript">
+    </script>
+    <script type="text/javascript">
     $(document).ready(function () {
         $("#msg-gonder").click(function () {
             var Mesaj = $("#yeni-mesaj").val();
@@ -441,4 +451,4 @@
             };
         });
     });
-</script>
+    </script>

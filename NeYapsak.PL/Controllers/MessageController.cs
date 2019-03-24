@@ -137,5 +137,9 @@ namespace NeYapsak.PL.Controllers
             Mail.SendMail(msg);
             return RedirectToAction("Main","Home");
         }
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }
