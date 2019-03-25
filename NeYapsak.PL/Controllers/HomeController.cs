@@ -248,8 +248,8 @@ namespace NeYapsak.PL.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Daha Önce Katılma İsteği Gönderdin!");
-                        result = "Daha Önce Katılma İsteği Gönderdin!";
+                        ModelState.AddModelError("", "Daha önce katılma isteği gönderdin!");
+                        result = "Daha önce katılma isteği gönderdin!";
                         return Json(result, JsonRequestBehavior.AllowGet);
                     }
                 }
@@ -341,7 +341,7 @@ namespace NeYapsak.PL.Controllers
                     return Json("False", JsonRequestBehavior.AllowGet);
                 }
             }
-            return Json("Etkinliği Silmeye Yetkin Yok", JsonRequestBehavior.AllowGet);
+            return Json("Etkinliği silmeye yetkin yok", JsonRequestBehavior.AllowGet);
         }
 
         //[Authorize]
