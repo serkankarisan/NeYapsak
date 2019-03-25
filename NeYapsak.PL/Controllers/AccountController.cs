@@ -335,6 +335,7 @@ namespace NeYapsak.PL.Controllers
                         errores.Add("Doğrulama linkim gelmedi diyorsan ");
                         errores.Add(kullanici.Id);
                         errores.Add("tıklayabilirsin.");
+                        errores.Add("a");
                         return Json(errores, JsonRequestBehavior.AllowGet);
                     }
                 }

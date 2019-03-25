@@ -155,8 +155,15 @@ $(document).ready(function(){
                         $('#modal-login-body').text("");
                         console.log(result);
                         $('#modal-login-body').append(result[0] + "<br/>");
-                        $('#modal-login-body').append(result[1] + "<a id = 'ConfAgain' href=/Account/ConfirmReqAgain?Id=" + result[2] + "> bu link</a >e " + result[3]);
+                        console.log(result[0]);
+                        var Dogrulama = result[4];
+                        if (("a" === Dogrulama)) {
+                            console.log('çalýþtý');
+                            $('#modal-login-body').append(result[1] + "<a id = 'ConfAgain' href=/Account/ConfirmReqAgain?Id=" + result[2] + "> bu link</a >e " + result[3]);
+                            $('#LoginModalCenter').modal('show');
+                        }
                         $('#LoginModalCenter').modal('show');
+
                     }
                 }
             });
