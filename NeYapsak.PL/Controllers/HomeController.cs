@@ -552,7 +552,13 @@ namespace NeYapsak.PL.Controllers
             }
             return View("MyProfile", model);
         }
-
+        [Authorize]
+        public ActionResult Profiles(string user)
+        {
+            Repository<ApplicationUser> repoU = new Repository<ApplicationUser>(new NeYapsakContext());
+            List<ApplicationUser> Users = repoU.GetAll(u => u.UserName.Contains(user) || u.Name.Contains(user) || u.Surname.Contains(user)).ToList();
+            return View(Users);
+        }
 
         [HttpPost]
         [Authorize]

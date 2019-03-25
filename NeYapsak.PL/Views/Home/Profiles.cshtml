@@ -1,0 +1,35 @@
+﻿@model IList<NeYapsak.Entity.Identity.ApplicationUser>
+@{
+    ViewBag.Title = "Profillerde Ara";
+    Layout = "~/Views/Shared/_Layout-3-TopMenu-User.cshtml";
+}
+
+<h2 class="text-center"><u>Aramandaki kelime/leri içeren kullanıcılar</u></h2><br />
+@if (Model.Count() == 0)
+{
+    <div class="text-center" style="height:500px">
+        <h3 class="text-danger">Bu aramana uyan bir kullanıcı henüz kaydolmamış.</h3>
+    </div>
+}
+else
+{
+    <div class="text-center" style="min-height:500px">
+    @foreach (var Kullanici in Model)
+    {
+                    <div class="row bg-light">
+                        <div class="col-md-4">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-1">
+                            <img class="rounded-circle" width="45" height="45" src="@Kullanici.ProfilAvatarYolu" alt="">
+                        </div>
+                        <div class="col-2">
+                            <div class="h5 m-0"><a href="/Home/OtherProfile/@Kullanici.Id" class="cs-renk">@Kullanici.Name</a></div>
+                            <div class="h7 text-muted">@Kullanici.Name @Kullanici.Surname,@(Convert.ToInt32(DateTime.Now.Year - Kullanici.DogumTarihi.Year))</div>
+                        </div>
+                    </div>
+                    <p class="text-normal bg-light">@Kullanici.Bio</p>
+    }
+    </div>
+}
+

@@ -258,6 +258,7 @@
     <Content Include="Views\Home\MainBySearch.cshtml" />
     <Content Include="Views\Home\OtherEventDetailAdmin.cshtml" />
     <Content Include="Views\Home\OtherProfileAdmin.cshtml" />
+    <Content Include="Views\Home\Profiles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
