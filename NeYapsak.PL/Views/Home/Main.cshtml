@@ -798,16 +798,16 @@
                     if (result === "true") {
                         $('#KatilmaModalMainLongTitle').attr("class", "text-success")
                         $('#KatilmaModalMainLongTitle').text("İstek Gönderildi");
-                        $('#modal-main-body').text("Katılma İsteğini etkinlik Sahibine İlettik.");
+                        $('#modal-main-body').text("Katılma isteğini etkinlik sahibine ilettik.");
                     }
                     else if (result === "false") {
                         $('#KatilmaModalMainLongTitle').attr("class", "text-danger")
                         $('#KatilmaModalMainLongTitle').text("İstek Gönderilemedi");
-                        $('#modal-main-body').text("Katılma İsteğini etkinlik Sahibine İletemedik.");
+                        $('#modal-main-body').text("Katılma isteğini etkinlik sahibine iletemedik.");
                     }
                     else {
                         $('#KatilmaModalMainLongTitle').attr("class", "text-danger")
-                        $('#KatilmaModalMainLongTitle').text("İstek Gönderilemedi");
+                        $('#KatilmaModalMainLongTitle').text("İstek gönderilemedi");
                         $('#modal-main-body').text(result);
                     }
                     KatilmaDurumu = result;
@@ -840,7 +840,7 @@
                     type: "POST",
                     data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
                     success: function (result) {
-                        alert('Mesajınız gönderildi!');
+                        alert('Mesajın gönderildi!');
                     }
             });
             };
@@ -860,7 +860,7 @@
                     type: "POST",
                     data: { IlanId: IlanId, GondericiId: GondericiId, Mesaj: Mesaj },
                     success: function (result) {
-                        alert('Bildirimin site yönetimine iletildi!');
+                        alert('Bildirimin site yönetimine iletildi! Teşekkürler!');
                     }
                 });
             };
@@ -925,7 +925,7 @@
                     if (result === "True") {
                         $('#IlanOlusturModalLongTitle').attr("class", "text-success")
                         $('#IlanOlusturModalLongTitle').text("Etkinlik Oluşturuldu");
-                        $('#modal-ilan-olustur-body').text("İşte Bu kadar Etkinliğiniz Oluşturuldu.");
+                        $('#modal-ilan-olustur-body').text("İşte bu kadar! Etkinliğin oluşturuldu.");
                         $("#modal-ilan-olustur-tamam").click(function () {
                             window.location.href = "/Home/Main";
                         });

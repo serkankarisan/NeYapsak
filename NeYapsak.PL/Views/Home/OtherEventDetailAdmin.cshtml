@@ -481,7 +481,7 @@
                     if (result === "True") {
                         $('#IlanDuzenleModalLongTitle').attr("class", "text-success")
                         $('#IlanDuzenleModalLongTitle').text("Etkinlik Güncellendi");
-                        $('#modal-ilan-duzenle-body').text("İşte Bu kadar Etkinliğiniz Artık Güncel.");
+                        $('#modal-ilan-duzenle-body').text("İşte bu kadar! Etkinliğin artık güncel.");
                         $("#modal-ilan-duzenle-tamam").click(function () {
                             window.location.href = "/Home/MyEventDetail/"+@Model.Id;
                         });
@@ -558,12 +558,12 @@
                     if (result === "true") {
                         $('#KatilmaModalLongTitle').attr("class", "text-success")
                         $('#KatilmaModalLongTitle').text("İstek Gönderildi");
-                        $('#modal-bodyy').text("Katılma İsteğini etkinlik Sahibine İlettik.");
+                        $('#modal-bodyy').text("Katılma isteğini etkinlik sahibine ilettik.");
                     }
                     else if (result === "false") {
                         $('#KatilmaModalLongTitle').attr("class", "text-danger")
                         $('#KatilmaModalLongTitle').text("İstek Gönderilemedi");
-                        $('#modal-bodyy').text("Katılma İsteğini etkinlik Sahibine İletemedik.");
+                        $('#modal-bodyy').text("Katılma isteğini etkinlik sahibine iletemedik.");
                     }
                     else {
                         $('#KatilmaModalLongTitle').attr("class", "text-danger")
@@ -590,13 +590,13 @@
                         console.log("true" + ID);
                         $('#KatilmaModalLongTitle').attr("class", "text-success")
                         $('#KatilmaModalLongTitle').text("İşlem Başarılı");
-                        $('#modal-bodyy').text("Katılmaktan Vazgeçtin.");
+                        $('#modal-bodyy').text("Katılmaktan vazgeçtin.");
                     }
                     else {
                         console.log("false" + ID);
                         $('#KatilmaModalLongTitle').attr("class", "text-danger")
-                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
-                        $('#modal-bodyy').text("Katılmaktan Vazgeçemedin!.");
+                        $('#KatilmaModalLongTitle').text("Sorun Oluştu, Tekrar Dene!");
+                        $('#modal-bodyy').text("Katılmaktan vazgeçemedin!.");
                     }
                     ktldurum = result;
                     $('#KatilmaModalCenter').modal('show');
@@ -618,13 +618,13 @@
                         console.log("true" + ID);
                         $('#KatilmaModalLongTitle').attr("class", "text-success")
                         $('#KatilmaModalLongTitle').text("İşlem Başarılı");
-                        $('#modal-bodyy').text("Katılma İsteğini Geri Çektik.");
+                        $('#modal-bodyy').text("Katılma isteğini geri çektik.");
                     }
                     else {
                         console.log("false" + ID);
                         $('#KatilmaModalLongTitle').attr("class", "text-danger")
-                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
-                        $('#modal-bodyy').text("Katılma İsteğini Geri Alamadık!.");
+                        $('#KatilmaModalLongTitle').text("Sorun Oluştu, Tekrar Dene!");
+                        $('#modal-bodyy').text("Katılma isteğini geri alamadık!.");
                     }
                     ktldurum = result;
                     $('#KatilmaModalCenter').modal('show');
@@ -662,7 +662,7 @@
                     type: "POST",
                     data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
                     success: function (result) {
-                        alert('Mesajınız gönderildi!');
+                        alert('Mesajın gönderildi!');
                     }
                 });
             };

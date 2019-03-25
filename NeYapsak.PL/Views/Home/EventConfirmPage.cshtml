@@ -230,13 +230,13 @@
         btnModalOnay.style.display = "block";
         $('#ConfirmModalLabel').attr("class", " text-info")
         $('#ConfirmModalLabel').text("Emin Misin?");
-        $('#confirm-modal-bodyy').text("Katılma İsteğini Onaylamak İstediğine Emin Misin?");
+        $('#confirm-modal-bodyy').text("Katılma isteğini onaylamak istediğine emin misin?");
     });
 
     $("#btn-onay-iptal").click(function () {
         $('#ConfirmModalIptalLabel').attr("class", " text-info")
         $('#ConfirmModalIptalLabel').text("Emin Misin?");
-        $('#confirm-iptal-modal-bodyy').text("Katılanlardan Çıkarmak İstediğine Emin Misin?");
+        $('#confirm-iptal-modal-bodyy').text("Katılanlardan çıkarmak istediğine emin misin?");
     });
 
     $("#btn-reddet").click(function () {
@@ -244,7 +244,7 @@
         btnModalOnay.style.display = "none";
         $('#ConfirmModalLabel').attr("class", " text-info")
         $('#ConfirmModalLabel').text("Emin Misin?");
-        $('#confirm-modal-bodyy').text("Katılma İsteğini Reddetmek İstediğine Emin Misin?");
+        $('#confirm-modal-bodyy').text("Katılma isteğini reddetmek istediğine emin misin?");
     });
 
     $(document).ready(function () {
@@ -270,18 +270,18 @@
                         $('#KatilmaModalLongTitle').attr("class", "text-success")
                         $('#KatilmaModalLongTitle').text("İşlem Başarılı");
                         if (btntext ==="Evet Onayla") {
-                            $('#modal-bodyy').text("Katılma İsteğini Onayladın.");
+                            $('#modal-bodyy').text("Katılma isteğini onayladın.");
                         }
                         else if (btntext === "Evet Reddet") {
-                            $('#modal-bodyy').text("Katılma İsteğini Reddettin.");
+                            $('#modal-bodyy').text("Katılma isteğini reddettin.");
                         }
 
                     }
                     else {
                         console.log("false" + ID);
                         $('#KatilmaModalLongTitle').attr("class", "text-danger")
-                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
-                        $('#modal-bodyy').text("Katılma İsteğini Geri Alamadık!.");
+                        $('#KatilmaModalLongTitle').text("Sorun Oluştu, Tekrar Dene!");
+                        $('#modal-bodyy').text("Katılma isteğini geri alamadık!.");
                     }
                     ktldurum = result;
                     $('#KatilmaModalCenter').modal('show');
@@ -300,12 +300,12 @@
                     if (result === "true") {
                         $('#KatilmaModalLongTitle').attr("class", "text-success")
                         $('#KatilmaModalLongTitle').text("İşlem Başarılı");
-                            $('#modal-bodyy').text("Katılanlardan Çıkarıldı.");
+                            $('#modal-bodyy').text("Katılanlardan çıkarıldı.");
                     }
                     else {
                         $('#KatilmaModalLongTitle').attr("class", "text-danger")
-                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
-                        $('#modal-bodyy').text("Katılanlardan Çıkaramadık!.");
+                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Dene!");
+                        $('#modal-bodyy').text("Katılanlardan çıkaramadık!.");
                     }
                     ktldurum = result;
                     $('#KatilmaModalCenter').modal('show');

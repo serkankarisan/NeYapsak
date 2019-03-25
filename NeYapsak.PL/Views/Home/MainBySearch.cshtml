@@ -347,26 +347,6 @@
         </div>
     </div>
     <!-- Modal Bilgi Bitiş -->
-    <!-- Modal İlan Oluştur-->
-    <div class="modal fade" id="IlanOlusturModalCenter" tabindex="-1" role="dialog" aria-labelledby="IlanOlusturModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="card-header text-center">
-                    <button id="modal-ilan-olustur-cikis" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="text-center" id="IlanOlusturModalLongTitle"></h5>
-                </div>
-                <div id="modal-ilan-olustur-body" style="margin-left:5%;" class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button id="modal-ilan-olustur-tamam" type="button" class="btn cs-arka-renk" data-dismiss="modal">Tamam</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal İlan Oluştur Bitiş -->
     <!-- Modal Etiketler-->
     <div class="modal fade" id="EtiketlerModalCenter" tabindex="-1" role="dialog" aria-labelledby="EtiketlerModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -415,12 +395,12 @@
                     if (result === "true") {
                         $('#KatilmaModalMainLongTitle').attr("class", "text-success")
                         $('#KatilmaModalMainLongTitle').text("İstek Gönderildi");
-                        $('#modal-main-body').text("Katılma İsteğini etkinlik Sahibine İlettik.");
+                        $('#modal-main-body').text("Katılma isteğini etkinlik sahibine ilettik.");
                     }
                     else if (result === "false") {
                         $('#KatilmaModalMainLongTitle').attr("class", "text-danger")
                         $('#KatilmaModalMainLongTitle').text("İstek Gönderilemedi");
-                        $('#modal-main-body').text("Katılma İsteğini etkinlik Sahibine İletemedik.");
+                        $('#modal-main-body').text("Katılma isteğini etkinlik sahibine iletemedik.");
                     }
                     else {
                         $('#KatilmaModalMainLongTitle').attr("class", "text-danger")
@@ -457,7 +437,7 @@
                     type: "POST",
                     data: { AliciId: ArkadasId, GondericiId: BenimId, Mesaj: Mesaj },
                     success: function (result) {
-                        alert('Mesajınız gönderildi!');
+                        alert('Mesajın gönderildi!');
                     }
             });
             };
@@ -477,7 +457,7 @@
                     type: "POST",
                     data: { IlanId: IlanId, GondericiId: GondericiId, Mesaj: Mesaj },
                     success: function (result) {
-                        alert('Bildirimin site yönetimine iletildi!');
+                        alert('Bildirimin site yönetimine iletildi! Teşekkürler!');
                     }
                 });
             };
@@ -519,47 +499,6 @@
                     EtiketIdListe.push(ID);
                     $('#etiketler-body').append('<div style="margin:5px;margin-left:5px;padding:10px;display:inline-block;border: 1px solid #f74c3c;background-color:lightgrey;border-radius:5px">' + name + '</div>');
                 });
-        });
-        $("#etkinlik-olustur").click(function () {
-            var etk = {};
-            etk.Baslik = $('#ilan-baslik').val();
-            etk.Il = $('#il').val();
-            etk.Ilce = $('#ilce').val();
-            etk.Kontenjan = $('#ilan-kontenjan').val();
-            etk.Ozet = $('#ilan-ozet').val();
-            etk.BaslangicTarihi = $('#ilan-vakit').val();
-            console.log("model " + etk);
-            var mainmodel = {};
-            mainmodel.Ilan = etk;
-            console.log("model main" + mainmodel);
-            $.ajax({
-                type: "POST",
-                url: '/Home/Main',
-                data: { model: mainmodel, EtiketIDleri: EtiketIdListe },
-                success: function (result) {
-                    console.log(result);
-                    if (result === "True") {
-                        $('#IlanOlusturModalLongTitle').attr("class", "text-success")
-                        $('#IlanOlusturModalLongTitle').text("Etkinlik Oluşturuldu");
-                        $('#modal-ilan-olustur-body').text("İşte Bu kadar Etkinliğiniz Oluşturuldu.");
-                        $("#modal-ilan-olustur-tamam").click(function () {
-                            window.location.href = "/Home/Main";
-                        });
-                        $("#modal-ilan-olustur-cikis").click(function () {
-                            window.location.href = "/Home/Main";
-                        });
-                    }
-                    else {
-                        $('#IlanOlusturModalLongTitle').attr("class", "text-danger")
-                        $('#IlanOlusturModalLongTitle').text("Etkinlik Oluşturulamadı!");
-                        $('#modal-ilan-olustur-body').text("");
-                        $.each(result, function (i, hata) {
-                            $('#modal-ilan-olustur-body').append('<p class="text-danger" style="width:10px;display:inline-block">*</p>' + hata + "<br/><br/>");
-                        });
-                    }
-                    $('#IlanOlusturModalCenter').modal('show');
-                }
-            });
         });
     });
 </script>

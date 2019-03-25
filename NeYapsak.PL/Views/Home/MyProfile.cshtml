@@ -540,13 +540,13 @@
                     if (result === "true") {
                         $('#KatilmaModalLongTitle').attr("class", "text-success")
                         $('#KatilmaModalLongTitle').text("İşlem Başarılı");
-                        $('#modal-katilma-bilgi-body').text("Katılmakatan Vazgeçtin.");
+                        $('#modal-katilma-bilgi-body').text("Katılmakatan vazgeçtin.");
                     }
                     else {
                         console.log("false" + ID);
                         $('#KatilmaModalLongTitle').attr("class", "text-danger")
-                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
-                        $('#modal-katilma-bilgi-body').text("Katılmakatan Vazgeçemedin!.");
+                        $('#KatilmaModalLongTitle').text("Sorun oluştu tekrar deneyin!");
+                        $('#modal-katilma-bilgi-body').text("Katılmakatan vazgeçemedin!.");
                     }
                     ktldurum = result;
                     $('#KatilmaModalCenter').modal('show');
@@ -566,12 +566,12 @@
                     if (result === "true") {
                         $('#KatilmaModalLongTitle').attr("class", "text-success")
                         $('#KatilmaModalLongTitle').text("İşlem Başarılı");
-                        $('#modal-katilma-bilgi-body').text("Katılma İsteğini Geri Çektik.");
+                        $('#modal-katilma-bilgi-body').text("Katılma isteğini geri çektik.");
                     }
                     else {
                         $('#KatilmaModalLongTitle').attr("class", "text-danger")
-                        $('#KatilmaModalLongTitle').text("Sorun Oluştu Tekrar Deneyin!");
-                        $('#modal-katilma-bilgi-body').text("Katılma İsteğini Geri Alamadık!.");
+                        $('#KatilmaModalLongTitle').text("Sorun Oluştu, Tekrar Dene!");
+                        $('#modal-katilma-bilgi-body').text("Katılma isteğini geri alamadık!.");
                     }
                     ktldurum = result;
                     $('#KatilmaModalCenter').modal('show');

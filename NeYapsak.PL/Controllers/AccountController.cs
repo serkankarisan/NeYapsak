@@ -84,7 +84,7 @@ namespace NeYapsak.PL.Controllers
             var kullanici = usermanager.FindByEmail(model.Email);
             if (kullanici != null)
             {
-                ModelState.AddModelError("", "Bu Email Sistemde Kayıtlı!");
+                ModelState.AddModelError("", "Bu E-Posta Sistemde Kayıtlı!");
                 errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
                 return Json(errors, JsonRequestBehavior.AllowGet);
             }
@@ -171,7 +171,7 @@ namespace NeYapsak.PL.Controllers
             var kullanici = await UserManager.FindByEmailAsync(model.Email);
             if (kullanici == null)
             {
-                ModelState.AddModelError("", "Bu Email Sistemde Kayıtlı Değil!");
+                ModelState.AddModelError("", "Bu E-Posta Sistemde Kayıtlı Değil!");
                 return View(model);
             }
             else
@@ -180,7 +180,7 @@ namespace NeYapsak.PL.Controllers
                 var callbackUrl = Url.Action("PasswordReset", "Account", new { email = kullanici.Email, userId = kullanici.Id, code = code }, protocol: Request.Url.Scheme);
                 IdentityMessage msg = new IdentityMessage();
                 msg.Destination = kullanici.Email;
-                msg.Body = "Şifreni sıfırlama isteğini aldık, değerlendirdik ve uygun bulduk. İnsanlık hali, olur öyle. Sıfırlama işlemi için <a href=\"" + callbackUrl + "\">şifremi sıfırla</a> linkine tıkla.";
+                msg.Body = "Şifreni sıfırlama isteğini aldık, değerlendirdik ve uygun bulduk. İnsanlık hali, unutmak da var kaptırmak da, biliyoruz. Sıfırlama işlemi için <a href=\"" + callbackUrl + "\">şifremi sıfırla</a> linkine tıkla.";
                 msg.Subject = "NeYapsak Şifre Sıfırlama Servisi";
                 mail.SendMail(msg);
                 return View("DisplayPasswordReset");
