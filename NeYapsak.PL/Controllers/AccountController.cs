@@ -64,6 +64,11 @@ namespace NeYapsak.PL.Controllers
         public JsonResult Register(RegisterViewModel model)
         {
             List<string> errors = new List<string>();
+            if (string.IsNullOrEmpty(model.Password))
+            {
+                errors = ModelState.Values.SelectMany(state => state.Errors).Select(error => error.ErrorMessage).ToList();
+                return Json(errors, JsonRequestBehavior.AllowGet);
+            }
             if (model.Password.Count()<8)
             {
                 ModelState.AddModelError("", "Şifre en az 8 karakter uzunluğunda olmalıdır!");

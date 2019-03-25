@@ -1,7 +1,9 @@
 ﻿@model NeYapsak.PL.Models.MsgHistViewModel
 
-<div class="row text-center">
-    <h4 class="text-center">@Model.Baslik</h4>
+<div class="row">
+    <div class="col-md-12 text-center" style="padding-top:10px;background-color:#343a40;color:white;font-weight:bold;border-bottom-left-radius:30px;border-bottom-right-radius:30px;">
+        <h4 class="text-center">@Model.Baslik</h4>
+    </div>
 </div>
 <div class="row">
     @if (Model.Mesajlar != null)
@@ -13,14 +15,14 @@
                 <div class="col-md-3">
                     &nbsp;
                 </div>
-                <div class="col-md-9 gonderilen-mesaj">
+                <div class="col-md-9 gonderilen-mesaj" style="border-radius:30px;padding-top:10px;">
                     <span><strong>@mesaj.Mesaj</strong></span><br />
                     <p class="text-right">Gönderilme Tarihi : @mesaj.Tarih</p>
                 </div><br />
             }
             else
             {
-                <div class="col-md-9 alinan-mesaj">
+                <div class="col-md-9 alinan-mesaj" style="border-radius:30px;padding-top:10px;">
                     <span><strong>@mesaj.Mesaj</strong></span><br />
                     <p class="text-right">Alınma Tarihi : @mesaj.Tarih</p>
                 </div>
